@@ -5,7 +5,7 @@
 
 # 环境
 
-``python3.7 + BS4 + request``
+``python3.7 + BS4``
 
 ---
 
