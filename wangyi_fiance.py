@@ -1,7 +1,9 @@
 import requests
 from bs4 import BeautifulSoup
 import os
-import xlrd, xlwt
+import xlrd
+import xlwt
+from xlutils.copy import copy
 
 headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
@@ -11,6 +13,7 @@ class WangYi(object):
     def __init__(self):
         self.url = 'https://money.163.com/'
         self.data = requests.get(self.url, headers=headers)
+        self.xlsxname = "C:\\Users\\Vcvc\\Desktop\\WangyiFinance.xlsx"
 
     def getTopNew(self):
         print("要闻 ")
@@ -45,22 +48,44 @@ class WangYi(object):
             wsheet.write(t_row, t_col + 1, url)
             t_row = t_row + 1
         try:
-            wbook.save('C:\\Users\\Vcvc\\Desktop\\' + 'Wangyi.xlsx')
+            #wbook.save('C:\\Users\\Vcvc\\Desktop\\' + self.xlsxname)
+            wbook.save(self.xlsxname)
         except:
             print('Save error')
         else:
             print('excel save')
 
+    def getlist2(self):
+        soup = BeautifulSoup(self.data.text, "lxml")
+        datalist2 = soup.find_all(class_='topnews_nlist topnews_nlist2')
+
+        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
+        sheet = copy(xlsxin)
+        wb = sheet.get_sheet(0)
+
+        t_row = 5
+        t_col = 0
+        for tp in datalist2:
+            datalist3 = tp.select("li h3")
+            for tn in datalist3:
+                url = tn.find('a')['href']
+                title = tn.get_text()
+                wb.write(t_row, t_col, title)
+                wb.write(t_row, t_col + 1, url)
+                t_row = t_row + 1
+        try:
+            os.remove(self.xlsxname)
+            sheet.save(self.xlsxname)
+        except:
+            print("Save Error")
+        else:
+            print("Save Success")
 
 
 if __name__ == '__main__':
     Wy = WangYi()
-    if not os.path.exists("./WangYiNews"):
-        os.mkdir("./WangYiNews")
-    Wy.getTopNew()
-    """
     try:
         Wy.getTopNew()
+        Wy.getlist2()
     except Exception:
         print("获取TopNew失败")
-    """
