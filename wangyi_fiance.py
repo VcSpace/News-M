@@ -14,14 +14,15 @@ class WangYi(object):
         self.url = 'https://money.163.com/'
         self.data = requests.get(self.url, headers=headers)
         self.xlsxname = "C:\\Users\\Vcvc\\Desktop\\WangyiFinance.xlsx"
+        #stock
+        self.stockurl = 'https://money.163.com/stock/'
+        self.stockdata = requests.get(self.stockurl, headers=headers)
 
     def getTopNew(self):
         print("要闻 ")
         soup = BeautifulSoup(self.data.text, "lxml")
         datalist = soup.select("ul li h2")
-        #print(datalist)
         #datalist = soup.find_all(class_="topnews_nlist topnews_nlist1")
-        #print(datalist)
 
         wbook = xlwt.Workbook()
         wsheet = wbook.add_sheet('wy', cell_overwrite_ok=True)
@@ -63,7 +64,10 @@ class WangYi(object):
         sheet = copy(xlsxin)
         wb = sheet.get_sheet(0)
 
-        t_row = 5
+        table = xlsxin.sheets()[0]
+        ow = table.nrows
+
+        t_row = ow
         t_col = 0
         for tp in datalist2:
             datalist3 = tp.select("li h3")
@@ -81,11 +85,50 @@ class WangYi(object):
         else:
             print("Save Success")
 
+    def getstock(self):
+        soup = BeautifulSoup(self.stockdata.text, 'lxml')
+        stockl = soup.select('#stock2016_wrap > div > div.stock2016_content > div.idx_main.common_wrap.clearfix > div.news_main > div.news_main_wrap > div.topnews > div.topnews_first > h2 > a')
+        top_url = stockl[0]['href']
+        top_title = stockl[0].get_text()
+
+        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
+        table = xlsxin.sheets()[0]
+        ow = table.nrows #已经使用多少行
+        sheet = copy(xlsxin)
+        wb = sheet.get_sheet(0)
+
+        t_row = ow
+        t_col = 0
+        wb.write(t_row, t_col, top_title)
+        wb.write(t_row, t_col + 1, top_url)
+        t_row = t_row + 1
+
+        stocknewlist = soup.find_all(class_='topnews_list')
+        for s_new in stocknewlist:
+            news = s_new.find_all('a')
+            for tn in news:
+                t_url = tn['href']
+                t_title = tn.get_text()
+                wb.write(t_row, t_col, t_title)
+                wb.write(t_row, t_col + 1, t_url)
+                t_row = t_row + 1
+        try:
+            sheet.save(self.xlsxname)
+        except:
+            print("Save Error")
+        else:
+            print("Save Success")
+
+
+
 
 if __name__ == '__main__':
     Wy = WangYi()
     try:
         Wy.getTopNew()
         Wy.getlist2()
+        #stock
+        Wy.getstock()
+        #Wy.getmain() #主页原创栏目右边
     except Exception:
         print("获取TopNew失败")
