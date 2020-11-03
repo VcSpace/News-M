@@ -17,6 +17,7 @@ class WangYi(object):
         self.url = 'https://money.163.com/'
         self.data = requests.get(self.url, headers=headers)
         self.xlsxname = "C:\\Users\\Vcvc\\Desktop\\News_Finance.xlsx"
+        self.soup = BeautifulSoup(self.data.text, "lxml")
 
         #stock
         self.stockurl = 'https://money.163.com/stock/'
@@ -28,8 +29,7 @@ class WangYi(object):
         self.indexdata = requests.get(self.indexurl, headers=headers)
 
     def getTopNew(self):
-        soup = BeautifulSoup(self.data.text, "lxml")
-        datalist = soup.select("ul li h2")
+        datalist = self.soup.select("ul li h2")
         #datalist = soup.find_all(class_="topnews_nlist topnews_nlist1")
 
         wbook = xlwt.Workbook()
@@ -59,13 +59,10 @@ class WangYi(object):
         try:
             wbook.save(self.xlsxname)
         except:
-            print('GetTopNew Save Error')
-        else:
-            print('GetTopNew Save Success')
+            print('Wangyi Save Error = 1')
 
     def getlist2(self):
-        soup = BeautifulSoup(self.data.text, "lxml")
-        datalist2 = soup.find_all(class_='topnews_nlist topnews_nlist2')
+        datalist2 = self.soup.find_all(class_='topnews_nlist topnews_nlist2')
 
         xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
         sheet = copy(xlsxin)
@@ -87,12 +84,10 @@ class WangYi(object):
         try:
             sheet.save(self.xlsxname)
         except:
-            print("Getlist2 Save Error")
-        else:
-            print("Getlist2 Save Success")
+            print("Wangyi Save Error = 2")
 
     def getstock(self):
-        soup = BeautifulSoup(self.stockdata.text, 'lxml')
+        soup = BeautifulSoup(self.stockdata.text, "lxml")
         stockl = soup.select('#stock2016_wrap > div > div.stock2016_content > div.idx_main.common_wrap.clearfix > div.news_main > div.news_main_wrap > div.topnews > div.topnews_first > h2 > a')
         top_url = stockl[0]['href']
         top_title = stockl[0].get_text()
@@ -121,9 +116,7 @@ class WangYi(object):
         try:
             sheet.save(self.xlsxname)
         except:
-            print("GetStock Save Error")
-        else:
-            print("GetStock Save Success")
+            print("Wangyi Save Error = 4")
 
     def get_num(self, num, row):
         num_price = num['price']
@@ -157,7 +150,6 @@ class WangYi(object):
         wb.write(3, 0, u'沪深300')
 
         wb.write(row, 1, num_price)
-
         wb.write(row, 2, str(percent) + "%")
         wb.write(row, 3, num_updown)
         wb.write(row, 4, num_open)
@@ -169,9 +161,7 @@ class WangYi(object):
         try:
             sheet.save(self.xlsxname)
         except:
-            print("GetNum Save Error")
-        else:
-            print("GetNum Save Success")
+            print("Wangyi Save Error = 5")
 
 
     def getindex(self):
@@ -195,11 +185,8 @@ class WangYi(object):
 #if __name__ == '__main__':
     def main(self):
         Wy = WangYi()
-        try:
-            Wy.getTopNew()
-            Wy.getlist2()
-            #stock
-            Wy.getstock()
-            Wy.getindex()  # 主页原创栏目右边
-        except Exception:
-            print("Wangyi Get Error")
+        Wy.getTopNew()
+        Wy.getlist2()
+        #stock
+        Wy.getstock()
+        Wy.getindex()  # 主页原创栏目右边
