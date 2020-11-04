@@ -78,11 +78,12 @@ class TongHua():
     def getInvestment2(self):
         #投资机会后半部分获取
         datalist = self.soup.find_all(class_="last")
-        print(datalist) #明天见
+        for newlist in datalist:
+            news = newlist.select('li a')
 
 
     def main(self):
         Ths = TongHua()
         Ths.getNew()
         Ths.getInvestment()
-        #Ths.getInvestment2()
+        Ths.getInvestment2()
