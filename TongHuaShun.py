@@ -78,8 +78,31 @@ class TongHua():
     def getInvestment2(self):
         #投资机会后半部分获取
         datalist = self.soup.find_all(class_="last")
+
+        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
+        table = xlsxin.sheets()[1]
+        t_row = table.nrows  # 已经使用多少行
+        t_col = 0
+        sheet = copy(xlsxin)
+        wb = sheet.get_sheet(1)
+
+        i = 0
         for newlist in datalist:
             news = newlist.select('li a')
+            for m_new in news:
+                if i >= 5:
+                    if i < 11:
+                        m_title = m_new.get_text()
+                        m_url = m_new['href']
+                        wb.write(t_row, t_col, m_title)
+                        wb.write(t_row, t_col + 1, m_url)
+                        t_row = t_row + 1
+                i = i + 1
+        try:
+            sheet.save(self.xlsxname)
+        except Exception:
+            print("THS Save Error = 3")
+
 
 
     def main(self):
