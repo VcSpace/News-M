@@ -11,14 +11,15 @@ headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
 }
 
-class TongHua():
-    def __init__(self):
+class TongHua(object):
+    def __init__(self, file_name):
         self.url = 'http://www.10jqka.com.cn/'
         self.data = requests.get(self.url, headers=headers)
         self.data.encoding = "gbk"
         self.soup = BeautifulSoup(self.data.text, "lxml")
 
-        self.xlsxname = "C:\\Users\\Vcvc\\Desktop\\News_Finance.xlsx"
+        #self.xlsxname = "C:\\Users\\Vcvc\\Desktop\\News_Finance.xlsx"
+        self.xlsxname = file_name
 
     def getNew(self):
         datalist = self.soup.find_all(class_="item_txt")
@@ -90,6 +91,7 @@ class TongHua():
         for newlist in datalist:
             news = newlist.select('li a')
             for m_new in news:
+                #这个分类筛选的结果重复的太多  但是数量是固定的
                 if i >= 5:
                     if i < 11:
                         m_title = m_new.get_text()
@@ -104,9 +106,8 @@ class TongHua():
             print("THS Save Error = 3")
 
 
-
-    def main(self):
-        Ths = TongHua()
+    def main(self, file_name):
+        Ths = TongHua(file_name)
         Ths.getNew()
         Ths.getInvestment()
         Ths.getInvestment2()
