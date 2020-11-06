@@ -1,0 +1,8 @@
+requests
+BeautifulSoup4
+xlrd
+xlwt
+shutil
+platform
+lxml
+json
