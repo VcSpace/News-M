@@ -4,7 +4,7 @@ import os, shutil
 import time
 import platform
 
-def platform():
+def get_platform():
     sys = platform.system()
     if sys == "Windows":
         return True
@@ -62,7 +62,8 @@ if __name__ == '__main__':
     win_file = desktop_path + "\\News_Finance.xlsx"
     linux_file = "./News_Finance.xlsx"
 
-    get_News(platform, win_file, linux_file)
-    file_move(platform)
+    m_platform = get_platform() #判断系统 win/linux 设置配置
+    get_News(m_platform, win_file, linux_file)
+    file_move(m_platform)
 
     print("操作完成")
