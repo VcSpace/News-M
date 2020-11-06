@@ -12,11 +12,12 @@ headers = {
 }
 
 class WangYi(object):
-    def __init__(self):
+    def __init__(self, file_name):
         #new
         self.url = 'https://money.163.com/'
         self.data = requests.get(self.url, headers=headers)
-        self.xlsxname = "C:\\Users\\Vcvc\\Desktop\\News_Finance.xlsx"
+        #self.xlsxname = "C:\\Users\\Vcvc\\Desktop\\News_Finance.xlsx"
+        self.xlsxname = file_name
         self.soup = BeautifulSoup(self.data.text, "lxml")
 
         #stock
@@ -181,10 +182,8 @@ class WangYi(object):
         self.get_num(n3, 3)
 
 
-
-#if __name__ == '__main__':
-    def main(self):
-        Wy = WangYi()
+    def main(self, file_name):
+        Wy = WangYi(file_name)
         Wy.getTopNew()
         Wy.getlist2()
         #stock
