@@ -4,6 +4,15 @@ import os, shutil
 import time
 import platform
 
+"""
+def pip_install(platform):
+    file_name = "library.txt"
+    if platform:
+        import os
+        os.system("pip install" + )
+        import requests
+"""
+
 def get_platform():
     sys = platform.system()
     if sys == "Windows":
@@ -64,6 +73,7 @@ if __name__ == '__main__':
     linux_file = "./News_Finance.xlsx"
 
     m_platform = get_platform() #判断系统 win/linux 设置配置
+    #pip_install(m_platform) 以后添加
     get_News(m_platform, win_file, linux_file)
     file_move(m_platform)
 
