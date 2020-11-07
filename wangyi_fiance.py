@@ -29,6 +29,23 @@ class WangYi(object):
         self.indexurl = 'http://api.money.126.net/data/feed/1399001,1399300,0000001,HSRANK_COUNT_SHA,HSRANK_COUNT_SZA,HSRANK_COUNT_SH3?callback=ne_{}&[object%20Object]'.format(int(self.time))
         self.indexdata = requests.get(self.indexurl, headers=headers)
 
+    def Style(self):
+        font = xlwt.Font()  # 内容字体
+        font2 = xlwt.Font()  # 标题字体
+        font3 = xlwt.Font()  # 指数
+        font.height = 20 * 11
+        font2.height = 20 * 12
+        font2.bold = True
+        font3.height = 20 * 13
+        self.style = xlwt.XFStyle() #标题 链接字体
+        self.style_head = xlwt.XFStyle() #类别列字体
+        self.style_index = xlwt.XFStyle() #指数字体
+
+        self.style.font = font
+        self.style_head.font = font2
+        self.style_index.font = font3
+
+
     def getTopNew(self):
         datalist = self.soup.select("ul li h2")
         #datalist = soup.find_all(class_="topnews_nlist topnews_nlist1")
@@ -44,10 +61,10 @@ class WangYi(object):
         style2.alignment = alignment
         """
 
-        wsheet.write(4, 0, u'网易新闻标题', style)
-        wsheet.write(4, 1, u'新闻链接', style)
-        wsheet.write(4, 2, u'新闻时间', style)
-        wsheet.write(4, 3, u'内容简介', style)
+        wsheet.write(4, 0, u'网易新闻标题', self.style_head)
+        wsheet.write(4, 1, u'新闻链接', self.style_head)
+        wsheet.write(4, 2, u'内容简介', self.style_head)
+        wsheet.write(4, 3, u'新闻时间', self.style_head)
 
         t_row = 5
         t_col = 0
@@ -137,27 +154,27 @@ class WangYi(object):
         sheet = copy(xlsxin)
         wb = sheet.get_sheet(0)
 
-        wb.write(0, 0, u'大盘指数')
-        wb.write(0, 1, u'当前价位')
-        wb.write(0, 2, u'今日涨幅')
-        wb.write(0, 3, u'涨跌价格')
-        wb.write(0, 4, u'开盘价位')
-        wb.write(0, 5, u'今日最高')
-        wb.write(0, 6, u'今日最低')
-        wb.write(0, 7, u'昨日收盘')
-        wb.write(0, 8, u'更新时间')
-        wb.write(1, 0, u'上证指数')
-        wb.write(2, 0, u'深证成指')
-        wb.write(3, 0, u'沪深300')
+        wb.write(0, 0, u'大盘指数', self.style)
+        wb.write(0, 1, u'当前价位', self.style)
+        wb.write(0, 2, u'今日涨幅', self.style)
+        wb.write(0, 3, u'涨跌价格', self.style)
+        wb.write(0, 4, u'开盘价位', self.style)
+        wb.write(0, 5, u'今日最高', self.style)
+        wb.write(0, 6, u'今日最低', self.style)
+        wb.write(0, 7, u'昨日收盘', self.style)
+        wb.write(0, 8, u'更新时间', self.style)
+        wb.write(1, 0, u'上证指数', self.style)
+        wb.write(2, 0, u'深证成指', self.style)
+        wb.write(3, 0, u'沪深300', self.style)
 
-        wb.write(row, 1, num_price)
-        wb.write(row, 2, str(percent) + "%")
-        wb.write(row, 3, num_updown)
-        wb.write(row, 4, num_open)
-        wb.write(row, 5, num_high)
-        wb.write(row, 6, num_low)
-        wb.write(row, 7, num_yestclose)
-        wb.write(row, 8, num_update)
+        wb.write(row, 1, num_price, self.style_index)
+        wb.write(row, 2, str(percent) + "%", self.style_index)
+        wb.write(row, 3, num_updown, self.style_index)
+        wb.write(row, 4, num_open, self.style_index)
+        wb.write(row, 5, num_high, self.style_index)
+        wb.write(row, 6, num_low, self.style_index)
+        wb.write(row, 7, num_yestclose, self.style_index)
+        wb.write(row, 8, num_update, self.style_index)
 
         try:
             sheet.save(self.xlsxname)
@@ -184,6 +201,7 @@ class WangYi(object):
 
     def main(self, file_name):
         Wy = WangYi(file_name)
+        Wy.Style()
         Wy.getTopNew()
         Wy.getlist2()
         #stock
