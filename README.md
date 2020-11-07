@@ -15,7 +15,9 @@
 # 跨平台使用 
 
 **以下是两台真机下运行 软件正常使用** 
+
 **1. Win7 + python3.7 + pycharm**
+
 **2. Ubuntu20.04.1 + python3.8 + pycharm**
 
 ---
