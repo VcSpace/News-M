@@ -18,12 +18,13 @@ def file_move(platform):
         linux_filemove()
 
 def linux_filemove():
-    path = "./Finance/"
+    path = "./Finance"
     filename = "./News_Finance.xlsx"
-    if not path:
+    isExists = os.path.exists(path)
+    if not isExists:
         os.mkdir(path)
     filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
-    path2 = path + "闻讯__" + filetime + ".xlsx"
+    path2 = path + "/" +"闻讯__" + filetime + ".xlsx"
     shutil.move(filename, path2)
 
 
