@@ -1,3 +1,4 @@
+#以下所有第三方库都是当前最新版本 
 requests
 BeautifulSoup4
 xlrd
