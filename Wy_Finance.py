@@ -16,18 +16,11 @@ class WangYi(object):
         #new
         self.url = 'https://money.163.com/'
         self.data = requests.get(self.url, headers=headers)
-        #self.xlsxname = "C:\\Users\\Vcvc\\Desktop\\News_Finance.xlsx"
-        self.xlsxname = file_name
         self.soup = BeautifulSoup(self.data.text, "lxml")
+        #self.xlsxname = "C:\\Users\\Vcvc\\Desktop\\News_Finance.xlsx"
 
-        #stock
-        self.stockurl = 'https://money.163.com/stock/'
-        self.stockdata = requests.get(self.stockurl, headers=headers)
-
-        #index
+        self.xlsxname = file_name
         self.time = time.time()
-        self.indexurl = 'http://api.money.126.net/data/feed/1399001,1399300,0000001,HSRANK_COUNT_SHA,HSRANK_COUNT_SZA,HSRANK_COUNT_SH3?callback=ne_{}&[object%20Object]'.format(int(self.time))
-        self.indexdata = requests.get(self.indexurl, headers=headers)
 
     def Style(self):
         font = xlwt.Font()  # 内容字体
@@ -108,7 +101,10 @@ class WangYi(object):
             print("Wangyi Save Error = 2")
 
     def getstock(self):
-        soup = BeautifulSoup(self.stockdata.text, "lxml")
+        #stock
+        stockurl = 'https://money.163.com/stock/'
+        stockdata = requests.get(stockurl, headers=headers)
+        soup = BeautifulSoup(stockdata.text, "lxml")
         stockl = soup.select('#stock2016_wrap > div > div.stock2016_content > div.idx_main.common_wrap.clearfix > div.news_main > div.news_main_wrap > div.topnews > div.topnews_first > h2 > a')
         top_url = stockl[0]['href']
         top_title = stockl[0].get_text()
@@ -188,8 +184,11 @@ class WangYi(object):
 
 
     def getindex(self):
+        #index
+        indexurl = 'http://api.money.126.net/data/feed/1399001,1399300,0000001,HSRANK_COUNT_SHA,HSRANK_COUNT_SZA,HSRANK_COUNT_SH3?callback=ne_{}&[object%20Object]'.format(int(self.time))
+        indexdata = requests.get(indexurl, headers=headers)
         #soup = BeautifulSoup(self.indexdata.text,)
-        data = self.indexdata.text + "del"
+        data = indexdata.text + "del"
         time = int(self.time)
         data = data.replace('ne_' + str(time) + '(', '')
         data = data.replace(');del', '')
