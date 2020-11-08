@@ -61,13 +61,16 @@ class WangYi(object):
         style2.alignment = alignment
         """
 
-        wsheet.write(4, 0, u'网易新闻标题', self.style_head)
-        wsheet.write(4, 1, u'新闻链接', self.style_head)
-        wsheet.write(4, 2, u'内容简介', self.style_head)
-        wsheet.write(4, 3, u'新闻时间', self.style_head)
-
         t_row = 5
+        wsheet.write(t_row, 0, u"网易财经", self.style_head)
+        t_row = t_row + 1
         t_col = 0
+        wsheet.write(t_row, t_col, u'新闻标题', self.style_head)
+        wsheet.write(t_row, t_col + 1, u'新闻链接', self.style_head)
+        wsheet.write(t_row, t_col + 2, u'内容简介', self.style_head)
+        wsheet.write(t_row, t_col + 3, u'新闻时间', self.style_head)
+        t_row = t_row + 1
+
         for li in datalist:
             url = li.find('a')['href']
             title = li.get_text()
@@ -154,18 +157,20 @@ class WangYi(object):
         sheet = copy(xlsxin)
         wb = sheet.get_sheet(0)
 
-        wb.write(0, 0, u'大盘指数', self.style)
-        wb.write(0, 1, u'当前价位', self.style)
-        wb.write(0, 2, u'今日涨幅', self.style)
-        wb.write(0, 3, u'涨跌价格', self.style)
-        wb.write(0, 4, u'开盘价位', self.style)
-        wb.write(0, 5, u'今日最高', self.style)
-        wb.write(0, 6, u'今日最低', self.style)
-        wb.write(0, 7, u'昨日收盘', self.style)
-        wb.write(0, 8, u'更新时间', self.style)
-        wb.write(1, 0, u'上证指数', self.style)
-        wb.write(2, 0, u'深证成指', self.style)
-        wb.write(3, 0, u'沪深300', self.style)
+        t_row = 0
+        t_col = 0
+        wb.write(t_row, t_col, u'大盘指数', self.style_head)
+        wb.write(t_row, t_col + 1, u'当前价位', self.style_head)
+        wb.write(t_row, t_col + 2, u'今日涨幅', self.style_head)
+        wb.write(t_row, t_col + 3, u'涨跌价格', self.style_head)
+        wb.write(t_row, t_col + 4, u'开盘价位', self.style_head)
+        wb.write(t_row, t_col + 5, u'今日最高', self.style_head)
+        wb.write(t_row, t_col + 6, u'今日最低', self.style_head)
+        wb.write(t_row, t_col + 7, u'昨日收盘', self.style_head)
+        wb.write(t_row, t_col + 8, u'更新时间', self.style_head)
+        wb.write(t_row + 1, t_col, u'上证指数', self.style)
+        wb.write(t_col + 2, t_col, u'深证成指', self.style)
+        wb.write(t_row + 3, t_col, u'沪深300', self.style)
 
         wb.write(row, 1, num_price, self.style_index)
         wb.write(row, 2, str(percent) + "%", self.style_index)
