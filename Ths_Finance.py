@@ -10,7 +10,7 @@ headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
 }
 
-class TongHua(object):
+class TongHuaShun(object):
     def __init__(self, file_name):
         self.url = 'http://www.10jqka.com.cn/'
         self.data = requests.get(self.url, headers=headers)
