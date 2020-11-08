@@ -17,10 +17,6 @@ class TongHuaShun(object):
         self.data.encoding = "gbk"
         self.soup = BeautifulSoup(self.data.text, "lxml")
 
-        self.url_Newspaper = 'http://stock.10jqka.com.cn/bktt_list/'
-        self.data_paper = requests.get(self.url_Newspaper, headers=headers)
-        self.soup_paper = BeautifulSoup(self.data_paper.text, "lxml")
-
         #calendar
         calendar_time = time.strftime("%Y%m", time.localtime())  # year-month-day-hour-minute
         #self.url_calendar = 'http://stock.10jqka.com.cn/fincalendar.shtml#{}'.format(datatime)
@@ -127,8 +123,12 @@ class TongHuaShun(object):
             print("THS Save Error = 3")
 
     def get_Newspaper(self):
-        datalist = self.soup_paper.select('body > div.content-1200 > div.module-l.fl > div.list-con > ul > li:nth-child(1) > span > a')
-        datalist2 = self.soup_paper.select('body > div.content-1200 > div.module-l.fl > div.list-con > ul > li:nth-child(1) > a')
+        url_Newspaper = 'http://stock.10jqka.com.cn/bktt_list/'
+        data_paper = requests.get(url_Newspaper, headers=headers)
+        soup_paper = BeautifulSoup(data_paper.text, "lxml")
+
+        datalist = soup_paper.select('body > div.content-1200 > div.module-l.fl > div.list-con > ul > li:nth-child(1) > span > a')
+        datalist2 = soup_paper.select('body > div.content-1200 > div.module-l.fl > div.list-con > ul > li:nth-child(1) > a')
         m_url = datalist[0]['href']
         m_title = datalist[0]['title']
         m_content = datalist2[0].get_text() + "del"
