@@ -1,17 +1,10 @@
-from wangyi_fiance import WangYi
-from TongHuaShun import TongHua
+from Wy_Finance import WangYi
+from Ths_Finance import TongHuaShun
+from Jrj_Finance import JinRongJie
 import os, shutil
 import time
 import platform
 
-"""
-def pip_install(platform):
-    file_name = "library.txt"
-    if platform:
-        import os
-        os.system("pip install" + )
-        import requests
-"""
 
 def get_platform():
     sys = platform.system()
@@ -55,16 +48,22 @@ def Wy(filename):
     Wy.main(filename)
 
 def THS(filename):
-    Th = TongHua(filename)
-    Th.main(filename)
+    Ths = TongHuaShun(filename)
+    Ths.main(filename)
+
+def JRJ(filename):
+    Jrj = JinRongJie(filename)
+    Jrj.main(filename)
 
 def get_News(platform, win_file, lin_file):
     if platform:
         Wy(win_file)
         THS(win_file)
+        JRJ(win_file)
     else:
         Wy(lin_file)
         THS(lin_file)
+        JRJ(lin_file)
 
 
 if __name__ == '__main__':
