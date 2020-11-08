@@ -49,7 +49,8 @@ class TongHuaShun(object):
         sheet.add_sheet('ths')
         wb = sheet.get_sheet(1)
 
-        wb.write(1, 0, "同花顺新闻标题", self.style_head)
+        wb.write(0, 0, "同花顺财经", self.style_head)
+        wb.write(1, 0, "新闻标题", self.style_head)
         wb.write(1, 1, "新闻链接", self.style_head)
         wb.write(1, 2, "内容简介", self.style_head)
         wb.write(1, 3, "新闻时间", self.style_head)
@@ -192,7 +193,7 @@ class TongHuaShun(object):
 
 
     def main(self, file_name):
-        Ths = TongHua(file_name)
+        Ths = TongHuaShun(file_name)
         Ths.Style()
         Ths.getNew()
         Ths.getInvestment()
