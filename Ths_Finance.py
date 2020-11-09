@@ -48,7 +48,7 @@ class TongHuaShun(object):
         wb.write(0, 0, "同花顺财经", self.style_head)
         wb.write(1, 0, "新闻标题", self.style_head)
         wb.write(1, 1, "新闻链接", self.style_head)
-        wb.write(1, 2, "内容简介", self.style_head)
+        wb.write(1, 2, "新闻简介", self.style_head)
         wb.write(1, 3, "新闻时间", self.style_head)
 
         t_row = 2
