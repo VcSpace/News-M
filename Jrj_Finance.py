@@ -55,8 +55,8 @@ class JinRongJie(object):
                 data = m_new.find('a')
                 m_url = data['href']
                 m_title = data.get_text()
-                wb.write(t_row, t_col, m_title)
-                wb.write(t_row, t_col + 1, m_url)
+                wb.write(t_row, t_col, m_title, self.style)
+                wb.write(t_row, t_col + 1, m_url, self.style)
                 t_row = t_row + 1
         try:
             sheet.save(self.xlsxname)
