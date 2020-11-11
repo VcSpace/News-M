@@ -1,6 +1,8 @@
 from Wy_Finance import WangYi
 from Ths_Finance import TongHuaShun
 from Jrj_Finance import JinRongJie
+from Xq_Community import XueQiu
+from Self_Stock import SelfStock
 import os, shutil
 import time
 import platform
@@ -55,15 +57,27 @@ def JRJ(filename):
     Jrj = JinRongJie(filename)
     Jrj.main(filename)
 
+def Xq(filename):
+    Xq = XueQiu(filename)
+    Xq.main(filename)
+
+def Stock(filename):
+    Stock = SelfStock(filename)
+    Stock.main(filename)
+
 def get_News(platform, win_file, lin_file):
     if platform:
         Wy(win_file)
         THS(win_file)
         JRJ(win_file)
+        Xq(win_file)
+        Stock(win_file)
     else:
         Wy(lin_file)
         THS(lin_file)
         JRJ(lin_file)
+        Xq(lin_file)
+        Stock(lin_file)
 
 
 if __name__ == '__main__':
