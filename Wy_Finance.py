@@ -6,6 +6,7 @@ import xlwt
 from xlutils.copy import copy
 import json
 import time
+import threading
 
 headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
@@ -81,7 +82,6 @@ class WangYi(object):
         xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
         sheet = copy(xlsxin)
         wb = sheet.get_sheet(0)
-
         table = xlsxin.sheets()[0]
         ow = table.nrows
 
@@ -135,7 +135,9 @@ class WangYi(object):
         except:
             print("Wangyi Save Error = 4")
 
+    threadLock = threading.Lock()
     def get_num(self, num, row, if_write):
+        self.threadLock.acquire()
         num_price = num['price']
         num_open = num['open']
         num_updown = num['updown']
@@ -179,7 +181,9 @@ class WangYi(object):
         wb.write(row, 8, num_update, self.style_index)
         try:
             sheet.save(self.xlsxname)
+            self.threadLock.release()
         except:
+            self.threadLock.release()
             print("Wangyi Save Error = 5")
 
 
@@ -196,13 +200,18 @@ class WangYi(object):
         json_str = json.loads(data)  # 解码
 
         if_write = True
-        n1 = json_str['0000001'] #上证指数_0000001
-        n2 = json_str['1399001'] #深证成指_1399001
-        n3 = json_str['1399300'] #沪深300_1399300
-        self.get_num(n1, 1, if_write)
+        n_data1 = json_str['0000001'] #上证指数_0000001
+        n_data2 = json_str['1399001'] #深证成指_1399001
+        n_data3 = json_str['1399300'] #沪深300_1399300
+        t1 = threading.Thread(target=self.get_num, args=(n_data1, 1, if_write))
+        t1.start()
         if_write = False
-        self.get_num(n2, 2, if_write)
-        self.get_num(n3, 3, if_write)
+        t2 = threading.Thread(target=self.get_num, args=(n_data2, 2, if_write))
+        t3 = threading.Thread(target=self.get_num, args=(n_data3, 3, if_write))
+        t2.start()
+        t3.start()
+        #self.get_num(n2, 2, if_write)
+        #self.get_num(n3, 3, if_write)
 
     def get_bu(self, soup, if_write):
         xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
