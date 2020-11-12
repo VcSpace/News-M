@@ -63,7 +63,7 @@ class JinRongJie(object):
         except Exception:
             print("JRJ Save Error = 1")
 
-    def get_FinanceNewslist(self): #差不多4-5个小时内的热点新闻
+    def get_FinanceNews(self): #差不多4-5个小时内的热点新闻
         fin_time1 = time.strftime("%Y%m", time.localtime())  # year-month-day-hour-minute
         fin_time2 = time.strftime("%Y%m%d", time.localtime())  # year-month-day-hour-minute
         fin_url = 'http://finance.jrj.com.cn/xwk/{}/{}_1.shtml'.format(fin_time1, fin_time2)
@@ -109,6 +109,45 @@ class JinRongJie(object):
             sheet.save(self.xlsxname)
         except Exception:
             print("JRJ Save Error = 2")
+
+    def get_todayHot(self):
+        url = 'http://biz.jrj.com.cn/biz_index.shtml'
+        data = requests.get(url, headers=headers)
+        soup = BeautifulSoup(data.text, "lxml")
+        datalist = soup.find_all(class_="jrj-top10")
+
+        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
+        table = xlsxin.sheets()[2]
+        t_row = table.nrows + 1  # 已经使用多少行
+        t_col = 0
+        sheet = copy(xlsxin)
+        wb = sheet.get_sheet(2)
+
+        wb.write(t_row, t_col, "24小时间热闻点击排行榜", self.style_head)
+        t_row = t_row + 1
+        wb.write(t_row, t_col, "新闻标题", self.style_head)
+        wb.write(t_row, t_col + 0, "新闻标题", self.style_head)
+        wb.write(t_row, t_col + 1, "新闻链接", self.style_head)
+        wb.write(t_row, t_col + 2, "新闻简介", self.style_head)
+        wb.write(t_row, t_col + 3, "新闻时间", self.style_head)
+        t_row = t_row + 1
+
+        flag = True
+        for Newslist in datalist:
+            if flag == True:
+                News = Newslist.find_all('a')
+                for m_new in News:
+                    m_title = m_new['title']
+                    m_url = m_new['href']
+                    wb.write(t_row, t_col, m_title, self.style)
+                    wb.write(t_row, t_col + 1, m_url, self.style)
+                    t_row = t_row + 1
+            flag = False
+        try:
+            sheet.save(self.xlsxname)
+        except Exception:
+            print("JRJ Save Error = 5")
+
 
     def get_Business(self):
         bu_time1 = time.strftime("%Y%m", time.localtime())  # year-month-day-hour-minute
@@ -208,7 +247,8 @@ class JinRongJie(object):
         Jrj = JinRongJie(filename)
         Jrj.Style()
         Jrj.get_TopNews()
-        Jrj.get_FinanceNewslist()
+        Jrj.get_todayHot()
+        Jrj.get_FinanceNews()
         Jrj.get_Business()
         Jrj.get_Science()
 
