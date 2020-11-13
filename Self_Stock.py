@@ -33,20 +33,22 @@ class SelfStock(object):
         self.style_head.font = font2
         self.style_index.font = font3
 
-    num = 3
     def Deal_Xq_data(self, data, url, name):
         self.threadLock.acquire()
 
         xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
+        table = xlsxin.sheets()[0]
+        t_row = table.nrows  # 已经使用多少行
+        t_col = 0
         sheet = copy(xlsxin)
-        sheet.add_sheet(name)
-        wb = sheet.get_sheet(self.num)
-        self.num = self.num + 1
+        wb = sheet.get_sheet_by_name(name)
+        wb.write()
 
         data_json = data['data']
         data_items = data_json['items']
         data_mk = data_items[0]['market']
         data_quote = data_items[0]['quote']
+        print(data_quote)
 
         m_status = data_mk['status']
         stock_code = data_quote['symbol']
@@ -75,15 +77,15 @@ class SelfStock(object):
         m_pe_forecast = data_quote['pe_forecast'] #动态市盈率
         m_pe_lyr = data_quote['pe_lyr'] #静态市盈率
         m_pb = data_quote['pb'] #市净率
-        m_profit = data_quote['profit']
-        m_profit_four = data_quote['profit_four']
+        m_profit = data_quote['profit'] #年报利润
+        m_profit_four = data_quote['profit_four'] #也是利润 不清楚
         m_profit_forecast = data_quote['profit_forecast']
 
         try:
             sheet.save(self.xlsxname)
             self.threadLock.release()
         except Exception:
-            print("Self_Stock Save Error = 1")
+            print("Self_Stock Save Error = 2")
             self.threadLock.release()
 
 
@@ -111,11 +113,15 @@ class SelfStock(object):
                 name_list2.pop(0)
                 resp = session.get(url, headers=headers)
                 data = json.loads(resp.text)
-                t1 = threading.Thread(target=self.Deal_q_data, args=(data, url, name))
+                t1 = threading.Thread(target=self.Deal_Xq_data, args=(data, url, name))
                 t1.start()
                 t1.join()
                 break
-
+        try:
+            print(1)
+#            sheet.save(self.xlsxname)
+        except Exception:
+            print("Self_Stock Error = 1")
 
     def main(self, file_name):
         Stock = SelfStock(file_name)
