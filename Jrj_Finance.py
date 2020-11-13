@@ -4,6 +4,7 @@ import xlrd, xlwt
 from xlutils.copy import copy
 import json
 import time
+import datetime
 
 headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
@@ -196,9 +197,27 @@ class JinRongJie(object):
         except Exception:
             print("JRJ Save Error = 3")
 
+    """
     def get_Science(self):
+        url = 'http://finance.jrj.com.cn/tech/tech_index.shtml'
+        sci_time = time.strftime("%Y-%m-%d", time.localtime())  # year-month-day-hour-minute
+    """
+
+    def get_yesScience(self):
         sci_time1 = time.strftime("%Y%m", time.localtime())  # year-month-day-hour-minute
         sci_time2 = time.strftime("%Y%m%d", time.localtime())  # year-month-day-hour-minute
+        """ 
+        yesterday = time.strftime("%d", time.localtime())  # year-month-day-hour-minute
+        yesterday = 1
+        if yesterday == 1:
+            # 获取当前日期
+            now_time = datetime.datetime.now()
+            # 获取本月的第一天
+            end_day_in_mouth = now_time.replace(day=1)
+            # 获取上月的最后一天
+            next_mouth = end_day_in_mouth - datetime.timedelta(days=1)
+            print(next_mouth.month)
+        """
         sci_url = 'http://biz.jrj.com.cn/xwk/{}/{}_1.shtml'.format(sci_time1, sci_time2)
 
         xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
@@ -250,5 +269,6 @@ class JinRongJie(object):
         Jrj.get_todayHot()
         Jrj.get_FinanceNews()
         Jrj.get_Business()
-        Jrj.get_Science()
+#        Jrj.get_Science()
+        Jrj.get_yesScience()
 
