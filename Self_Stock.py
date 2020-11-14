@@ -33,16 +33,17 @@ class SelfStock(object):
         self.style_head.font = font2
         self.style_index.font = font3
 
+    num = 3
     def Deal_Xq_data(self, data, url, name):
         self.threadLock.acquire()
 
         xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        table = xlsxin.sheets()[0]
-        t_row = table.nrows  # 已经使用多少行
-        t_col = 0
         sheet = copy(xlsxin)
-        wb = sheet.get_sheet_by_name(name)
-        wb.write()
+        sheet.add_sheet(name)
+        wb = sheet.get_sheet(self.num)
+        table = xlsxin.sheets()[self.num]
+        t_row = table.nrows
+        t_col = 0
 
         data_json = data['data']
         data_items = data_json['items']
