@@ -1,10 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
-import xlrd
-import xlwt
-from xlutils.copy import copy
+from openpyxl import load_workbook
+from openpyxl.styles import Font
 import json
 import time
+import threading
 
 headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
@@ -12,6 +12,9 @@ headers = {
 
 class TongHuaShun(object):
     def __init__(self, file_name):
+        self.xlsxname = file_name
+
+    def request(self):
         self.url = 'http://www.10jqka.com.cn/'
         self.data = requests.get(self.url, headers=headers)
         self.data.encoding = "gbk"
@@ -23,59 +26,51 @@ class TongHuaShun(object):
         self.url_calendar = 'http://comment.10jqka.com.cn/tzrl/getTzrlData.php?callback=callback_dt&type=data&date={}'.format(calendar_time)
         self.data_calendar = requests.get(self.url_calendar, headers=headers)
 
-        #self.xlsxname = "C:\\Users\\Vcvc\\Desktop\\News_Finance.xlsx"
-        self.xlsxname = file_name
-
     def Style(self):
-        font = xlwt.Font() #内容字体
-        font2 = xlwt.Font() #标题字体
-        font.height = 20 * 11
-        font2.height = 20 * 12
-        font2.bold = True
-        self.style = xlwt.XFStyle()
-        self.style.font = font
-        self.style_head = xlwt.XFStyle()
-        self.style_head.font = font2
+        self.m_font = Font(
+            size=12,
+            bold=True,
+        )
 
+        self.head_font = Font(
+            size=14,
+            bold=True,
+        )
 
     def getNew(self):
+        wb = load_workbook(self.xlsxname)
+        sheet = wb.create_sheet('Ths')
         datalist = self.soup.find_all(class_="item_txt")
-        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        sheet = copy(xlsxin)
-        sheet.add_sheet('ths')
-        wb = sheet.get_sheet(1)
+        t_row = 1
+        t_col = 1
 
-        wb.write(0, 0, "同花顺财经", self.style_head)
-        wb.write(1, 0, "新闻标题", self.style_head)
-        wb.write(1, 1, "新闻链接", self.style_head)
-        wb.write(1, 2, "新闻简介", self.style_head)
-        wb.write(1, 3, "新闻时间", self.style_head)
+        sheet.cell(row=t_row + 0, column=t_col + 0, value="同花顺财经")
+        sheet.cell(row=t_row + 1, column=t_col + 0, value="新闻标题")
+        sheet.cell(row=t_row + 1, column=t_col + 1, value="新闻链接")
+        sheet.cell(row=t_row + 1, column=t_col + 2, value="新闻简介")
+        sheet.cell(row=t_row + 1, column=t_col + 3, value="新闻时间")
+        t_row = t_row + 2
 
-        t_row = 2
-        t_col = 0
         for news in datalist:
             newlist2 = news.select('p a')
             for m_new in newlist2:
                 m_url = m_new['href']
                 m_title = m_new['title']
-                wb.write(t_row, t_col, m_title, self.style)
-                wb.write(t_row, t_col + 1, m_url, self.style)
+                sheet.cell(row=t_row, column=t_col, value=m_title)
+                sheet.cell(row=t_row, column=t_col + 1, value=m_url)
                 t_row = t_row + 1
         try:
-            sheet.save(self.xlsxname)
+            wb.save(self.xlsxname)
         except Exception:
             print("THS Save Error = 1")
 
     def getInvestment(self):
+        wb = load_workbook(self.xlsxname)
+        sheet = wb.get_sheet_by_name('Ths')
+        t_row = sheet.max_row
+
         datalist = self.soup.find_all(class_="content newhe") #投资机会上半部分 产经新闻 研报精选
-
-        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        table = xlsxin.sheets()[1]
-        t_row = table.nrows  # 已经使用多少行
-        t_col = 0
-        sheet = copy(xlsxin)
-        wb = sheet.get_sheet(1)
-
+        t_col = 1
         index = 0
         for newlist in datalist:
             #里面有个重复 加个判断去掉
@@ -84,25 +79,22 @@ class TongHuaShun(object):
                 if index != 1:
                     m_url = m_new['href']
                     m_title = m_new['title']
-                    wb.write(t_row, t_col, m_title, self.style)
-                    wb.write(t_row, t_col + 1, m_url, self.style)
+                    sheet.cell(row=t_row, column=t_col, value=m_title)
+                    sheet.cell(row=t_row, column=t_col + 1, value=m_url)
                     t_row = t_row + 1
                 index = index + 1
         try:
-            sheet.save(self.xlsxname)
+            wb.save(self.xlsxname)
         except Exception:
             print("THS Save Error = 2")
 
     def getInvestment2(self):
+        wb = load_workbook(self.xlsxname)
+        sheet = wb.get_sheet_by_name('Ths')
+        t_row = sheet.max_row
+        t_col = 1
         #投资机会后半部分获取
         datalist = self.soup.find_all(class_="last")
-
-        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        table = xlsxin.sheets()[1]
-        t_row = table.nrows  # 已经使用多少行
-        t_col = 0
-        sheet = copy(xlsxin)
-        wb = sheet.get_sheet(1)
 
         i = 0
         for newlist in datalist:
@@ -113,12 +105,12 @@ class TongHuaShun(object):
                     if i < 11:
                         m_title = m_new.get_text()
                         m_url = m_new['href']
-                        wb.write(t_row, t_col, m_title, self.style)
-                        wb.write(t_row, t_col + 1, m_url, self.style)
+                        sheet.cell(row=t_row, column=t_col, value=m_title)
+                        sheet.cell(row=t_row, column=t_col + 1, value=m_url)
                         t_row = t_row + 1
                 i = i + 1
         try:
-            sheet.save(self.xlsxname)
+            wb.save(self.xlsxname)
         except Exception:
             print("THS Save Error = 3")
 
@@ -134,49 +126,47 @@ class TongHuaShun(object):
         m_content = datalist2[0].get_text() + "del"
         m_content = m_content.replace("...del", "")
 
-        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        table = xlsxin.sheets()[1]
-        t_row = table.nrows  # 已经使用多少行
-        t_col = 0
-        sheet = copy(xlsxin)
-        wb = sheet.get_sheet(1)
-        wb.write(t_row + 1, t_col, "报刊头条", self.style_head) #下一个函数省一次xlwt操作 (投资日历)
+        wb = load_workbook(self.xlsxname)
+        sheet = wb.get_sheet_by_name('Ths')
+        t_row = sheet.max_row + 1
+        t_col = 1
+
+        sheet.cell(row=t_row + 1, column=t_col, value="报刊头条") #下一个函数省一次xlwt操作 (投资日历)
         t_row = t_row + 2
-        wb.write(t_row, t_col, m_title, self.style)
-        wb.write(t_row, t_col + 1, m_url, self.style)
-        wb.write(t_row, t_col + 2, m_content, self.style)
+        sheet.cell(row=t_row, column=t_col, value=m_title)
+        sheet.cell(row=t_row, column=t_col + 1, value=m_url)
+        sheet.cell(row=t_row, column=t_col + 2, value=m_content)
 
         # 为下一个函数省一次xlwt操作 (投资日历)
-        wb.write(t_row + 2, t_col, "投资日历", self.style_head)
-        wb.write(t_row + 3 , t_col, "会议事件", self.style_head)
-        wb.write(t_row + 3, t_col + 1, "会议地点", self.style_head)
-        wb.write(t_row + 3, t_col + 2, "会议时间", self.style_head)
-
+        sheet.cell(row=t_row + 2, column=t_col, value="投资日历")
+        sheet.cell(row=t_row + 3 ,column=t_col, value="会议事件")
+        sheet.cell(row=t_row + 3, column=t_col + 1, value="会议地点")
+        sheet.cell(row=t_row + 3, column=t_col + 2, value="会议时间")
         try:
-            sheet.save(self.xlsxname)
+            wb.save(self.xlsxname)
         except Exception:
             print("THS Save Error = 4")
 
+    threadLock = threading.Lock()
     def dealjson(self, json): #时间 事件 地点 json问题相关板块顺序是乱序 就不加了
-        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        table = xlsxin.sheets()[1]
-        t_row = table.nrows # 已经使用多少行
-        t_col = 0
-        sheet = copy(xlsxin)
-        wb = sheet.get_sheet(1)
+        self.threadLock.acquire()
+        wb = load_workbook(self.xlsxname)
+        sheet = wb.get_sheet_by_name('Ths')
+        t_row = sheet.max_row + 1
+        t_col = 1
 
         for json_event in json['events']:
             m_event = json_event[0]
             m_place = json_event[2]
-            wb.write(t_row, t_col, m_event, self.style)
-            wb.write(t_row, t_col + 1, m_place, self.style)
+            sheet.cell(row=t_row, column=t_col, value=m_event)
+            sheet.cell(row=t_row, column=t_col + 1, value=m_place)
             m_date = json['date']
             m_week = json['week']
-            wb.write(t_row, t_col + 2, m_date + "-" + m_week, self.style)
+            sheet.cell(row=t_row, column=t_col + 2, value=m_date + "-" + m_week)
             t_row = t_row + 1
-
         try:
-            sheet.save(self.xlsxname)
+            self.threadLock.release()
+            wb.save(self.xlsxname)
         except Exception:
             print("THS Save Error = 5")
 
@@ -189,11 +179,14 @@ class TongHuaShun(object):
         #m_json = json_str['data'][0]
         t = 0
         for m_json in json_str['data']:
-            self.dealjson(m_json)
+            t1 = threading.Thread(target=self.dealjson, args=(m_json))
+            t1.start()
+            t1.join()
 
 
     def main(self, file_name):
         Ths = TongHuaShun(file_name)
+        Ths.request()
         Ths.Style()
         Ths.getNew()
         Ths.getInvestment()
