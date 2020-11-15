@@ -1,12 +1,21 @@
 import requests
 from bs4 import BeautifulSoup
 import os
-import xlrd
-import xlwt
-from xlutils.copy import copy
+from openpyxl import load_workbook, Workbook
+from openpyxl.styles import Font
 import json
 import time
 import threading
+
+"""
+https://www.pynote.net/archives/2229
+font(字体类)：字号、字体颜色、下划线等
+fill(填充类)：颜色等
+border(边框类)：设置单元格边框
+alignment(位置类)：对齐方式
+number_format(格式类)：数据格式
+protection(保护类)：写保护
+"""
 
 headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
@@ -14,15 +23,28 @@ headers = {
 
 class WangYi(object):
     def __init__(self, file_name):
+        self.xlsxname = file_name
+
+    def request(self):
         #new
         self.url = 'https://money.163.com/'
         self.data = requests.get(self.url, headers=headers)
         self.soup = BeautifulSoup(self.data.text, "lxml")
-        #self.xlsxname = "C:\\Users\\Vcvc\\Desktop\\News_Finance.xlsx"
 
-        self.xlsxname = file_name
         self.time = time.time()
 
+    def Style(self):
+        self.m_font = Font(
+        size = 12,
+        bold = True,
+        )
+
+        self.head_font = Font(
+        size = 14,
+        bold = True,
+        )
+
+    """
     def Style(self):
         font = xlwt.Font()  # 内容字体
         font2 = xlwt.Font()  # 标题字体
@@ -38,15 +60,14 @@ class WangYi(object):
         self.style.font = font
         self.style_head.font = font2
         self.style_index.font = font3
-
+    """
 
     def getTopNew(self):
         datalist = self.soup.select("ul li h2")
-        #datalist = soup.find_all(class_="topnews_nlist topnews_nlist1")
-
-        wbook = xlwt.Workbook()
-        wsheet = wbook.add_sheet('wy', cell_overwrite_ok=True)
-        style = xlwt.easyxf('align: vertical center, horizontal center')
+        wb = Workbook()
+        ws = wb['Sheet']
+        wb.remove(ws)
+        sheet = wb.create_sheet("Wy")
         """
         alignment = xlwt.Alignment
         alignment.horz = xlwt.Alignment.HORZ_CENTER
@@ -54,49 +75,44 @@ class WangYi(object):
         style2 = xlwt.XFStyle()
         style2.alignment = alignment
         """
-
-        t_row = 5
-        wsheet.write(t_row, 0, u"网易财经", self.style_head)
+        t_row = 6
+        t_col = 1
+        sheet.cell(row=t_row, column=t_col, value="网易财经")
         t_row = t_row + 1
-        t_col = 0
-        wsheet.write(t_row, t_col, u'新闻标题', self.style_head)
-        wsheet.write(t_row, t_col + 1, u'新闻链接', self.style_head)
-        wsheet.write(t_row, t_col + 2, u'新闻简介', self.style_head)
-        wsheet.write(t_row, t_col + 3, u'新闻时间', self.style_head)
+        sheet.cell(row=t_row, column=t_col, value="新闻标题")
+        sheet.cell(row=t_row, column=t_col + 1, value="新闻链接")
+        sheet.cell(row=t_row, column=t_col + 2, value="新闻简介")
+        sheet.cell(row=t_row, column=t_col + 3, value="新闻时间")
         t_row = t_row + 1
 
         for li in datalist:
             url = li.find('a')['href']
             title = li.get_text()
-            wsheet.write(t_row, t_col, title, self.style)
-            wsheet.write(t_row, t_col + 1, url, self.style)
+            sheet.cell(row=t_row, column=t_col, value=title)
+            sheet.cell(row=t_row, column=t_col + 1, value=url)
             t_row = t_row + 1
         try:
-            wbook.save(self.xlsxname)
-        except:
-            print('Wangyi Save Error = 1')
+            wb.save(self.xlsxname)
+        except Exception:
+            print("Wy Save Error = 1")
 
     def getlist2(self):
         datalist2 = self.soup.find_all(class_='topnews_nlist topnews_nlist2')
 
-        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        sheet = copy(xlsxin)
-        wb = sheet.get_sheet(0)
-        table = xlsxin.sheets()[0]
-        ow = table.nrows
-
-        t_row = ow
-        t_col = 0
+        wb = load_workbook(self.xlsxname)
+        sheet = wb.get_sheet_by_name('Wy')
+        t_row = sheet.max_row # 获得行数
+        t_col = 1
         for tp in datalist2:
             datalist3 = tp.select("li h3")
             for tn in datalist3:
                 url = tn.find('a')['href']
                 title = tn.get_text()
-                wb.write(t_row, t_col, title, self.style)
-                wb.write(t_row, t_col + 1, url, self.style)
+                sheet.cell(row=t_row, column=t_col, value=title)
+                sheet.cell(row=t_row, column=t_col + 1, value=url)
                 t_row = t_row + 1
         try:
-            sheet.save(self.xlsxname)
+            wb.save(self.xlsxname)
         except:
             print("Wangyi Save Error = 2")
 
@@ -109,17 +125,10 @@ class WangYi(object):
         top_url = stockl[0]['href']
         top_title = stockl[0].get_text()
 
-        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        table = xlsxin.sheets()[0]
-        ow = table.nrows #已经使用多少行
-        sheet = copy(xlsxin)
-        wb = sheet.get_sheet(0)
-
-        t_row = ow
-        t_col = 0
-        wb.write(t_row, t_col, top_title, self.style)
-        wb.write(t_row, t_col + 1, top_url, self.style)
-        t_row = t_row + 1
+        wb = load_workbook(self.xlsxname)
+        sheet = wb.get_sheet_by_name('Wy')
+        t_row = sheet.max_row  # 获得行数
+        t_col = 1
 
         stocknewlist = soup.find_all(class_='topnews_list')
         for s_new in stocknewlist:
@@ -127,17 +136,18 @@ class WangYi(object):
             for tn in news:
                 t_url = tn['href']
                 t_title = tn.get_text()
-                wb.write(t_row, t_col, t_title, self.style)
-                wb.write(t_row, t_col + 1, t_url, self.style)
+                sheet.cell(row=t_row, column=t_col, value=t_title)
+                sheet.cell(row=t_row, column=t_col + 1, value=t_url)
                 t_row = t_row + 1
         try:
-            sheet.save(self.xlsxname)
+            wb.save(self.xlsxname)
         except:
             print("Wangyi Save Error = 4")
 
     threadLock = threading.Lock()
     def get_num(self, num, row, if_write):
         self.threadLock.acquire()
+
         num_price = num['price']
         num_open = num['open']
         num_updown = num['updown']
@@ -149,38 +159,36 @@ class WangYi(object):
         m_percent = num_percent * 10000 #-0.020937 -%2.09
         percent = int(m_percent) /100
 
-        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        table = xlsxin.sheets()[0]
-        #ow = table.nrows  # 已经使用多少行
-        sheet = copy(xlsxin)
-        wb = sheet.get_sheet(0)
+        wb = load_workbook(self.xlsxname)
+        sheet = wb.get_sheet_by_name('Wy')
+        t_col = 1
 
         if if_write == True:
-            t_row = 0
-            t_col = 0
-            wb.write(t_row, t_col, u'大盘指数', self.style_head)
-            wb.write(t_row, t_col + 1, u'当前价位', self.style_head)
-            wb.write(t_row, t_col + 2, u'今日涨幅', self.style_head)
-            wb.write(t_row, t_col + 3, u'涨跌价格', self.style_head)
-            wb.write(t_row, t_col + 4, u'开盘价位', self.style_head)
-            wb.write(t_row, t_col + 5, u'今日最高', self.style_head)
-            wb.write(t_row, t_col + 6, u'今日最低', self.style_head)
-            wb.write(t_row, t_col + 7, u'昨日收盘', self.style_head)
-            wb.write(t_row, t_col + 8, u'更新时间', self.style_head)
-            wb.write(t_row + 1, t_col, u'上证指数', self.style)
-            wb.write(t_row + 2, t_col, u'深证成指', self.style)
-            wb.write(t_row + 3, t_col, u'沪深300', self.style)
+            t_row = 1
+            sheet.cell(row=t_row, column=t_col, value='大盘指数')
+            sheet.cell(row=t_row, column=t_col + 1, value='当前价位')
+            sheet.cell(row=t_row, column=t_col + 2, value='今日涨幅')
+            sheet.cell(row=t_row, column=t_col + 3, value='涨跌价格')
+            sheet.cell(row=t_row, column=t_col + 4, value='开盘价位')
+            sheet.cell(row=t_row, column=t_col + 5, value='今日最高')
+            sheet.cell(row=t_row, column=t_col + 6, value='今日最低')
+            sheet.cell(row=t_row, column=t_col + 7, value='昨日收盘')
+            sheet.cell(row=t_row, column=t_col + 8, value='更新时间')
+            sheet.cell(row=t_row + 2, column=t_col, value='深证成指')
+            sheet.cell(row=t_row + 1, column=t_col, value='上证指数')
+            sheet.cell(row=t_row + 3, column=t_col, value='沪深300')
+            t_row = t_row + 1
 
-        wb.write(row, 1, num_price, self.style_index)
-        wb.write(row, 2, str(percent) + "%", self.style_index)
-        wb.write(row, 3, num_updown, self.style_index)
-        wb.write(row, 4, num_open, self.style_index)
-        wb.write(row, 5, num_high, self.style_index)
-        wb.write(row, 6, num_low, self.style_index)
-        wb.write(row, 7, num_yestclose, self.style_index)
-        wb.write(row, 8, num_update, self.style_index)
+        sheet.cell(row=row, column=2, value=num_price)
+        sheet.cell(row=row, column=3, value=str(percent) + "%")
+        sheet.cell(row=row, column=4, value=num_updown)
+        sheet.cell(row=row, column=5, value=num_open)
+        sheet.cell(row=row, column=6, value=num_high)
+        sheet.cell(row=row, column=7, value=num_low)
+        sheet.cell(row=row, column=8, value=num_yestclose)
+        sheet.cell(row=row, column=9, value=num_update)
         try:
-            sheet.save(self.xlsxname)
+            wb.save(self.xlsxname)
             self.threadLock.release()
         except:
             self.threadLock.release()
@@ -203,29 +211,31 @@ class WangYi(object):
         n_data1 = json_str['0000001'] #上证指数_0000001
         n_data2 = json_str['1399001'] #深证成指_1399001
         n_data3 = json_str['1399300'] #沪深300_1399300
-        t1 = threading.Thread(target=self.get_num, args=(n_data1, 1, if_write))
+        t1 = threading.Thread(target=self.get_num, args=(n_data1, 2, if_write))
         t1.start()
         if_write = False
-        t2 = threading.Thread(target=self.get_num, args=(n_data2, 2, if_write))
-        t3 = threading.Thread(target=self.get_num, args=(n_data3, 3, if_write))
+        t1.join()
+        t2 = threading.Thread(target=self.get_num, args=(n_data2, 3, if_write))
+        t3 = threading.Thread(target=self.get_num, args=(n_data3, 4, if_write))
         t2.start()
         t3.start()
+        t2.join()
+        t3.join()
         #self.get_num(n2, 2, if_write)
         #self.get_num(n3, 3, if_write)
 
     def get_bu(self, soup, if_write):
-        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        table = xlsxin.sheets()[0]
-        t_row = table.nrows  # 已经使用多少行
-        t_col = 0
-        sheet = copy(xlsxin)
-        wb = sheet.get_sheet(0)
+        wb = load_workbook(self.xlsxname)
+        sheet = wb.get_sheet_by_name('Wy')
+        t_row = sheet.max_row + 1
+        t_col = 1
+
         if if_write == True:
-            wb.write(t_row + 1, t_col, "市场资讯", self.style_head)
-            wb.write(t_row + 2, t_col, "新闻标题", self.style_head)
-            wb.write(t_row + 2, t_col + 1, "新闻链接", self.style_head)
-            wb.write(t_row + 2, t_col + 2, "新闻简介", self.style_head)
-            wb.write(t_row + 2, t_col + 3, "新闻时间", self.style_head)
+            sheet.cell(row=t_row + 1, column=t_col, value="市场资讯")
+            sheet.cell(row=t_row + 2, column=t_col, value="新闻标题")
+            sheet.cell(row=t_row + 2, column=t_col + 1, value="新闻链接")
+            sheet.cell(row=t_row + 2, column=t_col + 2, value="新闻简介")
+            sheet.cell(row=t_row + 2, column=t_col + 3, value="新闻时间")
             t_row = t_row + 3  # 已经使用多少行
 
         datalist1 = soup.find_all(class_='list_item clearfix')
@@ -237,12 +247,12 @@ class WangYi(object):
                 m_title = m_new1.get_text()
                 m_url = m_new1['href']
                 m_time = m_new2.get_text()
-                wb.write(t_row, t_col, m_title, self.style)
-                wb.write(t_row, t_col + 1, m_url, self.style)
-                wb.write(t_row, t_col + 3, m_time, self.style)
+                sheet.cell(row=t_row, column=t_col, value=m_title)
+                sheet.cell(row=t_row, column=t_col + 1, value=m_url)
+                sheet.cell(row=t_row, column=t_col + 3, value=m_time)
                 t_row = t_row + 1
         try:
-            sheet.save(self.xlsxname)
+            wb.save(self.xlsxname)
         except:
             print("Wangyi Save Error = 6")
 
@@ -258,24 +268,26 @@ class WangYi(object):
         soup2 = BeautifulSoup(bu_data2.text, "lxml")
 
         if_write = True
-        self.get_bu(soup1, if_write)
+        t1 =threading.Thread(target=self.get_bu, args=(soup1, if_write))
+        t1.start()
         if_write = False
-        self.get_bu(soup2, if_write)
+        t1.join()
+        t2 =threading.Thread(target=self.get_bu, args=(soup1, if_write))
+        t2.start()
+        #self.get_bu(soup2, if_write)
 
 
     def get_Indu(self, soup, if_write):
-        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        table = xlsxin.sheets()[0]
-        t_row = table.nrows  # 已经使用多少行
-        t_col = 0
-        sheet = copy(xlsxin)
-        wb = sheet.get_sheet(0)
+        wb = load_workbook(self.xlsxname)
+        sheet = wb.get_sheet_by_name('Wy')
+        t_row = sheet.max_row + 1
+        t_col = 1
         if if_write == True:
-            wb.write(t_row + 1, t_col, "行业板块", self.style_head)
-            wb.write(t_row + 2, t_col, "新闻标题", self.style_head)
-            wb.write(t_row + 2, t_col + 1, "新闻链接", self.style_head)
-            wb.write(t_row + 2, t_col + 2, "新闻简介", self.style_head)
-            wb.write(t_row + 2, t_col + 3, "新闻时间", self.style_head)
+            sheet.cell(row=t_row + 1, column=t_col, value="行业板块")
+            sheet.cell(row=t_row + 2, column=t_col, value="新闻标题")
+            sheet.cell(row=t_row + 2, column=t_col + 1, value="新闻链接")
+            sheet.cell(row=t_row + 2, column=t_col + 2, value="新闻简介")
+            sheet.cell(row=t_row + 2, column=t_col + 3, value="新闻时间")
             t_row = t_row + 3
 
         datalist = soup.find_all(class_="col_l")
@@ -289,12 +301,12 @@ class WangYi(object):
                     m_title = m_new[0].get_text()
                     m_new2 = new.select('p span')
                     m_time = m_new2[0].get_text()
-                    wb.write(t_row, t_col, m_title, self.style)
-                    wb.write(t_row, t_col + 1, m_url, self.style)
-                    wb.write(t_row, t_col + 3, m_time, self.style)
+                    sheet.cell(row=t_row, column=t_col, value=m_title)
+                    sheet.cell(row=t_row, column=t_col + 1, value=m_url)
+                    sheet.cell(row=t_row, column=t_col + 3, value=m_time)
                     t_row = t_row + 1
         try:
-            sheet.save(self.xlsxname)
+            wb.save(self.xlsxname)
         except Exception:
             print("Wangyi Save Error = 7")
 
@@ -307,14 +319,19 @@ class WangYi(object):
         Industry_data2 = requests.get(url2, headers=headers)
         soup2 = BeautifulSoup(Industry_data2.text, "lxml")
         if_write = True
-        self.get_Indu(soup1, if_write)
+        t1 = threading.Thread(target=self.get_Indu, args=(soup1, if_write))
+        t1.start()
         if_write = False
-        self.get_Indu(soup2, if_write)
+        t1.join()
+        t2 = threading.Thread(target=self.get_Indu, args=(soup2, if_write))
+        t2.start()
+        #self.get_Indu(soup2, if_write)
 
 
     def main(self, file_name):
         Wy = WangYi(file_name)
         Wy.Style()
+        Wy.request()
         Wy.getTopNew()
         Wy.getlist2()
         #stock
