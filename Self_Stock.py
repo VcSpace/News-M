@@ -2,8 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import xlrd, xlwt
 from xlutils.copy import copy
+#import openpyxl
 import json
-from requests.cookies import RequestsCookieJar
+#from requests.cookies import RequestsCookieJar
 import threading
 
 headers = {
@@ -16,40 +17,13 @@ class SelfStock(object):
     def __init__(self, file_name):
         self.xlsxname = file_name
 
-
-    def Style(self):
-        font = xlwt.Font()  # 内容字体
-        font2 = xlwt.Font()  # 标题字体
-        font3 = xlwt.Font()  # 指数
-        font.height = 20 * 11
-        font2.height = 20 * 12
-        font2.bold = True
-        font3.height = 20 * 13
-        self.style = xlwt.XFStyle() #标题 链接字体
-        self.style_head = xlwt.XFStyle() #类别列字体
-        self.style_index = xlwt.XFStyle() #指数字体
-
-        self.style.font = font
-        self.style_head.font = font2
-        self.style_index.font = font3
-
-    num = 3
     def Deal_Xq_data(self, data, url, name):
         self.threadLock.acquire()
-
-        xlsxin = xlrd.open_workbook(self.xlsxname, formatting_info=True)
-        sheet = copy(xlsxin)
-        sheet.add_sheet(name)
-        wb = sheet.get_sheet(self.num)
-        table = xlsxin.sheets()[self.num]
-        t_row = table.nrows
-        t_col = 0
 
         data_json = data['data']
         data_items = data_json['items']
         data_mk = data_items[0]['market']
         data_quote = data_items[0]['quote']
-        print(data_quote)
 
         m_status = data_mk['status']
         stock_code = data_quote['symbol']
@@ -83,7 +57,6 @@ class SelfStock(object):
         m_profit_forecast = data_quote['profit_forecast']
 
         try:
-            sheet.save(self.xlsxname)
             self.threadLock.release()
         except Exception:
             print("Self_Stock Save Error = 2")
@@ -118,13 +91,8 @@ class SelfStock(object):
                 t1.start()
                 t1.join()
                 break
-        try:
-            print(1)
-#            sheet.save(self.xlsxname)
-        except Exception:
-            print("Self_Stock Error = 1")
+
 
     def main(self, file_name):
         Stock = SelfStock(file_name)
-        Stock.Style()
-        Stock.get_SelfStock()
+        #Stock.get_SelfStock()
