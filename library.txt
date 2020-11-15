@@ -1,9 +1,10 @@
 #以下所有第三方库都是当前最新版本 
 requests
 BeautifulSoup4
-xlrd
-xlwt
-shutil
+#xlrd
+#xlwt
+#xlutils 以上三个启用 改用openpyxl
+openpyxl
 platform
 lxml
 json
