@@ -211,12 +211,12 @@ class WangYi(object):
         n_data1 = json_str['0000001'] #上证指数_0000001
         n_data2 = json_str['1399001'] #深证成指_1399001
         n_data3 = json_str['1399300'] #沪深300_1399300
-        t1 = threading.Thread(target=self.get_num, args=(n_data1, 2, if_write))
+        t1 = threading.Thread(target=self.get_num, args=(n_data1, 2, if_write, ))
         t1.start()
         if_write = False
         t1.join()
-        t2 = threading.Thread(target=self.get_num, args=(n_data2, 3, if_write))
-        t3 = threading.Thread(target=self.get_num, args=(n_data3, 4, if_write))
+        t2 = threading.Thread(target=self.get_num, args=(n_data2, 3, if_write, ))
+        t3 = threading.Thread(target=self.get_num, args=(n_data3, 4, if_write, ))
         t2.start()
         t3.start()
         t2.join()
@@ -268,11 +268,11 @@ class WangYi(object):
         soup2 = BeautifulSoup(bu_data2.text, "lxml")
 
         if_write = True
-        t1 =threading.Thread(target=self.get_bu, args=(soup1, if_write))
+        t1 =threading.Thread(target=self.get_bu, args=(soup1, if_write, ))
         t1.start()
         if_write = False
         t1.join()
-        t2 =threading.Thread(target=self.get_bu, args=(soup1, if_write))
+        t2 =threading.Thread(target=self.get_bu, args=(soup1, if_write, ))
         t2.start()
         #self.get_bu(soup2, if_write)
 
@@ -319,11 +319,11 @@ class WangYi(object):
         Industry_data2 = requests.get(url2, headers=headers)
         soup2 = BeautifulSoup(Industry_data2.text, "lxml")
         if_write = True
-        t1 = threading.Thread(target=self.get_Indu, args=(soup1, if_write))
+        t1 = threading.Thread(target=self.get_Indu, args=(soup1, if_write, ))
         t1.start()
         if_write = False
         t1.join()
-        t2 = threading.Thread(target=self.get_Indu, args=(soup2, if_write))
+        t2 = threading.Thread(target=self.get_Indu, args=(soup2, if_write, ))
         t2.start()
         #self.get_Indu(soup2, if_write)
 
