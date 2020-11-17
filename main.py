@@ -70,18 +70,12 @@ def get_News(platform, win_file, lin_file):
         Wy(win_file)
         THS(win_file)
         JRJ(win_file)
-        """
-        Xq(win_file)
-        """
-        #Stock(win_file)
+        Stock(win_file)
     else:
         Wy(lin_file)
         THS(lin_file)
         JRJ(lin_file)
-        """
-        Xq(lin_file)
-        """
-        #Stock(lin_file)
+        Stock(lin_file)
 
 
 if __name__ == '__main__':
