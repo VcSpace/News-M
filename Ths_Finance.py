@@ -165,9 +165,10 @@ class TongHuaShun(object):
             sheet.cell(row=t_row, column=t_col + 2, value=m_date + "-" + m_week)
             t_row = t_row + 1
         try:
-            self.threadLock.release()
             wb.save(self.xlsxname)
+            self.threadLock.release()
         except Exception:
+            self.threadLock.release()
             print("THS Save Error = 5")
 
 
@@ -176,13 +177,13 @@ class TongHuaShun(object):
         data = data.replace("callback_dt(", "")
         data = data.replace(");del", "")
         json_str = json.loads(data)
-        #m_json = json_str['data'][0]
         t = 0
+        #pool = ThreadPoolExecutor(max_workers=2)
         for m_json in json_str['data']:
-            t1 = threading.Thread(target=self.dealjson, args=(m_json))
+            #future1 = pool.submit(self.dealjson, m_json)
+            t1 = threading.Thread(target=self.dealjson, args=(m_json, ))
             t1.start()
             t1.join()
-
 
     def main(self, file_name):
         Ths = TongHuaShun(file_name)
