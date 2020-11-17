@@ -87,7 +87,7 @@ class SelfStock(object):
                 name_list2.pop(0)
                 resp = session.get(url, headers=headers)
                 data = json.loads(resp.text)
-                t1 = threading.Thread(target=self.Deal_Xq_data, args=(data, url, name))
+                t1 = threading.Thread(target=self.Deal_Xq_data, args=(data, url, name, ))
                 t1.start()
                 t1.join()
                 break
