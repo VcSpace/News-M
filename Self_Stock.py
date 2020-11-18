@@ -6,6 +6,7 @@ import json
 #from requests.cookies import RequestsCookieJar
 import threading
 import time
+import re
 
 headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
@@ -27,7 +28,7 @@ class SelfStock(object):
             bold=True,
         )
 
-    def Deal_Xq_data(self, data, url, name):
+    def Deal_Xq_quote(self, data, url, name):
         self.threadLock.acquire()
         wb = load_workbook(self.xlsxname)
         sheet = wb.create_sheet(name)
@@ -38,7 +39,7 @@ class SelfStock(object):
         data_items = data_json['items']
         data_mk = data_items[0]['market']
         data_quote = data_items[0]['quote']
-        print(data_quote)
+        #print(data_quote)
 
         sheet.cell(row=t_row, column=t_col, value="股票代码")
         sheet.cell(row=t_row, column=t_col + 1, value="股票名称")
@@ -144,46 +145,63 @@ class SelfStock(object):
         sheet.cell(row=t_row, column=t_col + 10, value=m_float_shares)
         sheet.cell(row=t_row, column=t_col + 11, value=m_market_capital)
         sheet.cell(row=t_row, column=t_col + 12, value=m_float_market_capital)
-        t_row = t_row + 1
-
-
         try:
             wb.save(self.xlsxname)
             self.threadLock.release()
         except Exception:
-            print("Self_Stock Save Error = 2")
+            print("Self_Stock Save Error = Xq_qupte")
             self.threadLock.release()
+
+    #def get_Main_capital_history(self): #主力资金流向历史记录  记录是否跑路
+    def Deal_Xq(self, data):
+        for i in range(3):
+
 
 
     def get_SelfStock(self):
-        url_list = list()
-        name_list = list()
+        #url_list = list()
+        name_list = dict()
+        t = time.time()
+        m_time = int(t)
         with open("Code.txt", "r") as f:
             for line in f.readlines():
                 m_line = line.strip('\n')  # 去掉列表中每一个元素的换行符
                 sep = '#'
-                line = line.split(sep, 1)[0]
-                if line != '':
-                    #url = 'https://xueqiu.com/S/{}'.format(line)
-                    url = 'https://stock.xueqiu.com/v5/stock/batch/quote.json?extend=detail&is_delay_ft=1&is_delay_hk=0&symbol={}'.format(line)
-                    url_list.append(url)
+                code = line.split(sep, 1)[0]
+                if code != '':
                     name = m_line.split(sep)[1]
-                    name_list.append(name)
+                    m_code = re.sub('[a-zA-Z]', "", code)
+                    url_code = 'https://stock.xueqiu.com/v5/stock/batch/quote.json?extend=detail&is_delay_ft=1&is_delay_hk=0&symbol={}'.format(code)
+                    url_mainc = 'https://stock.xueqiu.com/v5/stock/capital/distribution.json?symbol={}&_={}'.format(code, m_time) #今日流出
+                    url_main_h = 'https://stock.xueqiu.com/v5/stock/capital/query.json?count=20&symbol={}&_={}'.format(code, m_time) #流出历史
+                    #name_list[str(name)] = url_list
+                    name_list.setdefault(name, [])
+                    name_list[name].append(url_code)
+                    name_list[name].append(url_mainc)
+                    name_list[name].append(url_main_h)
 
         url = 'https://xueqiu.com'
         session = requests.session()
         session.get(url, headers=headers)
-        name_list2 = name_list
-        for url in url_list:
-            for name in name_list2:
-                name_list2.pop(0)
-                resp = session.get(url, headers=headers)
-                data = json.loads(resp.text)
-                t1 = threading.Thread(target=self.Deal_Xq_data, args=(data, url, name, ))
-                t1.start()
-                t1.join()
-                break
+        for name in name_list:
+            for m_url in name_list[name]:
+                res = "xueqiu" in m_url
+                if res == True:
+                    resp = session.get(m_url, headers=headers)
+                    data = json.loads(resp.text)
+                    self.Deal_Xq(data)
 
+            """
+            resp = session.get(m_url, headers=headers)
+            data = json.loads(resp.text)
+            t1 = threading.Thread(target=self.Deal_Xq_data, args=(data, url, name, ))
+            #t2 = threading.Thread(target=self.get_Main_capital_history, args=(data, url, name, ))
+            t1.start()
+            t1.join()
+            break
+            """
+
+        del name_list #释放
 
     def main(self, file_name):
         Stock = SelfStock(file_name)
