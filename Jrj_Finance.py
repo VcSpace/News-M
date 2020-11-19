@@ -210,7 +210,7 @@ class JinRongJie(object):
 
         wb = load_workbook(self.xlsxname)
         sheet = wb.get_sheet_by_name('Jrj')
-        t_row = sheet.max_row
+        t_row = sheet.max_row + 1
         t_col = 1
 
         sheet.cell(row=t_row + 1, column=t_col, value="科技频道新闻")
