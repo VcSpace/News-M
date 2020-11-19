@@ -28,7 +28,7 @@ class SelfStock(object):
             bold=True,
         )
 
-    def Deal_Xq_quote(self, data, url, name):
+    def Deal_Xq_quote(self, data, name):
         self.threadLock.acquire()
         wb = load_workbook(self.xlsxname)
         sheet = wb.create_sheet(name)
@@ -101,8 +101,8 @@ class SelfStock(object):
         t_row = t_row + 2
 
 
-        sheet.cell(row=t_row, column=t_col + 0, value="成交额")
-        sheet.cell(row=t_row, column=t_col + 1, value="成交量")
+        sheet.cell(row=t_row, column=t_col + 0, value="成交额(/万)")
+        sheet.cell(row=t_row, column=t_col + 1, value="成交量(/万手)")
         sheet.cell(row=t_row, column=t_col + 2, value="换手率")
         sheet.cell(row=t_row, column=t_col + 3, value="量比")
         sheet.cell(row=t_row, column=t_col + 4, value="振幅")
@@ -110,10 +110,10 @@ class SelfStock(object):
         sheet.cell(row=t_row, column=t_col + 6, value="市盈率(动)")
         sheet.cell(row=t_row, column=t_col + 7, value="市盈率(静)")
         sheet.cell(row=t_row, column=t_col + 8, value="市净率")
-        sheet.cell(row=t_row, column=t_col + 9, value="总股本")
-        sheet.cell(row=t_row, column=t_col + 10, value="流通股")
-        sheet.cell(row=t_row, column=t_col + 11, value="总市值")
-        sheet.cell(row=t_row, column=t_col + 12, value="流通市值")
+        sheet.cell(row=t_row, column=t_col + 9, value="总股本(/万)")
+        sheet.cell(row=t_row, column=t_col + 10, value="流通股(/万)")
+        sheet.cell(row=t_row, column=t_col + 11, value="总市值(/亿)")
+        sheet.cell(row=t_row, column=t_col + 12, value="流通市值(/亿)")
         t_row = t_row + 1
 
         m_amount = data_quote['amount'] #成交额
@@ -132,8 +132,8 @@ class SelfStock(object):
         m_profit_forecast = data_quote['profit_forecast']
         m_market_capital = data_quote['market_capital'] #总市值
         m_float_market_capital = data_quote['float_market_capital'] #流通市值
-        sheet.cell(row=t_row, column=t_col + 0, value=m_amount)
-        sheet.cell(row=t_row, column=t_col + 1, value=m_volume)
+        sheet.cell(row=t_row, column=t_col + 0, value=round(m_amount / 10000, 2))
+        sheet.cell(row=t_row, column=t_col + 1, value=round(m_volume / 10000, 2))
         sheet.cell(row=t_row, column=t_col + 2, value=str(m_turnover_rate) + "%")
         sheet.cell(row=t_row, column=t_col + 3, value=m_volume_ratio)
         sheet.cell(row=t_row, column=t_col + 4, value=str(m_amplitude) + "%")
@@ -141,21 +141,111 @@ class SelfStock(object):
         sheet.cell(row=t_row, column=t_col + 6, value=m_pe_forecast)
         sheet.cell(row=t_row, column=t_col + 7, value=m_pe_lyr)
         sheet.cell(row=t_row, column=t_col + 8, value=m_pb)
-        sheet.cell(row=t_row, column=t_col + 9, value=m_total_shares)
-        sheet.cell(row=t_row, column=t_col + 10, value=m_float_shares)
-        sheet.cell(row=t_row, column=t_col + 11, value=m_market_capital)
-        sheet.cell(row=t_row, column=t_col + 12, value=m_float_market_capital)
+        sheet.cell(row=t_row, column=t_col + 9, value=round(m_total_shares / 10000, 2))
+        sheet.cell(row=t_row, column=t_col + 10, value=round(m_float_shares / 10000, 2))
+        sheet.cell(row=t_row, column=t_col + 11, value=round(m_market_capital / 100000000, 2))
+        sheet.cell(row=t_row, column=t_col + 12, value=round(m_float_market_capital / 100000000, 2))
         try:
             wb.save(self.xlsxname)
             self.threadLock.release()
         except Exception:
-            print("Self_Stock Save Error = Xq_qupte")
+            print("Self_Stock Save Error = Xq_quote")
             self.threadLock.release()
+    
+    def Deal_Xq_distribution(self, data, name):
+        wb = load_workbook(self.xlsxname)
+        sheet = wb.get_sheet_by_name(name)
+        t_row = sheet.max_row + 2
+        t_col = 1
 
-    #def get_Main_capital_history(self): #主力资金流向历史记录  记录是否跑路
-    def Deal_Xq(self, data):
-        for i in range(3):
+        m_text = data['data']['analysis'][0] #今日主力净流入XX亿
+        sheet.cell(row=t_row, column=t_col, value=m_text)
+        t_row = t_row + 1
 
+        sheet.cell(row=t_row, column=t_col, value="主力资金(/万)")
+        sheet.cell(row=t_row, column=6, value="净流入(/万)")
+        t_row = t_row + 1
+
+        m_data = data['data']['distribution']
+
+        m_sell = m_data['sell']
+        m_buy = m_data['buy']
+
+        sheet.cell(row=t_row, column=t_col, value="特大单卖出")
+        sheet.cell(row=t_row + 1, column=t_col, value="大单卖出")
+        sheet.cell(row=t_row + 2, column=t_col, value="中单卖出")
+        sheet.cell(row=t_row + 3, column=t_col, value="小单卖出")
+        sheet.cell(row=t_row + 4, column=t_col, value="合计")
+        se_xlarge = m_sell['xlarge']
+        se_large = m_sell['large']
+        se_medium = m_sell['medium']
+        se_small = m_sell['small']
+        sum_sell = se_large + se_large + se_medium + se_small
+
+        by_xlarge = m_buy['xlarge']
+        by_large = m_buy['large']
+        by_medium = m_buy['medium']
+        by_small = m_buy['small']
+        sum_buy = by_xlarge + by_large + by_medium + by_small
+        t_col = t_col + 1
+        sheet.cell(row=t_row, column=t_col, value=round(se_xlarge / 10000, 2))
+        sheet.cell(row=t_row + 1, column=t_col, value=round(se_large / 10000, 2))
+        sheet.cell(row=t_row + 2, column=t_col, value=round(se_medium / 10000, 2))
+        sheet.cell(row=t_row + 3, column=t_col, value=round(se_small / 10000, 2))
+        sheet.cell(row=t_row + 4, column=t_col, value=round(sum_sell / 10000, 2))
+        t_col = t_col + 2
+
+        sheet.cell(row=t_row, column=t_col, value=round(by_xlarge / 10000, 2))
+        sheet.cell(row=t_row + 1, column=t_col, value=round(by_large / 10000, 2))
+        sheet.cell(row=t_row + 2, column=t_col, value=round(by_medium / 10000, 2))
+        sheet.cell(row=t_row + 3, column=t_col, value=round(by_small / 10000, 2))
+        sheet.cell(row=t_row + 4, column=t_col, value=round(sum_buy / 10000, 2))
+        t_col = t_col + 1
+
+        sheet.cell(row=t_row, column=t_col, value="特大单买入")
+        sheet.cell(row=t_row + 1, column=t_col, value="大单买入")
+        sheet.cell(row=t_row + 2, column=t_col, value="中单买入")
+        sheet.cell(row=t_row + 3, column=t_col, value="小单买入 ")
+        sheet.cell(row=t_row + 4, column=t_col, value="净额 ")
+
+        m_xlarge = round((by_xlarge / 10000) - (se_xlarge / 10000), 2)
+        m_large = round((by_large / 10000) - (se_large / 10000), 2)
+        m_medium = round((by_medium / 10000) - (se_medium / 10000), 2)
+        m_small = round((by_small / 10000) - (se_small / 10000), 2)
+        sheet.cell(row=t_row, column=6, value=m_xlarge)
+        sheet.cell(row=t_row + 1, column=6, value=m_large)
+        sheet.cell(row=t_row + 2, column=6, value=m_medium)
+        sheet.cell(row=t_row + 3, column=6, value=m_small)
+        sheet.cell(row=t_row + 4, column=6, value=round(sum_buy - sum_sell, 2) / 10000)
+        try:
+            wb.save(self.xlsxname)
+        except Exception:
+            print("Self_Stock Save Error = distribution")
+
+    def Deal_Xq_query(self, data, name):
+        print(2)
+
+    con = 0
+    def Deal_Xq(self, data, name):
+        con = self.con
+        if con < 3:
+            if con == 0:
+                con = con + 1
+                t1 = threading.Thread(target=self.Deal_Xq_quote, args=(data, name, ))
+                t1.start()
+                t1.join()
+            elif con == 1:
+                con = con + 1
+                t2 = threading.Thread(target=self.Deal_Xq_distribution, args=(data, name, ))
+                t2.start()
+                t2.join()
+            elif con == 2:
+                con = con + 1
+                t3 = threading.Thread(target=self.Deal_Xq_query, args=(data, name, ))
+                t3.start()
+                t3.join()
+        #elif con < 5:
+        self.con = self.con + 1
 
 
     def get_SelfStock(self):
@@ -174,7 +264,6 @@ class SelfStock(object):
                     url_code = 'https://stock.xueqiu.com/v5/stock/batch/quote.json?extend=detail&is_delay_ft=1&is_delay_hk=0&symbol={}'.format(code)
                     url_mainc = 'https://stock.xueqiu.com/v5/stock/capital/distribution.json?symbol={}&_={}'.format(code, m_time) #今日流出
                     url_main_h = 'https://stock.xueqiu.com/v5/stock/capital/query.json?count=20&symbol={}&_={}'.format(code, m_time) #流出历史
-                    #name_list[str(name)] = url_list
                     name_list.setdefault(name, [])
                     name_list[name].append(url_code)
                     name_list[name].append(url_mainc)
@@ -184,12 +273,13 @@ class SelfStock(object):
         session = requests.session()
         session.get(url, headers=headers)
         for name in name_list:
+            self.con = 0
             for m_url in name_list[name]:
                 res = "xueqiu" in m_url
                 if res == True:
                     resp = session.get(m_url, headers=headers)
                     data = json.loads(resp.text)
-                    self.Deal_Xq(data)
+                    self.Deal_Xq(data, name)
 
             """
             resp = session.get(m_url, headers=headers)
@@ -200,8 +290,8 @@ class SelfStock(object):
             t1.join()
             break
             """
-
         del name_list #释放
+        self.con = 0
 
     def main(self, file_name):
         Stock = SelfStock(file_name)
