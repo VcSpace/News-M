@@ -22,7 +22,16 @@ def file_move(platform):
         linux_filemove()
 
 def linux_filemove():
-    path = "./Finance"
+    path = "./Finance/"
+    isExists = os.path.exists(path)
+    if not isExists:
+        os.mkdir(path)
+
+    lin_News()
+    lin_History()
+
+def lin_News():
+    path = "./Finance/News/"
     filename = "./News_Finance.xlsx"
     isExists = os.path.exists(path)
     if not isExists:
@@ -31,16 +40,56 @@ def linux_filemove():
     path2 = path + "/" +"闻讯__" + filetime + ".xlsx"
     shutil.move(filename, path2)
 
+def lin_History():
+    path = "./Finance/History/"
+    file_name = "./Main_History.xlsx"
+    isExists = os.path.exists(path)
+    if not isExists:
+        os.mkdir(path)
+        #filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
+        path2 = path + "闻讯_主力资金历史" + ".xlsx"
+        shutil.move(file_name, path2)
+
 
 def win_filemove():
+    desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
+    path = desktop_path + "\\Finance\\"
+    isExists = os.path.exists(path)
+    if not isExists:
+        os.mkdir(path)
+
+    win_News()
+    win_History()
+
+def win_News():
     desktop_path = os.path.join(os.path.expanduser('~'),"Desktop") #获取桌面路径
-    filename = desktop_path + "\\News_Finance.xlsx"
-    path = desktop_path +"\\Finance\\"
+    filename = desktop_path + "\\Finance\\News_Finance.xlsx"
+    path = desktop_path +"\\Finance\\News\\"
 
     isExists = os.path.exists(path)
     if not isExists:
         os.mkdir(path)
     filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime()) #year-month-day-hour-minute
+    path2 = path + "闻讯__" + filetime + ".xlsx"
+    shutil.move(filename, path2)
+
+def win_History():
+    desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
+    filename = desktop_path + "\\Finance\\Main_History.xlsx"
+    path = desktop_path + "\\Finance\\History\\"
+    isExists = os.path.exists(path)
+    if not isExists:
+        os.mkdir(path)
+        # filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
+        path2 = path + "闻讯_主力资金历史" + ".xlsx"
+        shutil.move(filename, path2)
+
+    path = desktop_path + "\\Finance\\News\\"
+
+    isExists = os.path.exists(path)
+    if not isExists:
+        os.mkdir(path)
+    filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
     path2 = path + "闻讯__" + filetime + ".xlsx"
     shutil.move(filename, path2)
 
@@ -84,7 +133,6 @@ if __name__ == '__main__':
     linux_file = "./News_Finance.xlsx"
 
     m_platform = get_platform() #判断系统 win/linux 设置配置
-    #pip_install(m_platform) 以后添加
     get_News(m_platform, win_file, linux_file)
     file_move(m_platform)
 
