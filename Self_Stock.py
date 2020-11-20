@@ -1,12 +1,14 @@
 import requests
 from bs4 import BeautifulSoup
-from openpyxl import load_workbook
+from openpyxl import load_workbook, Workbook
 from openpyxl.styles import Font
 import json
 #from requests.cookies import RequestsCookieJar
 import threading
 import time
 import re
+import platform
+import os
 
 headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
@@ -87,7 +89,7 @@ class SelfStock(object):
         m_high52w = data_quote['high52w'] #52周最高
         m_low52w = data_quote['low52w'] #52周最低
         sheet.cell(row=t_row, column=t_col + 0, value=m_current)
-        sheet.cell(row=t_row, column=t_col + 1, value=m_percent)
+        sheet.cell(row=t_row, column=t_col + 1, value=str(m_percent) + "%")
         sheet.cell(row=t_row, column=t_col + 2, value=m_chg)
         sheet.cell(row=t_row, column=t_col + 3, value=m_open)
         sheet.cell(row=t_row, column=t_col + 4, value=m_high)
@@ -162,7 +164,7 @@ class SelfStock(object):
         sheet.cell(row=t_row, column=t_col, value=m_text)
         t_row = t_row + 1
 
-        sheet.cell(row=t_row, column=t_col, value="主力资金(/万)")
+        sheet.cell(row=t_row, column=t_col, value="资金成交分布(/万)")
         sheet.cell(row=t_row, column=6, value="净流入(/万)")
         t_row = t_row + 1
 
@@ -206,7 +208,7 @@ class SelfStock(object):
         sheet.cell(row=t_row + 1, column=t_col, value="大单买入")
         sheet.cell(row=t_row + 2, column=t_col, value="中单买入")
         sheet.cell(row=t_row + 3, column=t_col, value="小单买入 ")
-        sheet.cell(row=t_row + 4, column=t_col, value="净额 ")
+        sheet.cell(row=t_row + 4, column=t_col, value="净流入 ")
 
         m_xlarge = round((by_xlarge / 10000) - (se_xlarge / 10000), 2)
         m_large = round((by_large / 10000) - (se_large / 10000), 2)
@@ -222,8 +224,42 @@ class SelfStock(object):
         except Exception:
             print("Self_Stock Save Error = distribution")
 
-    def Deal_Xq_query(self, data, name):
-        print(2)
+    def Deal_Xq_query(self, data, name): #主力历史是个持续更新的东西 保存到一个新的文件中
+        m_data = data['data']['items']
+        print(m_data)
+
+        sys = platform.system()
+        if sys == "Windows":
+            res = True
+        elif sys == "Linux":
+            res = False
+
+        if res == False:
+            path = "./Finance/History/"
+            isExists = os.path.exists(path)
+            if not isExists:
+                wb = Workbook()
+                ws = wb['Sheet']
+                wb.remove(ws)
+                sheet = wb.create_sheet(name)
+                try:
+                    wb.save("./Main_History.xlsx")
+                except Exception:
+                    print("Self_Stock Save Error = res == False")
+
+
+        for m_json in m_data:
+            m_small = m_json['small']
+            m_large = m_json['large']
+            m_xlarge = m_json['xlarge']
+            m_medium = m_json['medium']
+            m_close = m_json['close'] #收盘价
+            m_percent = m_json['percent'] #涨跌幅
+            m_time = m_json['timestamp']
+            timeStamp = float(m_time / 1000)  # 13位时间戳
+            timeArray = time.localtime(timeStamp)
+            otherStyleTime = time.strftime("%Y-%m-%d", timeArray)
+
 
     con = 0
     def Deal_Xq(self, data, name):
@@ -263,7 +299,7 @@ class SelfStock(object):
                     m_code = re.sub('[a-zA-Z]', "", code)
                     url_code = 'https://stock.xueqiu.com/v5/stock/batch/quote.json?extend=detail&is_delay_ft=1&is_delay_hk=0&symbol={}'.format(code)
                     url_mainc = 'https://stock.xueqiu.com/v5/stock/capital/distribution.json?symbol={}&_={}'.format(code, m_time) #今日流出
-                    url_main_h = 'https://stock.xueqiu.com/v5/stock/capital/query.json?count=20&symbol={}&_={}'.format(code, m_time) #流出历史
+                    url_main_h = 'https://stock.xueqiu.com/v5/stock/capital/query.json?count=20&symbol={}&_={}'.format(code, m_time) #流出历史/
                     name_list.setdefault(name, [])
                     name_list[name].append(url_code)
                     name_list[name].append(url_mainc)
