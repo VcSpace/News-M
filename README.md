@@ -18,9 +18,9 @@
 
 **软件运行所需要的第三方库已经放入``library.txt``之中**
 
-**1. Win7 + python3.7 + pycharm**
+**1. Win7 + python3.7**
 
-**2. Ubuntu20.04.1 + python3.8 + pycharm**
+**2. Ubuntu20.04.1 + python3.8**
 
 ---
 
