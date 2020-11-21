@@ -43,9 +43,11 @@ def lin_News():
 def lin_History():
     path = "./Finance/History/"
     file_name = "./Main_History.xlsx"
-    isExists = os.path.exists(path)
+    isExists = os.path.exists(path + "闻讯_主力资金历史.xlsx")
+    isExists2 = os.path.exists(path)
     if not isExists:
-        os.mkdir(path)
+        if not isExists2:
+            os.mkdir(path)
         #filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
         path2 = path + "闻讯_主力资金历史" + ".xlsx"
         shutil.move(file_name, path2)
@@ -77,22 +79,19 @@ def win_History():
     desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
     filename = desktop_path + "\\Finance\\Main_History.xlsx"
     path = desktop_path + "\\Finance\\History\\"
-    isExists = os.path.exists(path)
+    isExists = os.path.exists(path + "闻讯_主力资金历史.xlsx")
+    isExists2 = os.path.exists(path)
     if not isExists:
-        os.mkdir(path)
+        if not isExists2:
+            os.mkdir(path)
         # filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
         path2 = path + "闻讯_主力资金历史" + ".xlsx"
         shutil.move(filename, path2)
 
-    path = desktop_path + "\\Finance\\News\\"
-
-    isExists = os.path.exists(path)
-    if not isExists:
-        os.mkdir(path)
-    filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
-    path2 = path + "闻讯__" + filetime + ".xlsx"
-    shutil.move(filename, path2)
-
+#----------------------------
+"""
+上部分为移动文件、重命名操作 可以无视
+"""
 
 def Wy(filename):
     Wy = WangYi(filename)
