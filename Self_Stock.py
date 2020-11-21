@@ -224,20 +224,33 @@ class SelfStock(object):
         except Exception:
             print("Self_Stock Save Error = distribution")
 
-    def Deal_Xq_query(self, data, name): #主力历史是个持续更新的东西 保存到一个新的文件中
+
+    def Deal_Xq_query(self, data, name, if_os): #主力历史是个持续更新的东西 保存到一个新的文件中 分为第一次使用或者长期更新
         m_data = data['data']['items']
-        print(m_data)
+        #print(m_data)
+        flag = True #已经存在为true
 
-        sys = platform.system()
-        if sys == "Windows":
-            res = True
-        elif sys == "Linux":
-            res = False
-
-        if res == False:
-            path = "./Finance/History/"
+        if if_os == True:
+            desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
+            path = desktop_path + "\\Finance\\History\\闻讯_主力资金历史.xlsx"
             isExists = os.path.exists(path)
             if not isExists:
+                flag = False
+                wb = Workbook()
+                ws = wb['Sheet']
+                wb.remove(ws)
+                sheet = wb.create_sheet(name)
+                try:
+                    wb.save(desktop_path + "\\Finance\\" + "Main_History.xlsx")
+                except Exception:
+                    print("Self_Stock Save Error = Query1")
+            else:
+                pass
+        elif if_os == False:
+            path = "./Finance/History/"
+            isExists = os.path.exists(path + "/闻讯_主力资金历史.xlsx")
+            if not isExists:
+                flag = False
                 wb = Workbook()
                 ws = wb['Sheet']
                 wb.remove(ws)
@@ -245,10 +258,34 @@ class SelfStock(object):
                 try:
                     wb.save("./Main_History.xlsx")
                 except Exception:
-                    print("Self_Stock Save Error = res == False")
+                    print("Self_Stock Save Error = Query2")
+            else:
+                pass
 
+        num = 0
+        if if_os == True:
+            if flag == True:
+                desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
+                path = desktop_path + "\\Finance\\News\\"
+                wb = load_workbook(path + "闻讯_主力资金历史.xlsx")
+                try:
+                    sheet = wb.get_sheet_by_name(name)
+                except:
+                    sheet = wb.create_sheet(name)
+        if if_os == False:
+            if flag == True:
+                wb = load_workbook("./Finance/History/闻讯_主力资金历史.xlsx")
+                try:
+                    sheet = wb.get_sheet_by_name(name)
+                except:
+                    sheet = wb.create_sheet(name)
+                wb.save("./Finance/History/闻讯_主力资金历史.xlsx")
+            elif flag == False:  # 第一次使用或者从头再来
+                wb = load_workbook("./Main_History.xlsx")
 
+        """
         for m_json in m_data:
+            sheet = wb.get_sheet_by_name(name)
             m_small = m_json['small']
             m_large = m_json['large']
             m_xlarge = m_json['xlarge']
@@ -259,7 +296,15 @@ class SelfStock(object):
             timeStamp = float(m_time / 1000)  # 13位时间戳
             timeArray = time.localtime(timeStamp)
             otherStyleTime = time.strftime("%Y-%m-%d", timeArray)
+            #写入保存
+        """
 
+    def if_latform(self):
+        sys = platform.system()
+        if sys == "Windows":
+            return True
+        elif sys == "Linux":
+            return False
 
     con = 0
     def Deal_Xq(self, data, name):
@@ -274,10 +319,10 @@ class SelfStock(object):
                 con = con + 1
                 t2 = threading.Thread(target=self.Deal_Xq_distribution, args=(data, name, ))
                 t2.start()
-                t2.join()
             elif con == 2:
                 con = con + 1
-                t3 = threading.Thread(target=self.Deal_Xq_query, args=(data, name, ))
+                if_os = self.if_latform() #如果if_os是真 是win系统
+                t3 = threading.Thread(target=self.Deal_Xq_query, args=(data, name, if_os,))
                 t3.start()
                 t3.join()
         #elif con < 5:
