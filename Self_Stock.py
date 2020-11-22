@@ -236,56 +236,28 @@ class SelfStock(object):
             isExists = os.path.exists(path)
             if not isExists:
                 flag = False
-                wb = Workbook()
-                ws = wb['Sheet']
-                wb.remove(ws)
-                sheet = wb.create_sheet(name)
-                try:
-                    wb.save(desktop_path + "\\Finance\\" + "Main_History.xlsx")
-                except Exception:
-                    print("Self_Stock Save Error = Query1")
+                self.wb = Workbook()
+                ws = self.wb['Sheet']
+                self.wb.remove(ws)
+                self.sheet = self.wb.create_sheet(name)
             else:
-                pass
+                self.wb = load_workbook(path)
+                self.sheet = self.wb.get_sheet_by_name(name)
         elif if_os == False:
-            path = "./Finance/History/"
-            isExists = os.path.exists(path + "/闻讯_主力资金历史.xlsx")
+            d_path = "./Finance/History/"
+            paths = d_path + "/闻讯_主力资金历史.xlsx"
+            isExists = os.path.exists(paths + "/闻讯_主力资金历史.xlsx")
             if not isExists:
-                flag = False
-                wb = Workbook()
-                ws = wb['Sheet']
-                wb.remove(ws)
-                sheet = wb.create_sheet(name)
-                try:
-                    wb.save("./Main_History.xlsx")
-                except Exception:
-                    print("Self_Stock Save Error = Query2")
+                flag = False #不存在
+                self.wb = Workbook()
+                ws = self.wb['Sheet']
+                self.wb.remove(ws)
+                self.sheet = self.wb.create_sheet(name)
             else:
-                pass
+               self.wb = load_workbook(paths)
+               self.sheet = self.wb.get_sheet_by_name(name)
 
-        num = 0
-        if if_os == True:
-            if flag == True:
-                desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
-                path = desktop_path + "\\Finance\\News\\"
-                wb = load_workbook(path + "闻讯_主力资金历史.xlsx")
-                try:
-                    sheet = wb.get_sheet_by_name(name)
-                except:
-                    sheet = wb.create_sheet(name)
-        if if_os == False:
-            if flag == True:
-                wb = load_workbook("./Finance/History/闻讯_主力资金历史.xlsx")
-                try:
-                    sheet = wb.get_sheet_by_name(name)
-                except:
-                    sheet = wb.create_sheet(name)
-                wb.save("./Finance/History/闻讯_主力资金历史.xlsx")
-            elif flag == False:  # 第一次使用或者从头再来
-                wb = load_workbook("./Main_History.xlsx")
-
-        """
         for m_json in m_data:
-            sheet = wb.get_sheet_by_name(name)
             m_small = m_json['small']
             m_large = m_json['large']
             m_xlarge = m_json['xlarge']
@@ -296,8 +268,13 @@ class SelfStock(object):
             timeStamp = float(m_time / 1000)  # 13位时间戳
             timeArray = time.localtime(timeStamp)
             otherStyleTime = time.strftime("%Y-%m-%d", timeArray)
+
+        try:
+            self.wb.save("./Main_History.xlsx")
+        except Exception:
+            print("Self_Stock Save Error = Query")
+
             #写入保存
-        """
 
     def if_latform(self):
         sys = platform.system()
