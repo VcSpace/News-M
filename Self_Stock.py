@@ -226,7 +226,6 @@ class SelfStock(object):
 
     def Deal_Xq_query(self, data, name, if_os): #主力历史是个持续更新的东西 保存到一个新的文件中 分为第一次使用或者长期更新
         m_data = data['data']['items']
-        print(m_data)
         flag = True #已经存在为true
 
         if if_os == True:
@@ -298,7 +297,10 @@ class SelfStock(object):
             otherStyleTime = time.strftime("%Y-%m-%d", timeArray)  # 年月日
 
             if flag == True:
-                if n < 2:
+                cell = self.sheet.cell(t_row - 1, 1).value
+                if cell == otherStyleTime:
+                    break
+                elif n < 2:
                     self.sheet.cell(row=t_row, column= t_col, value=otherStyleTime)
                     self.sheet.cell(row=t_row, column= t_col + 1, value=m_close)
                     self.sheet.cell(row=t_row, column= t_col + 2, value=m_percent)
@@ -322,8 +324,6 @@ class SelfStock(object):
                     self.sheet.cell(row=max_row, column=t_col + 6, value=m_medium)
                     self.sheet.cell(row=max_row, column=t_col + 7, value=m_small)
                     max_row = max_row - 1
-
-        print("save")
 
         if if_os == True:
             if flag == True:
