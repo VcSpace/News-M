@@ -3,7 +3,7 @@ requests
 BeautifulSoup4
 #xlrd
 #xlwt
-#xlutils 以上三个启用 改用openpyxl
+#xlutils 以上三个放弃 改用openpyxl 更快速
 openpyxl
 platform
 lxml
