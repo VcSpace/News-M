@@ -169,7 +169,6 @@ class SelfStock(object):
         t_row = t_row + 1
 
         m_data = data['data']['distribution']
-
         m_sell = m_data['sell']
         m_buy = m_data['buy']
 
@@ -224,9 +223,12 @@ class SelfStock(object):
         except Exception:
             print("Self_Stock Save Error = distribution")
 
+    first = False
     def Deal_Xq_query(self, data, name, if_os): #主力历史是个持续更新的东西 保存到一个新的文件中 分为第一次使用或者长期更新
+        self.threadLock.acquire()
         m_data = data['data']['items']
         flag = True #已经存在为true
+        new_sheet = True #新sheet
 
         if if_os == True:
             desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
@@ -234,50 +236,68 @@ class SelfStock(object):
             isExists = os.path.exists(path)
             if not isExists:
                 flag = False
-                self.wb = Workbook()
-                ws = self.wb['Sheet']
-                self.wb.remove(ws)
-                self.sheet = self.wb.create_sheet(name)
-                self.sheet.cell(row=1, column=1, value="日期")
-                self.sheet.cell(row=1, column=2, value="收盘价")
-                self.sheet.cell(row=1, column=3, value="涨跌幅")
-                self.sheet.cell(row=1, column=4, value="主力资金净流入")
-                self.sheet.cell(row=1, column=5, value="特大单净流入")
-                self.sheet.cell(row=1, column=6, value="大单净流入")
-                self.sheet.cell(row=1, column=7, value="中单净流入")
-                self.sheet.cell(row=1, column=8, value="小单净流入")
+                new_sheet = True
+                if self.first == 0:
+                    self.wb = Workbook()
+                    ws = self.wb['Sheet']
+                    self.wb.remove(ws)
+                    self.sheet = self.wb.create_sheet(name)
+                    self.first += 1
+                else:
+                    self.wb = load_workbook(desktop_path + "\\Finance\\Main_History.xlsx")
+                    try:
+                        self.sheet = self.wb.get_sheet_by_name(name)
+                        new_sheet = False
+                    except:
+                        self.sheet = self.wb.create_sheet(name)
+                        new_sheet = True
             else:
                 self.wb = load_workbook(path)
                 try:
                     self.sheet = self.wb.get_sheet_by_name(name)
+                    new_sheet = False
                 except:
                     self.sheet = self.wb.create_sheet(name)
-                    flag = False
+                    new_sheet = True
         elif if_os == False:
             d_path = "./Finance/History/"
             paths = d_path + "闻讯_主力资金历史.xlsx"
             isExists = os.path.exists(paths)
             if not isExists:
                 flag = False #不存在
-                self.wb = Workbook()
-                ws = self.wb['Sheet']
-                self.wb.remove(ws)
-                self.sheet = self.wb.create_sheet(name)
-                self.sheet.cell(row=1, column=1, value="日期")
-                self.sheet.cell(row=1, column=2, value="收盘价")
-                self.sheet.cell(row=1, column=3, value="涨跌幅")
-                self.sheet.cell(row=1, column=4, value="主力资金净流入")
-                self.sheet.cell(row=1, column=5, value="特大单净流入")
-                self.sheet.cell(row=1, column=6, value="大单净流入")
-                self.sheet.cell(row=1, column=7, value="中单净流入")
-                self.sheet.cell(row=1, column=8, value="小单净流入")
+                new_sheet = True
+                if self.first == 0:
+                    self.wb = Workbook()
+                    ws = self.wb['Sheet']
+                    self.wb.remove(ws)
+                    self.sheet = self.wb.create_sheet(name)
+                    self.first += 1
+                else:
+                    self.wb = load_workbook("./Main_History.xlsx")
+                    try:
+                        self.sheet = self.wb.get_sheet_by_name(name)
+                        new_sheet = False
+                    except:
+                        self.sheet = self.wb.create_sheet(name)
+                        new_sheet = True
             else:
                self.wb = load_workbook(paths)
                try:
                     self.sheet = self.wb.get_sheet_by_name(name)
+                    new_sheet = False
                except:
                     self.sheet = self.wb.create_sheet(name)
-                    flag = False
+                    new_sheet = True
+
+        if new_sheet == True:
+            self.sheet.cell(row=1, column=1, value="日期")
+            self.sheet.cell(row=1, column=2, value="收盘价")
+            self.sheet.cell(row=1, column=3, value="涨跌幅")
+            self.sheet.cell(row=1, column=4, value="主力资金净流入")
+            self.sheet.cell(row=1, column=5, value="特大单净流入")
+            self.sheet.cell(row=1, column=6, value="大单净流入")
+            self.sheet.cell(row=1, column=7, value="中单净流入")
+            self.sheet.cell(row=1, column=8, value="小单净流入")
 
         max_row = 20 + 1 #标题一行 内容20行
         n = 0
@@ -297,34 +317,47 @@ class SelfStock(object):
             otherStyleTime = time.strftime("%Y-%m-%d", timeArray)  # 年月日
 
             if flag == True:
-                cell = self.sheet.cell(t_row - 1, 1).value
-                if cell == otherStyleTime:
-                    break
-                elif n < 2:
-                    self.sheet.cell(row=t_row, column= t_col, value=otherStyleTime)
-                    self.sheet.cell(row=t_row, column= t_col + 1, value=m_close)
-                    self.sheet.cell(row=t_row, column= t_col + 2, value=m_percent)
-                    self.sheet.cell(row=t_row, column= t_col + 3, value=m_amount)
-                    self.sheet.cell(row=t_row, column= t_col + 4, value=m_xlarge)
-                    self.sheet.cell(row=t_row, column= t_col + 5, value=m_large)
-                    self.sheet.cell(row=t_row, column= t_col + 6, value=m_medium)
-                    self.sheet.cell(row=t_row, column= t_col + 7, value=m_small)
-                    t_row = t_row - 1
-                    n = n + 1
-                else:
-                    break
-            elif flag == False: #新文件 写入全部日期
+                if new_sheet == False:
+                    cell = self.sheet.cell(t_row - 1, 1).value
+                    if cell == otherStyleTime:
+                        break
+                    elif n < 2:
+                        self.sheet.cell(row=t_row, column= t_col, value=otherStyleTime)
+                        self.sheet.cell(row=t_row, column= t_col + 1, value=m_close)
+                        self.sheet.cell(row=t_row, column= t_col + 2, value=str(m_percent) + "%")
+                        self.sheet.cell(row=t_row, column= t_col + 3, value=round(m_amount / 10000, 2))
+                        self.sheet.cell(row=t_row, column= t_col + 4, value=round(m_xlarge / 10000, 2))
+                        self.sheet.cell(row=t_row, column= t_col + 5, value=round(m_large / 10000, 2))
+                        self.sheet.cell(row=t_row, column= t_col + 6, value=round(m_medium / 10000, 2))
+                        self.sheet.cell(row=t_row, column= t_col + 7, value=round(m_small / 10000, 2))
+                        t_row = t_row - 1
+                        n = n + 1
+                    else:
+                        break
+                elif new_sheet == True: #新文件/新表 写入全部日期
+                    if max_row > 1:
+                        self.sheet.cell(row=max_row, column=t_col, value=otherStyleTime)
+                        self.sheet.cell(row=max_row, column=t_col + 1, value=m_close)
+                        self.sheet.cell(row=max_row, column=t_col + 2, value=str(m_percent) + "%")
+                        self.sheet.cell(row=max_row, column= t_col + 3, value=round(m_amount / 10000, 2))
+                        self.sheet.cell(row=max_row, column= t_col + 4, value=round(m_xlarge / 10000, 2))
+                        self.sheet.cell(row=max_row, column= t_col + 5, value=round(m_large / 10000, 2))
+                        self.sheet.cell(row=max_row, column= t_col + 6, value=round(m_medium / 10000, 2))
+                        self.sheet.cell(row=max_row, column= t_col + 7, value=round(m_small / 10000, 2))
+                        max_row = max_row - 1
+            elif flag == False:  # 新文件/新表 写入全部日期
                 if max_row > 1:
                     self.sheet.cell(row=max_row, column=t_col, value=otherStyleTime)
                     self.sheet.cell(row=max_row, column=t_col + 1, value=m_close)
                     self.sheet.cell(row=max_row, column=t_col + 2, value=str(m_percent) + "%")
-                    self.sheet.cell(row=max_row, column=t_col + 3, value=m_amount)
-                    self.sheet.cell(row=max_row, column=t_col + 4, value=m_xlarge)
-                    self.sheet.cell(row=max_row, column=t_col + 5, value=m_large)
-                    self.sheet.cell(row=max_row, column=t_col + 6, value=m_medium)
-                    self.sheet.cell(row=max_row, column=t_col + 7, value=m_small)
+                    self.sheet.cell(row=max_row, column=t_col + 3, value=round(m_amount / 10000, 2))
+                    self.sheet.cell(row=max_row, column=t_col + 4, value=round(m_xlarge / 10000, 2))
+                    self.sheet.cell(row=max_row, column=t_col + 5, value=round(m_large / 10000, 2))
+                    self.sheet.cell(row=max_row, column=t_col + 6, value=round(m_medium / 10000, 2))
+                    self.sheet.cell(row=max_row, column=t_col + 7, value=round(m_small / 10000, 2))
                     max_row = max_row - 1
 
+        self.threadLock.release()
         if if_os == True:
             if flag == True:
                 try:
@@ -333,7 +366,7 @@ class SelfStock(object):
                     self.wb.save(path)
                 except:
                     print("Self_Stock Save Error = query_2_1")
-            if flag == False:
+            elif flag == False:
                 try:
                     desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")
                     path = desktop_path + "\\Finance\\Main_History.xlsx"
@@ -354,6 +387,7 @@ class SelfStock(object):
                     self.wb.save(file_name)
                 except:
                     print("Self_Stock Save Error = query_2_2")
+
 
     #判断系统类型
     def if_platform(self):
