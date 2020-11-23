@@ -4,6 +4,16 @@
 
 ---
 
+**当前效果展示:**
+```
+【腾讯文档】闻讯__2020_11_23_23_02
+https://docs.qq.com/sheet/DUG9PVnhIbUlDR2h4
+【腾讯文档】闻讯_主力资金历史
+https://docs.qq.com/sheet/DUHdZWk9EYkd6cW5a
+```
+
+---
+
 # 数据来源
 
 **网易、同花顺、金融界、雪球、个股数据(雪球、腾讯证券、~~东方财富~~), 数据会生成表格存放在Finance文件夹中**
