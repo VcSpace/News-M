@@ -128,7 +128,7 @@ def get_News(platform, win_file, lin_file):
 
 if __name__ == '__main__':
     desktop_path = os.path.join(os.path.expanduser('~'),"Desktop") #获取桌面路径
-    win_file = desktop_path + "\\News_Finance.xlsx"
+    win_file = desktop_path + "\\Finance\\News_Finance.xlsx"
     linux_file = "./News_Finance.xlsx"
 
     m_platform = get_platform() #判断系统 win/linux 设置配置
