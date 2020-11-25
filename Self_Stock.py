@@ -410,6 +410,7 @@ class SelfStock(object):
                 con = con + 1
                 t2 = threading.Thread(target=self.Deal_Xq_distribution, args=(data, name, ))
                 t2.start()
+                t2.join()
             elif con == 2:
                 con = con + 1
                 if_os = self.if_platform() #如果if_os是真 是win系统
