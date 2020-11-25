@@ -140,3 +140,6 @@ if __name__ == '__main__':
     file_move(m_platform)
 
     print("操作完成")
+
+    if m_platform == True:
+        os.system('pause')
