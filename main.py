@@ -116,7 +116,7 @@ def Stock(filename):
 def get_News(platform, win_file, lin_file):
     if platform:
         desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
-        dir = desktop_path + "\\Finance"
+        dir = os.path.exists(desktop_path + "\\Finance")
         if not dir:
             os.mkdir(dir)
         Wy(win_file)
