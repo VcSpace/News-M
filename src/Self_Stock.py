@@ -488,9 +488,17 @@ class SelfStock(object):
         platform = self.pt.get_platform()
         if platform == True:
             desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
+            path = desktop_path + "\\Finance\\Stock\\"
+            isExists = os.path.exists(path)
+            if not isExists:
+                os.mkdir(path)
             win_file = desktop_path + "\\Finance\\Stock\\" + name + ".xlsx"
             return win_file
         else:
+            path = "./Finance/Stock/"
+            isExists = os.path.exists(path)
+            if not isExists:
+                os.mkdir(path)
             lin_file = "./Finance/Stock/" + name + ".xlsx"
             return lin_file
 
@@ -517,12 +525,7 @@ class SelfStock(object):
 
 
     def get_SelfStock(self):
-        path = "./Finance/Stock/"
-        isExists = os.path.exists(path)
-        if not isExists:
-            os.mkdir(path)
-
-        #url_list = list()
+       #url_list = list()
         name_list = dict()
         t = time.time()
         m_time = int(t)
