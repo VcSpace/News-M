@@ -7,8 +7,9 @@ import json
 import threading
 import time
 import re
-import platform
 import os
+from src.Platform import Files
+
 
 headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
@@ -16,9 +17,12 @@ headers = {
 }
 
 class SelfStock(object):
+    pt = Files()
     threadLock = threading.Lock()
     def __init__(self, file_name):
-        self.xlsxname = file_name
+        pass
+        #self.xlsxname = file_name
+
 
     def Style(self):
         self.m_font = Font(
@@ -30,10 +34,22 @@ class SelfStock(object):
             bold=True,
         )
 
+
     def Deal_Xq_quote(self, data, name):
         self.threadLock.acquire()
-        wb = load_workbook(self.xlsxname)
-        sheet = wb.create_sheet(name)
+        file_name = self.get_filename(name)
+        try:
+            wb = load_workbook(file_name)
+            try:
+                sheet = wb.get_sheet_by_name(name)
+            except:
+                sheet = wb.create_sheet(name)
+        except:
+            wb = Workbook()
+            ws = wb['Sheet']
+            wb.remove(ws)
+            sheet = wb.create_sheet(name)
+
         t_row = 1
         t_col = 1
 
@@ -148,15 +164,21 @@ class SelfStock(object):
         sheet.cell(row=t_row, column=t_col + 11, value=round(m_market_capital / 100000000, 2))
         sheet.cell(row=t_row, column=t_col + 12, value=round(m_float_market_capital / 100000000, 2))
         try:
-            wb.save(self.xlsxname)
+            wb.save(file_name)
             self.threadLock.release()
         except Exception:
             print("Self_Stock Save Error = Xq_quote")
             self.threadLock.release()
     
     def Deal_Xq_distribution(self, data, name):
-        wb = load_workbook(self.xlsxname)
-        sheet = wb.get_sheet_by_name(name)
+        self.threadLock.acquire()
+        file_name = self.get_filename(name)
+        wb = load_workbook(file_name)
+        try:
+            sheet = wb.get_sheet_by_name(name)
+        except:
+            sheet = wb.create_sheet(name)
+
         t_row = sheet.max_row + 2
         t_col = 1
 
@@ -219,14 +241,85 @@ class SelfStock(object):
         sheet.cell(row=t_row + 3, column=6, value=m_small)
         sheet.cell(row=t_row + 4, column=6, value=round(sum_buy - sum_sell, 2) / 10000)
         try:
-            wb.save(self.xlsxname)
+            wb.save(file_name)
+            self.threadLock.release()
         except Exception:
             print("Self_Stock Save Error = distribution")
+            self.threadLock.release()
 
-    first = False
-    def Deal_Xq_query(self, data, name, if_os): #主力历史是个持续更新的东西 保存到一个新的文件中 分为第一次使用或者长期更新
+    def Deal_Xq_query(self, data, name): #主力历史是个持续更新的东西 保存到一个新的文件中 分为第一次使用或者长期更新
         self.threadLock.acquire()
+        file_name = self.get_filename(name)
+        wb = load_workbook(file_name)
+        new_sheet = False
+        try:
+            sheet = wb.get_sheet_by_name("资金流向历史")
+        except:
+            sheet = wb.create_sheet("资金流向历史")
+            new_sheet = True
+            sheet.cell(row=1, column=1, value="日期")
+            sheet.cell(row=1, column=2, value="收盘价")
+            sheet.cell(row=1, column=3, value="涨跌幅")
+            sheet.cell(row=1, column=4, value="主力资金净流入")
+            sheet.cell(row=1, column=5, value="特大单净流入")
+            sheet.cell(row=1, column=6, value="大单净流入")
+            sheet.cell(row=1, column=7, value="中单净流入")
+            sheet.cell(row=1, column=8, value="小单净流入")
+
         m_data = data['data']['items']
+        new_max_line = 20 + 1  # 标题一行 内容20行
+        t_row = sheet.max_row + 1
+        n = 0
+        t_col = 1
+        for m_json in m_data:
+            m_small = m_json['small']
+            m_large = m_json['large']
+            m_xlarge = m_json['xlarge']
+            m_medium = m_json['medium']
+            m_close = m_json['close']  # 收盘价
+            m_percent = m_json['percent']  # 涨跌幅
+            m_amount = m_json['amount']  # 主力
+            m_time = m_json['timestamp']
+            timeStamp = float(m_time / 1000)  # 13位时间戳
+            timeArray = time.localtime(timeStamp)
+            otherStyleTime = time.strftime("%Y-%m-%d", timeArray)  # 年月日
+
+            if new_sheet == False:
+                cell = sheet.cell(t_row - 1, 1).value
+                if cell == otherStyleTime:
+                    break
+                elif n < 2:
+                    sheet.cell(row=t_row, column=t_col, value=otherStyleTime)
+                    sheet.cell(row=t_row, column=t_col + 1, value=m_close)
+                    sheet.cell(row=t_row, column=t_col + 2, value=str(m_percent) + "%")
+                    sheet.cell(row=t_row, column=t_col + 3, value=round(m_amount / 10000, 2))
+                    sheet.cell(row=t_row, column=t_col + 4, value=round(m_xlarge / 10000, 2))
+                    sheet.cell(row=t_row, column=t_col + 5, value=round(m_large / 10000, 2))
+                    sheet.cell(row=t_row, column=t_col + 6, value=round(m_medium / 10000, 2))
+                    sheet.cell(row=t_row, column=t_col + 7, value=round(m_small / 10000, 2))
+                    t_row = t_row - 1
+                    n = n + 1
+                else:
+                    break
+            elif new_sheet == True:  # 新文件/新表 写入全部日期
+                if new_max_line > 1:
+                    sheet.cell(row=new_max_line, column=t_col, value=otherStyleTime)
+                    sheet.cell(row=new_max_line, column=t_col + 1, value=m_close)
+                    sheet.cell(row=new_max_line, column=t_col + 2, value=str(m_percent) + "%")
+                    sheet.cell(row=new_max_line, column=t_col + 3, value=round(m_amount / 10000, 2))
+                    sheet.cell(row=new_max_line, column=t_col + 4, value=round(m_xlarge / 10000, 2))
+                    sheet.cell(row=new_max_line, column=t_col + 5, value=round(m_large / 10000, 2))
+                    sheet.cell(row=new_max_line, column=t_col + 6, value=round(m_medium / 10000, 2))
+                    sheet.cell(row=new_max_line, column=t_col + 7, value=round(m_small / 10000, 2))
+                    new_max_line = new_max_line - 1
+
+        try:
+            wb.save(file_name)
+            self.threadLock.release()
+        except:
+            print("Self_Stock Save Error = query")
+            self.threadLock.release()
+        """
         flag = True #已经存在为true
         new_sheet = True #新sheet
 
@@ -387,17 +480,20 @@ class SelfStock(object):
                     self.wb.save(file_name)
                 except:
                     print("Self_Stock Save Error = query_2_2")
+    """
 
-
-    #判断系统类型
-    def if_platform(self):
-        sys = platform.system()
-        if sys == "Windows":
-            return True
-        elif sys == "Linux":
-            return False
 
     con = 0
+    def get_filename(self, name):
+        platform = self.pt.get_platform()
+        if platform == True:
+            desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
+            win_file = desktop_path + "\\Finance\\Stock\\" + name + ".xlsx"
+            return win_file
+        else:
+            lin_file = "./Finance/Stock/" + name + ".xlsx"
+            return lin_file
+
     def Deal_Xq(self, data, name):
         con = self.con
         if con < 3:
@@ -413,9 +509,7 @@ class SelfStock(object):
                 t2.join()
             elif con == 2:
                 con = con + 1
-                if_os = self.if_platform() #如果if_os是真 是win系统
-#                self.Deal_Xq_query(data, name, if_os)
-                t3 = threading.Thread(target=self.Deal_Xq_query, args=(data, name, if_os,))
+                t3 = threading.Thread(target=self.Deal_Xq_query, args=(data, name, ))
                 t3.start()
                 t3.join()
         #elif con < 5:
@@ -423,6 +517,11 @@ class SelfStock(object):
 
 
     def get_SelfStock(self):
+        path = "./Finance/Stock/"
+        isExists = os.path.exists(path)
+        if not isExists:
+            os.mkdir(path)
+
         #url_list = list()
         name_list = dict()
         t = time.time()
@@ -469,4 +568,5 @@ class SelfStock(object):
 
     def main(self, file_name):
         Stock = SelfStock(file_name)
+        #Stock.get_filename()
         Stock.get_SelfStock()
