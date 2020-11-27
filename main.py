@@ -22,7 +22,7 @@ def Stock(filename):
 
 def get_News(platform, win_file, lin_file):
     if platform:
-        pt.win_mkdir() #win下创建Finance文件夹
+        #pt.win_mkdir() #win下创建Finance文件夹
         Wy(win_file)
         THS(win_file)
         JRJ(win_file)
