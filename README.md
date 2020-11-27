@@ -38,6 +38,8 @@ https://docs.qq.com/sheet/DUHdZWk9EYkd6cW5a
 
 **所有.py文件放置在同一目录下 运行main.py即可, 数据存放在新生成的表格之中**
 
+**如果出错可能是Code.txt编码问题 请自己新建一份 内容格式(例: SH600887#伊利)**
+
 - Windows生成在桌面Finance文件夹中
 
 - Linux生成在main.py目录下的Finance文件夹中
