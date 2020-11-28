@@ -33,7 +33,7 @@ https://docs.qq.com/sheet/DUHNaeU1aRUlQb0xm
 
 **软件运行所需要的第三方库已经放入``library.txt``之中**
 
-**win系统读取Code错误 是因为linux win的编码问题 更改为ANIS或新建即可解决 文件名必须是Code.txt**
+**win系统读取Code错误 是因为linux win的编码问题 更改为ANSI或新建即可解决 文件名必须是Code.txt**
 
 **1. Win7 + python3.7**
 
