@@ -20,27 +20,26 @@ def Stock(filename):
     Stock = SelfStock(filename)
     Stock.main(filename)
 
-def get_News(platform, win_file, lin_file):
-    if platform:
-        #pt.win_mkdir() #win下创建Finance文件夹
-        Wy(win_file)
-        THS(win_file)
-        JRJ(win_file)
-        Stock(win_file)
-    else:
-        Wy(lin_file)
-        THS(lin_file)
-        JRJ(lin_file)
-        Stock(lin_file)
+def get_News(platform, filename):
+        Wy(filename)
+        THS(filename)
+        JRJ(filename)
+        Stock(filename)
 
+def get_filename(platform):
+    if m_platform == True:
+        win_file = pt.win_filename()
+        return win_file
+    else:
+        linux_file = pt.linux_filename()
+        return linux_file
 
 if __name__ == '__main__':
     pt = Files()
-    win_file = pt.win_filename()
-    linux_file = pt.linux_filename()
 
     m_platform = pt.get_platform() #判断系统
-    get_News(m_platform, win_file, linux_file) #获取信息
+    filename = get_filename(m_platform)
+    get_News(m_platform, filename) #获取信息
 
     pt.file_move(m_platform) #文件移动 重命名操作
 
