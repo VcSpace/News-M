@@ -42,6 +42,9 @@ class SelfStock(object):
             wb = load_workbook(file_name)
             try:
                 sheet = wb.get_sheet_by_name(name)
+                ws = wb[name]
+                wb.remove(ws)
+                sheet = wb.create_sheet(name, 0)
             except:
                 sheet = wb.create_sheet(name)
         except:
