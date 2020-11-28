@@ -6,12 +6,15 @@
 
 **当前效果展示:**
 
-**在重写 修改生成结构 优化体验**
 ```
-【腾讯文档】闻讯__2020_11_23_23_02
-https://docs.qq.com/sheet/DUG9PVnhIbUlDR2h4
-【腾讯文档】闻讯_主力资金历史
-https://docs.qq.com/sheet/DUHdZWk9EYkd6cW5a
+【腾讯文档】闻讯__2020_11_28_14_36
+https://docs.qq.com/sheet/DUHZWV0ZCQ0ZHdUJG
+
+#以下为个股信息 个股代码添加到Code.txt中
+【腾讯文档】伊利
+https://docs.qq.com/sheet/DUHV5WUthdk5YbENJ
+【腾讯文档】顺丰
+https://docs.qq.com/sheet/DUFdEeFNvWmFvUHd6
 ```
 
 ---
@@ -30,21 +33,11 @@ https://docs.qq.com/sheet/DUHdZWk9EYkd6cW5a
 
 **软件运行所需要的第三方库已经放入``library.txt``之中**
 
+**win系统读取Code错误 是因为linux win的编码问题 更改为ANIS或新建即可解决 文件名必须是Code.txt**
+
 **1. Win7 + python3.7**
 
 **2. Ubuntu20.04.1 + python3.8**
-
----
-
-# 操作流程
-
-**所有.py文件放置在同一目录下 运行main.py即可, 数据存放在新生成的表格之中**
-
-**如果出错可能是Code.txt编码问题 请自己新建一份 内容格式(例: SH600887#伊利)**
-
-- Windows生成在桌面Finance文件夹中
-
-- Linux生成在main.py目录下的Finance文件夹中
 
 ---
 
@@ -52,7 +45,7 @@ https://docs.qq.com/sheet/DUHdZWk9EYkd6cW5a
 
 **本项目主要抓取财经金融类新闻、资讯、金融知识 取得的数据仅供参考 。**
 
-**如有其他对投资有帮助的网站(信息类或学习类) 请提交issues 合适的网站会添加至软件中**
+**如有其他对投资有帮助的网站或者建议、BUG等 请提交ISSUES**
 
 ---
 
