@@ -82,8 +82,8 @@ class SelfStock(object):
         t_row = t_row + 2
 
         sheet.cell(row=t_row, column=t_col + 0, value="当前价格")
-        sheet.cell(row=t_row, column=t_col + 1, value="涨跌幅度")
-        sheet.cell(row=t_row, column=t_col + 2, value="涨跌价格")
+        sheet.cell(row=t_row, column=t_col + 1, value="涨跌价格")
+        sheet.cell(row=t_row, column=t_col + 2, value="涨跌幅度")
         sheet.cell(row=t_row, column=t_col + 3, value="开盘价格")
         sheet.cell(row=t_row, column=t_col + 4, value="当前新高")
         sheet.cell(row=t_row, column=t_col + 5, value="当前新低")
@@ -108,8 +108,8 @@ class SelfStock(object):
         m_high52w = data_quote['high52w'] #52周最高
         m_low52w = data_quote['low52w'] #52周最低
         sheet.cell(row=t_row, column=t_col + 0, value=m_current)
-        sheet.cell(row=t_row, column=t_col + 1, value=str(m_percent) + "%")
-        sheet.cell(row=t_row, column=t_col + 2, value=m_chg)
+        sheet.cell(row=t_row, column=t_col + 1, value=m_chg)
+        sheet.cell(row=t_row, column=t_col + 2, value=str(m_percent) + "%")
         sheet.cell(row=t_row, column=t_col + 3, value=m_open)
         sheet.cell(row=t_row, column=t_col + 4, value=m_high)
         sheet.cell(row=t_row, column=t_col + 5, value=m_low)
@@ -177,12 +177,9 @@ class SelfStock(object):
         self.threadLock.acquire()
         file_name = self.get_filename(name)
         wb = load_workbook(file_name)
-        try:
-            sheet = wb.get_sheet_by_name(name)
-        except:
-            sheet = wb.create_sheet(name)
+        sheet = wb.get_sheet_by_name(name)
 
-        t_row = sheet.max_row + 2
+        t_row = sheet.max_row + 3
         t_col = 1
 
         m_text = data['data']['analysis'][0] #今日主力净流入XX亿
@@ -485,6 +482,57 @@ class SelfStock(object):
                     print("Self_Stock Save Error = query_2_2")
     """
 
+    def Deal_Xq_blocktrans(self, data, name):
+        self.threadLock.acquire()
+        file_name = self.get_filename(name)
+        wb = load_workbook(file_name)
+        sheet = wb.get_sheet_by_name(name)
+
+        t_row = sheet.max_row + 3
+        t_col = 1
+        sheet.cell(row=t_row, column=t_col, value="大宗交易")
+        t_row = t_row + 1
+        sheet.cell(row=t_row, column=t_col, value="成交价")
+        sheet.cell(row=t_row, column=t_col + 1, value="成交量(/股)")
+        sheet.cell(row=t_row, column=t_col + 2, value="成交额(/万)")
+        sheet.cell(row=t_row, column=t_col + 3, value="溢价率")
+        sheet.cell(row=t_row, column=t_col + 4, value="交易时间")
+        sheet.cell(row=t_row, column=t_col + 5, value="买方营业部")
+        sheet.cell(row=t_row, column=t_col + 6, value="卖方营业部")
+        t_row = t_row + 1
+
+        m_data = data['data']
+        data_items = m_data['items']
+
+        for m_json in data_items:
+            m_vol = m_json['vol']
+            m_seller = m_json['sell_branch_org_name']
+            m_premium = m_json['premium_rat']
+            m_trans = m_json['trans_amt']
+            m_time = m_json['td_date']
+            m_buyer = m_json['buy_branch_org_name']
+            m_price = m_json['trans_price']
+
+            timeStamp = float(m_time / 1000)  # 13位时间戳
+            timeArray = time.localtime(timeStamp)
+            m_date = time.strftime("%Y-%m-%d", timeArray)
+
+            sheet.cell(row=t_row, column=t_col, value=m_price)
+            sheet.cell(row=t_row, column=t_col + 1, value=m_vol)
+            sheet.cell(row=t_row, column=t_col + 2, value=round(m_trans / 10000, 2))
+            sheet.cell(row=t_row, column=t_col + 3, value=str(m_premium) + "%")
+            sheet.cell(row=t_row, column=t_col + 4, value=m_date)
+            sheet.cell(row=t_row, column=t_col + 5, value=m_seller)
+            sheet.cell(row=t_row, column=t_col + 6, value=m_buyer)
+            t_row = t_row + 1
+
+        try:
+            wb.save(file_name)
+            self.threadLock.release()
+        except:
+            print("Self_Stock Save Error = blocktrans")
+            self.threadLock.release()
+
 
     con = 0
     def get_filename(self, name):
@@ -507,7 +555,7 @@ class SelfStock(object):
 
     def Deal_Xq(self, data, name):
         con = self.con
-        if con < 3:
+        if con < 4:
             if con == 0:
                 con = con + 1
                 t1 = threading.Thread(target=self.Deal_Xq_quote, args=(data, name, ))
@@ -523,6 +571,11 @@ class SelfStock(object):
                 t3 = threading.Thread(target=self.Deal_Xq_query, args=(data, name, ))
                 t3.start()
                 t3.join()
+            elif con == 3:
+                con = con + 1
+                t4 = threading.Thread(target=self.Deal_Xq_blocktrans, args=(data, name,))
+                t4.start()
+                t4.join()
         #elif con < 5:
         self.con = self.con + 1
 
@@ -539,14 +592,16 @@ class SelfStock(object):
                 code = line.split(sep, 1)[0]
                 if code != '':
                     name = m_line.split(sep)[1]
-                    m_code = re.sub('[a-zA-Z]', "", code)
-                    url_code = 'https://stock.xueqiu.com/v5/stock/batch/quote.json?extend=detail&is_delay_ft=1&is_delay_hk=0&symbol={}'.format(code)
-                    url_mainc = 'https://stock.xueqiu.com/v5/stock/capital/distribution.json?symbol={}&_={}'.format(code, m_time) #今日流出
-                    url_main_h = 'https://stock.xueqiu.com/v5/stock/capital/query.json?count=20&symbol={}&_={}'.format(code, m_time) #流出历史/
+                    m_code = re.sub('[a-zA-Z]', "", code) #纯数字代码
+                    url_quote = 'https://stock.xueqiu.com/v5/stock/batch/quote.json?extend=detail&is_delay_ft=1&is_delay_hk=0&symbol={}'.format(code) #个股信息
+                    url_distrbution = 'https://stock.xueqiu.com/v5/stock/capital/distribution.json?symbol={}&_={}'.format(code, m_time) #今日流出
+                    url_query = 'https://stock.xueqiu.com/v5/stock/capital/query.json?count=20&symbol={}&_={}'.format(code, m_time) #流出历史
+                    url_blocktrans = 'https://stock.xueqiu.com/v5/stock/capital/blocktrans.json?symbol={}'.format(code) #大宗交易
                     name_list.setdefault(name, [])
-                    name_list[name].append(url_code)
-                    name_list[name].append(url_mainc)
-                    name_list[name].append(url_main_h)
+                    name_list[name].append(url_quote)
+                    name_list[name].append(url_distrbution)
+                    name_list[name].append(url_query)
+                    name_list[name].append(url_blocktrans)
 
         url = 'https://xueqiu.com'
         session = requests.session()
