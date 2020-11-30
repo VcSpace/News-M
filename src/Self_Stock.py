@@ -287,6 +287,15 @@ class SelfStock(object):
             if new_sheet == False:
                 cell = sheet.cell(t_row - 1, 1).value
                 if cell == otherStyleTime:
+                    t_row = t_row - 1
+                    sheet.cell(row=t_row, column=t_col, value=otherStyleTime)
+                    sheet.cell(row=t_row, column=t_col + 1, value=m_close)
+                    sheet.cell(row=t_row, column=t_col + 2, value=str(m_percent) + "%")
+                    sheet.cell(row=t_row, column=t_col + 3, value=round(m_amount / 10000, 2))
+                    sheet.cell(row=t_row, column=t_col + 4, value=round(m_xlarge / 10000, 2))
+                    sheet.cell(row=t_row, column=t_col + 5, value=round(m_large / 10000, 2))
+                    sheet.cell(row=t_row, column=t_col + 6, value=round(m_medium / 10000, 2))
+                    sheet.cell(row=t_row, column=t_col + 7, value=round(m_small / 10000, 2))
                     break
                 elif n < 2:
                     sheet.cell(row=t_row, column=t_col, value=otherStyleTime)
