@@ -325,6 +325,7 @@ class WangYi(object):
         t1.join()
         t2 = threading.Thread(target=self.get_Indu, args=(soup2, if_write, ))
         t2.start()
+        t2.join()
         #self.get_Indu(soup2, if_write)
 
 
