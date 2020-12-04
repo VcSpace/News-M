@@ -542,9 +542,7 @@ class SelfStock(object):
             print("Self_Stock Save Error = blocktrans")
             self.threadLock.release()
 
-
-    con = 0
-    def get_filename(self, name):
+    def get_path(self):
         platform = self.pt.get_platform()
         if platform == True:
             desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
@@ -552,16 +550,32 @@ class SelfStock(object):
             isExists = os.path.exists(path)
             if not isExists:
                 os.mkdir(path)
-            win_file = desktop_path + "\\Finance\\Stock\\" + name + ".xlsx"
-            return win_file
         else:
             path = "./Finance/Stock/"
             isExists = os.path.exists(path)
             if not isExists:
                 os.mkdir(path)
+        return path
+
+    def get_filename(self, name):
+        platform = self.pt.get_platform()
+        if platform == True:
+            desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
+            win_file = desktop_path + "\\Finance\\Stock\\" + name + ".xlsx"
+            return win_file
+        else:
             lin_file = "./Finance/Stock/" + name + ".xlsx"
             return lin_file
 
+    def Download_Xlsx(self, m_url, path, name):
+        filename = self.get_filename(name)
+        temp_filename = path + "temp" + name + "成交明细.xlsx"
+        data = requests.get(m_url)
+        with open(temp_filename, 'wb') as f:
+            f.write(data.content)
+
+
+    con = 0
     def Deal_Xq(self, data, name):
         con = self.con
         if con < 4:
@@ -601,40 +615,47 @@ class SelfStock(object):
                 code = line.split(sep, 1)[0]
                 if code != '':
                     name = m_line.split(sep)[1]
-                    m_code = re.sub('[a-zA-Z]', "", code) #纯数字代码
-                    url_quote = 'https://stock.xueqiu.com/v5/stock/batch/quote.json?extend=detail&is_delay_ft=1&is_delay_hk=0&symbol={}'.format(code) #个股信息
-                    url_distrbution = 'https://stock.xueqiu.com/v5/stock/capital/distribution.json?symbol={}&_={}'.format(code, m_time) #今日流出
-                    url_query = 'https://stock.xueqiu.com/v5/stock/capital/query.json?count=20&symbol={}&_={}'.format(code, m_time) #流出历史
-                    url_blocktrans = 'https://stock.xueqiu.com/v5/stock/capital/blocktrans.json?symbol={}'.format(code) #大宗交易
+                    m_code = re.sub('[a-zA-Z]', "", code) #纯数字代码 SH000001 = 000001
+                    m_low_code = code.lower() #SH000001 = sh000001
+                    m_char = re.sub('[0-9]', "", code) #字母字符  SH0000001 = SH
+                    m_low_char = m_char.lower() #SH小写字符
+
+                    #雪球
+                    xq_url_quote = 'https://stock.xueqiu.com/v5/stock/batch/quote.json?extend=detail&is_delay_ft=1&is_delay_hk=0&symbol={}'.format(code) #个股信息
+                    xq_url_distrbution = 'https://stock.xueqiu.com/v5/stock/capital/distribution.json?symbol={}&_={}'.format(code, m_time) #今日流出
+                    xq_url_query = 'https://stock.xueqiu.com/v5/stock/capital/query.json?count=20&symbol={}&_={}'.format(code, m_time) #流出历史
+                    xq_url_blocktrans = 'https://stock.xueqiu.com/v5/stock/capital/blocktrans.json?symbol={}'.format(code) #大宗交易
+
+                    #腾讯证券
+                    filetime = time.strftime("%Y%m%d", time.localtime())  # year-month-day-hour-minute
+                    tx_url_detail = 'http://stock.gtimg.cn/data/index.php?appn=detail&action=download&c={}&d={}'.format(m_low_code, filetime)
+
                     name_list.setdefault(name, [])
-                    name_list[name].append(url_quote)
-                    name_list[name].append(url_distrbution)
-                    name_list[name].append(url_query)
-                    name_list[name].append(url_blocktrans)
+                    name_list[name].append(xq_url_quote)
+                    name_list[name].append(xq_url_distrbution)
+                    name_list[name].append(xq_url_query)
+                    name_list[name].append(xq_url_blocktrans)
+                    name_list[name].append(tx_url_detail)
 
         url = 'https://xueqiu.com'
         session = requests.session()
         session.get(url, headers=headers)
+        path = self.get_path()
         for name in name_list:
-            self.con = 0
             for m_url in name_list[name]:
                 res = "xueqiu" in m_url
                 if res == True:
                     resp = session.get(m_url, headers=headers)
                     data = json.loads(resp.text)
-                    self.Deal_Xq(data, name)
+                    #self.Deal_Xq(data, name)
+                    res = False
 
-            """
-            resp = session.get(m_url, headers=headers)
-            data = json.loads(resp.text)
-            t1 = threading.Thread(target=self.Deal_Xq_data, args=(data, url, name, ))
-            #t2 = threading.Thread(target=self.get_Main_capital_history, args=(data, url, name, ))
-            t1.start()
-            t1.join()
-            break
-            """
+                res = "gtimg" in m_url
+                if res == True:
+                    self.Download_Xlsx(m_url, path, name)
+                    res = False
+            self.con = 0
         del name_list #释放
-        self.con = 0
 
     def main(self, file_name):
         Stock = SelfStock(file_name)
