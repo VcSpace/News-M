@@ -542,16 +542,16 @@ class SelfStock(object):
             print("Self_Stock Save Error = blocktrans")
             self.threadLock.release()
 
-    def get_path(self):
+    def get_path(self, name):
         platform = self.pt.get_platform()
         if platform == True:
             desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
-            path = desktop_path + "\\Finance\\Stock\\"
+            path = desktop_path + "\\Finance\\Stock\\{}\\".format(name)
             isExists = os.path.exists(path)
             if not isExists:
                 os.mkdir(path)
         else:
-            path = "./Finance/Stock/"
+            path = "./Finance/Stock/{}/".format(name)
             isExists = os.path.exists(path)
             if not isExists:
                 os.mkdir(path)
@@ -561,17 +561,18 @@ class SelfStock(object):
         platform = self.pt.get_platform()
         if platform == True:
             desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
-            win_file = desktop_path + "\\Finance\\Stock\\" + name + ".xlsx"
+            win_file = desktop_path + "\\Finance\\Stock\\{}\\".format(name) + name + ".xlsx"
             return win_file
         else:
-            lin_file = "./Finance/Stock/" + name + ".xlsx"
+            lin_file = "./Finance/Stock/{}/".format(name) + name + ".xlsx"
             return lin_file
 
-    def Download_Xlsx(self, m_url, path, name):
-        filename = self.get_filename(name)
-        temp_filename = path + "temp" + name + "成交明细.xlsx"
+    def Download_Xlsx(self, m_url, path, name): #这个本来想写入伊利xlsx的 可是格式问题 openpyxl不能load 暂时这样吧
+
+        filetime = time.strftime("%Y_%m_%d", time.localtime())  # year-month-day-hour-minute
+        filename = path + name + "成交明细_" + filetime + ".xlsx"
         data = requests.get(m_url)
-        with open(temp_filename, 'wb') as f:
+        with open(filename, 'wb') as f:
             f.write(data.content)
 
 
@@ -640,14 +641,14 @@ class SelfStock(object):
         url = 'https://xueqiu.com'
         session = requests.session()
         session.get(url, headers=headers)
-        path = self.get_path()
         for name in name_list:
+            path = self.get_path(name)
             for m_url in name_list[name]:
                 res = "xueqiu" in m_url
                 if res == True:
                     resp = session.get(m_url, headers=headers)
                     data = json.loads(resp.text)
-                    #self.Deal_Xq(data, name)
+                    self.Deal_Xq(data, name)
                     res = False
 
                 res = "gtimg" in m_url
