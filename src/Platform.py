@@ -26,7 +26,8 @@ class Files(object):
         isExists = os.path.exists(path)
         if not isExists:
             os.mkdir(path)
-        filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
+        #filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
+        filetime = time.strftime("%Y_%m_%d", time.localtime()) #year-month-day-hour-minute
         path2 = path + "闻讯__" + filetime + ".xlsx"
         shutil.move(filename, path2)
 
@@ -52,7 +53,8 @@ class Files(object):
         isExists = os.path.exists(path)
         if not isExists:
             os.mkdir(path)
-        filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime()) #year-month-day-hour-minute
+        #filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime()) #year-month-day-hour-minute
+        filetime = time.strftime("%Y_%m_%d", time.localtime()) #year-month-day-hour-minute
         path2 = path + "闻讯__" + filetime + ".xlsx"
         shutil.move(filename, path2)
 
