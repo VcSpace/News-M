@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import Font
+import re
 import json
 import time
 
@@ -80,12 +81,37 @@ class FengHuang(object):
     def getStockNews(self):
         wb = load_workbook(self.xlsxname)
         sheet = wb.get_sheet_by_name("Fh")
-        t_row = sheet.max_row + 1
+        t_row = sheet.max_row + 2
         t_col = 1
+        sheet.cell(row=t_row, column=t_col, value="证券要闻")
+        t_row = t_row + 1
+        sheet.cell(row=t_row, column=t_col, value="新闻标题")
+        sheet.cell(row=t_row, column=t_col + 1, value="新闻链接")
+        sheet.cell(row=t_row, column=t_col + 2, value="新闻简介")
+        sheet.cell(row=t_row, column=t_col + 3, value="新闻时间")
+        t_row = t_row + 1
+        soup = str(self.stock_soup)
 
-        datalist = self.stock_soup.find('allData')
-        print(datalist)
+        #sear = re.search(r'var allData = (.*?) .*\"\}\}\;', soup, re.M | re.I)
+        sear = re.search('var allData = (.*?)var adData', soup, re.M | re.I | re.S)
+        data = sear.group(1)
+        data = data.replace(";", "")
+        json_str = json.loads(data)
+        print(data)
+        stockNews = json_str['stockNews']
+        for m_new in stockNews:
+            m_title = m_new['title']
+            href = m_new['url']
+            m_href = href.replace("//", "https://")
 
+            sheet.cell(row=t_row, column=t_col, value=m_title)
+            sheet.cell(row=t_row, column=t_col + 1, value=m_href)
+            t_row = t_row + 1
+
+        try:
+            wb.save(self.xlsxname)
+        except:
+            print("FengHuang Save Error = getStockNews")
 
 
     def main(self, filename):
@@ -93,5 +119,19 @@ class FengHuang(object):
         #Fh.Style()
         Fh.request()
         Fh.getTopNew()
-        #Fh.getNew2()
         Fh.getStockNews()
+"""
+stockNews
+stockNewsList
+news
+newsList
+bannerPic
+marketAnalysis
+hotPlate
+gnin
+gnout
+track
+fiveDaysBuy
+fiveDaysSell
+logs
+"""
