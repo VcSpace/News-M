@@ -1,6 +1,7 @@
 from src.Wy_Finance import WangYi
 from src.Ths_Finance import TongHuaShun
 from src.Jrj_Finance import JinRongJie
+from src.Fh_Finance import FengHuang
 from src.Self_Stock import SelfStock
 from src.Platform import Files
 
@@ -16,6 +17,10 @@ def JRJ(filename):
     Jrj = JinRongJie(filename)
     Jrj.main(filename)
 
+def FH(filename):
+    Fh = FengHuang(filename)
+    Fh.main(filename)
+
 def Stock(filename):
     Stock = SelfStock(filename)
     Stock.main(filename)
@@ -24,6 +29,7 @@ def get_News(platform, filename):
         Wy(filename)
         THS(filename)
         JRJ(filename)
+        FH(filename)
         Stock(filename)
 
 def get_filename(platform):
