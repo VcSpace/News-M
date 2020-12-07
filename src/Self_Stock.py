@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from openpyxl import load_workbook, Workbook
 from openpyxl.styles import Font
 import json
-#from requests.cookies import RequestsCookieJar
 import threading
 import time
 import re
@@ -542,6 +541,7 @@ class SelfStock(object):
             print("Self_Stock Save Error = blocktrans")
             self.threadLock.release()
 
+
     def get_path(self, name):
         platform = self.pt.get_platform()
         if platform == True:
@@ -557,6 +557,7 @@ class SelfStock(object):
                 os.mkdir(path)
         return path
 
+
     def get_filename(self, name):
         platform = self.pt.get_platform()
         if platform == True:
@@ -567,8 +568,8 @@ class SelfStock(object):
             lin_file = "./Finance/Stock/{}/".format(name) + name + ".xlsx"
             return lin_file
 
-    def Download_Xlsx(self, m_url, path, name): #这个本来想写入伊利xlsx的 可是格式问题 openpyxl不能load 暂时这样吧
 
+    def Download_Xlsx(self, m_url, path, name): #这个本来想写入伊利xlsx的 可是格式问题 openpyxl不能load 暂时这样吧
         filetime = time.strftime("%Y_%m_%d", time.localtime())  # year-month-day-hour-minute
         filename = path + name + "成交明细_" + filetime + ".xlsx"
         data = requests.get(m_url)
@@ -620,13 +621,11 @@ class SelfStock(object):
                     m_low_code = code.lower() #SH000001 = sh000001
                     m_char = re.sub('[0-9]', "", code) #字母字符  SH0000001 = SH
                     m_low_char = m_char.lower() #SH小写字符
-
                     #雪球
                     xq_url_quote = 'https://stock.xueqiu.com/v5/stock/batch/quote.json?extend=detail&is_delay_ft=1&is_delay_hk=0&symbol={}'.format(code) #个股信息
                     xq_url_distrbution = 'https://stock.xueqiu.com/v5/stock/capital/distribution.json?symbol={}&_={}'.format(code, m_time) #今日流出
                     xq_url_query = 'https://stock.xueqiu.com/v5/stock/capital/query.json?count=20&symbol={}&_={}'.format(code, m_time) #流出历史
                     xq_url_blocktrans = 'https://stock.xueqiu.com/v5/stock/capital/blocktrans.json?symbol={}'.format(code) #大宗交易
-
                     #腾讯证券
                     filetime = time.strftime("%Y%m%d", time.localtime())  # year-month-day-hour-minute
                     tx_url_detail = 'http://stock.gtimg.cn/data/index.php?appn=detail&action=download&c={}&d={}'.format(m_low_code, filetime)
@@ -657,6 +656,7 @@ class SelfStock(object):
                     res = False
             self.con = 0
         del name_list #释放
+
 
     def main(self, file_name):
         Stock = SelfStock(file_name)
