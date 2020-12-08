@@ -542,6 +542,23 @@ class SelfStock(object):
             self.threadLock.release()
 
 
+    def mkdir_stock(self):
+        platform = self.pt.get_platform()
+        if platform == True:
+            desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
+            path = desktop_path + "\\Finance\\Stock\\"
+            isExists = os.path.exists(path)
+            if not isExists:
+                os.mkdir(path)
+            return path
+        else:
+            path = "./Finance/Stock/"
+            isExists = os.path.exists(path)
+            if not isExists:
+                os.mkdir(path)
+            return path
+
+
     def get_path(self, name):
         platform = self.pt.get_platform()
         if platform == True:
@@ -550,12 +567,13 @@ class SelfStock(object):
             isExists = os.path.exists(path)
             if not isExists:
                 os.mkdir(path)
+            return path
         else:
             path = "./Finance/Stock/{}/".format(name)
             isExists = os.path.exists(path)
             if not isExists:
                 os.mkdir(path)
-        return path
+            return path
 
 
     def get_filename(self, name):
@@ -606,6 +624,7 @@ class SelfStock(object):
 
 
     def get_SelfStock(self):
+        self.mkdir_stock()
        #url_list = list()
         name_list = dict()
         t = time.time()
