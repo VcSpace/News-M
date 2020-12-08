@@ -44,9 +44,9 @@ https://docs.qq.com/sheet/DUGpLU3ZGUE9JUExz
 
 # 测试环境
 
-**1. Win7 + python3.7**
+- **Win7 + python3.7**
 
-**2. Ubuntu20.04.1 + python3.8**
+- **Ubuntu20.04.1 + python3.8**
 
 ---
 
