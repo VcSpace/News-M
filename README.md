@@ -1,6 +1,8 @@
 # 闻讯
 
-**闻讯-新闻爬虫, 爬取主流财经新闻网站新闻以及获取个人股票的辅助信息(例如30日内资金流向、当日成交明细), 将数据聚合、归类并写入表格中**
+**闻讯——获取主流财经新闻网站新闻以及获取个人股票的辅助信息(例如30日内资金流向、当日成交明细), 将数据聚合、归类并写入表格中 。**
+
+**News-M --News Spider, Crawling news from mainstream financial news websites and obtaining auxiliary information on personal stocks, aggregate, categorize and write data into tables .**
 
 ---
 
