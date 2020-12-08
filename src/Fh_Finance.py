@@ -196,7 +196,7 @@ class FengHuang(object):
         data = sear.group(1)
         data = data.replace(";", "")
         json_str = json.loads(data)
-        print(data)
+        #print(data)
         m_row = t_row + 1
         stockNews = json_str['stockNews'] #top新闻
         for m_new in stockNews:
