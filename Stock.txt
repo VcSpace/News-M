@@ -41,3 +41,9 @@ https://api.xueqiu.com/user/show.json?id=5351390332&_=1604852965534&_s=f5fd4e&_t
 用户帖子
 https://api.xueqiu.com/v4/statuses/user_timeline.json?count=10&filter_retweet_text=0&page=1&type=9&user_id=5351390332&_=1604852965841&_s=9a5d7e&_t=5279F1B4-058C-4273-AB6D-53DEAAB541EA.8697381426.1604852003868.1604852942560
 
+大宗交易
+https://stock.xueqiu.com/v5/stock/capital/blocktrans.json?_t=1SAMSUNGa4e2c761418db1d7b2076f66888de817.8865140155.1606631310844.1606631395770&_s=e7bea3&size=30&x=0.159&page=1&symbol=SZ002352
+
+
+凤凰财经24小时API
+https://api3.finance.ifeng.com/live/getclsnew?beg=1607150367&end=1606977567&cb=_434e1d6218b046b51e30870ea0b9062e
