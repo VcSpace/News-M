@@ -2,6 +2,7 @@ from src.Wy_Finance import WangYi
 from src.Ths_Finance import TongHuaShun
 from src.Jrj_Finance import JinRongJie
 from src.Fh_Finance import FengHuang
+from src.East_Finance import EastWealth
 from src.Self_Stock import SelfStock
 from src.Platform import Files
 
@@ -21,16 +22,21 @@ def FH(filename):
     Fh = FengHuang(filename)
     Fh.main(filename)
 
+def Ew(filename):
+    Ew = EastWealth(filename)
+    Ew.main(filename)
+
 def Stock(filename):
     Stock = SelfStock(filename)
     Stock.main(filename)
 
 def get_News(platform, filename):
         Wy(filename)
-        THS(filename)
-        JRJ(filename)
-        FH(filename)
-        Stock(filename)
+        #THS(filename)
+        #JRJ(filename)
+        #FH(filename)
+        #Stock(filename)
+        Ew(filename)
 
 def get_filename(platform):
     if m_platform == True:
