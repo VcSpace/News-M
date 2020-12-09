@@ -1,6 +1,8 @@
 # 闻讯
 
-**闻讯-新闻爬虫, 爬取主流财经新闻网站新闻以及获取个人股票的辅助信息(例如30日内资金流向、当日成交明细), 将数据聚合、归类并写入表格中**
+**闻讯——获取主流财经新闻网站新闻以及获取个人股票的辅助信息(例如30日内资金流向、当日成交明细), 将数据聚合、归类并写入表格中 。**
+
+**News-M --News Spider, Crawling news from mainstream financial news websites and obtaining auxiliary information on personal stocks, aggregate, categorize and write data into tables .**
 
 ---
 
@@ -44,9 +46,9 @@ https://docs.qq.com/sheet/DUGpLU3ZGUE9JUExz
 
 # 测试环境
 
-**1. Win7 + python3.7**
+- **Win7 + python3.7**
 
-**2. Ubuntu20.04.1 + python3.8**
+- **Ubuntu20.04.1 + python3.8**
 
 ---
 
