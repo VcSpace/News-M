@@ -32,10 +32,10 @@ def Stock(filename):
 
 def get_News(platform, filename):
         Wy(filename)
-        #THS(filename)
-        #JRJ(filename)
-        #FH(filename)
-        #Stock(filename)
+        THS(filename)
+        JRJ(filename)
+        FH(filename)
+        Stock(filename)
         Ew(filename)
 
 def get_filename(platform):
