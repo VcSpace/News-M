@@ -6,7 +6,7 @@
 
 ---
 
-# 数据来源 | Data
+## 数据来源 | Data
 
 **网易财经、同花顺财经、金融界财经、雪球、凤凰财经、东方财富、个股数据(雪球、腾讯证券), 数据会生成表格存放在Finance文件夹中**
 
@@ -14,7 +14,7 @@
 
 ---
 
-# 跨平台 | Cross-Plateform
+## 跨平台 | Cross-Plateform
 
 **使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
 
@@ -24,7 +24,7 @@
 
 ---
 
-# 关于
+## 关于
 
 **本项目主要抓取财经金融类新闻、资讯、金融知识 取得的数据仅供参考 。**
 
@@ -34,6 +34,6 @@
 
 ---
 
-# License
+## License
 
 ``GPL2协议``
