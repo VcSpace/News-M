@@ -30,6 +30,7 @@ class FengHuang(object):
         self.stock_data = requests.get(self.stock_url, headers=headers)
         self.stock_soup = BeautifulSoup(self.stock_data.text, "lxml")
 
+
     def getTopNew(self):
         wb = load_workbook(self.xlsxname)
         sheet = wb.create_sheet("Fh")
@@ -43,11 +44,12 @@ class FengHuang(object):
         sheet.cell(row=t_row, column=t_col + 3, value="新闻时间")
         t_row = t_row + 1
 
-        datalist = self.soup.find_all(class_='hot-1NJ2DKa4 clearfix')
+        #datalist = self.soup.find_all(class_='hot-1NJ2DKa4 clearfix')
+        datalist = self.soup.select('#root > div > div.col-3u4gcc0Q.clearfix > div.col_L-3c5atSII > div.box-1bAs3EGr')
 
-        for New in datalist:
-            for news in New:
-                m_new = news.find('a')
+        for Newslist in datalist:
+            News = Newslist.find_all('a')
+            for m_new in News:
                 m_title = m_new['title']
                 m_href = m_new['href']
                 sheet.cell(row=t_row, column=t_col, value=m_title)
@@ -70,7 +72,6 @@ class FengHuang(object):
             if temp == 6:
                 temp = 0
                 t_row = t_row + 1
-
             else:
                 m_title = m_new['title']
                 m_time = m_new['newsTime']
