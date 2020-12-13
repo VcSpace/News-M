@@ -28,11 +28,11 @@
 
 **本项目主要抓取财经金融类新闻、资讯、金融知识 取得的数据仅供参考 。**
 
-**This project mainly captures financial and financial news, information, and financial knowledge. The data obtained is for reference only .**
+**This project mainly captures financial news, information, and financial knowledge. The data obtained is for reference only .**
 
 **如有其他对投资有帮助的网站或者建议、BUG等 请提交ISSUES**
 
-**Suggestions, bugs, Please submit ISSUES .
+**Suggestions, bugs, Please submit ISSUES .**
 
 **推荐入门书籍: 富爸爸穷爸爸**
 
