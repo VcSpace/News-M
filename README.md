@@ -10,7 +10,11 @@
 
 **网易财经、同花顺财经、金融界财经、雪球、凤凰财经、东方财富、新闻联播文字版、个股数据(雪球、腾讯证券), 数据会生成表格存放在Finance文件夹中**
 
-**在更新:(新浪财经、投资界、芒格学院 | 外网(国内可以访问到): 雅虎、ABC News、CNN、CBS、CNBC)**
+**NetEase Finance, Flush Finance, Financial Finance, Xueqiu, Phoenix Finance, East Wealth, CCTV News text version, individual stock data (Xueqiu, Tencent Securities), the data will be generated and stored in the Finance folder**
+
+**在更新:(新浪财经、投资界、芒格学院 | 外网: 雅虎、ABC News、CNN、CBS、CNBC)**
+
+**Updating: (Sina Finance, Investment Circle, Munger College | Extranet: Yahoo, ABC News, CNN, CBS, CNBC)**
 
 ---
 
