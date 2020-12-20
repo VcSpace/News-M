@@ -39,6 +39,8 @@ class Files(object):
         path = "./Finance/CCTV_News/"
         filename = "./" + cctv_file
         isExists = os.path.exists(path)
+        if not isExists:
+            os.mkdir(path)
         shutil.move(filename, path + cctv_file)
 
 
@@ -72,10 +74,12 @@ class Files(object):
 
     def win_cctv_file(self, cctv_file):
         desktop_path = os.path.join(os.path.expanduser('~'),"Desktop") #获取桌面路径
-        filename = desktop_path + "\\Finance\\" + cctv_file
-        path = desktop_path +"\\Finance\\News\\"
+        path = desktop_path +"\\Finance\\CCTV_News\\"
+        isExists = os.path.exists(path)
+        if not isExists:
+            os.mkdir(path)
 
-        shutil.move(filename, path + cctv_file)
+        shutil.move(cctv_file, path + cctv_file)
 
     """
     def win_History(self):
