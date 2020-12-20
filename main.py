@@ -5,6 +5,7 @@ from src.Fh_Finance import FengHuang
 from src.East_Finance import EastWealth
 from src.Self_Stock import SelfStock
 from src.Platform import Files
+from src.CCTV_News import CCTV_News
 
 def Wy(filename):
     Wy = WangYi(filename)
@@ -30,6 +31,13 @@ def Stock(filename):
     Stock = SelfStock(filename)
     Stock.main(filename)
 
+
+cctv_filename = ""
+def CCTV():
+    CCTV = CCTV_News()
+    global cctv_filename
+    cctv_filename = CCTV.main()
+
 def get_News(platform, filename):
         Wy(filename)
         THS(filename)
@@ -37,6 +45,7 @@ def get_News(platform, filename):
         FH(filename)
         Stock(filename)
         Ew(filename)
+        CCTV()
 
 def get_filename(platform):
     if m_platform == True:
@@ -53,7 +62,7 @@ if __name__ == '__main__':
     filename = get_filename(m_platform)
     get_News(m_platform, filename) #获取信息
 
-    pt.file_move(m_platform) #文件移动 重命名操作
+    pt.file_move(m_platform, cctv_filename) #文件移动 重命名操作
 
     print("操作完成")
 
