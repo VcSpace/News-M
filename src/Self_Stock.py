@@ -590,6 +590,7 @@ class SelfStock(object):
     def Download_Xlsx(self, m_url, path, name): #这个本来想写入伊利xlsx的 可是格式问题 openpyxl不能load 暂时这样吧
         filetime = time.strftime("%Y_%m_%d", time.localtime())  # year-month-day-hour-minute
         filename = path + name + "成交明细_" + filetime + ".xlsx"
+        #filename = path + name + "成交明细_" + "2020_12_18" + ".xlsx" #补充操作
         data = requests.get(m_url)
         with open(filename, 'wb') as f:
             f.write(data.content)
@@ -648,6 +649,7 @@ class SelfStock(object):
                     #腾讯证券
                     filetime = time.strftime("%Y%m%d", time.localtime())  # year-month-day-hour-minute
                     tx_url_detail = 'http://stock.gtimg.cn/data/index.php?appn=detail&action=download&c={}&d={}'.format(m_low_code, filetime)
+                    #tx_url_detail = 'http://stock.gtimg.cn/data/index.php?appn=detail&action=download&c={}&d={}'.format(m_low_code, 20201218) #补充日期
 
                     name_list.setdefault(name, [])
                     name_list[name].append(xq_url_quote)
