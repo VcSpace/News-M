@@ -7,7 +7,7 @@ import threading
 import time
 import re
 import os
-from src.Platform import Files
+from src.Platform import pt
 
 
 headers = {
@@ -16,7 +16,6 @@ headers = {
 }
 
 class SelfStock(object):
-    pt = Files()
     threadLock = threading.Lock()
     def __init__(self, file_name):
         pass
@@ -543,7 +542,7 @@ class SelfStock(object):
 
 
     def mkdir_stock(self):
-        platform = self.pt.get_platform()
+        platform = pt.get_platform()
         if platform == True:
             desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
             path = desktop_path + "\\Finance\\Stock\\"
@@ -560,7 +559,7 @@ class SelfStock(object):
 
 
     def get_path(self, name):
-        platform = self.pt.get_platform()
+        platform = pt.get_platform()
         if platform == True:
             desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
             path = desktop_path + "\\Finance\\Stock\\{}\\".format(name)
@@ -577,7 +576,7 @@ class SelfStock(object):
 
 
     def get_filename(self, name):
-        platform = self.pt.get_platform()
+        platform = pt.get_platform()
         if platform == True:
             desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
             win_file = desktop_path + "\\Finance\\Stock\\{}\\".format(name) + name + ".xlsx"
