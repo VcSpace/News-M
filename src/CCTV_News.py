@@ -5,6 +5,8 @@ import threading
 import time
 import re
 import os
+import shutil
+from src.Platform import pt
 
 headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
@@ -25,18 +27,25 @@ class CCTV_News(object):
 
     def getNews_url(self):
         newslist = self.soup.select('#tab_con1 > div > ol > li:nth-child(1)')
-        self.News_url = ""
+        newslist2 = self.soup.select('#tab_con1 > div > ol > li:nth-child(2)')
+        os = self.get_os()
         for news in newslist:
-            self.News_url = news.find('a')['href']
-            self.News_title = news.find('a').get_text().replace('文字完整版内容', '')
+            News_url = news.find('a')['href']
+            News_title = news.find('a').get_text().replace('文字完整版内容', '')
+            self.getNews(os, News_url, News_title)
+
+        for news2 in newslist2:
+            News_url2 = news2.find('a')['href']
+            News_title2 = news2.find('a').get_text().replace('文字完整版内容', '')
+            self.getNews(os, News_url2, News_title2)
 
 
     filename = ""
-    def getNews(self):
-        news = requests.get(self.News_url, headers=headers)
+    def getNews(self, os, url, title):
+        news = requests.get(url, headers=headers)
         soup = BeautifulSoup(news.text, "lxml")
         content = soup.find_all(class_='text_content')
-        self.filename = self.News_title + ".md"
+        self.filename = title + ".md"
         with open(self.filename, "w+") as f:
             for news in content:
                 m_con = news.find_all('p')
@@ -44,17 +53,38 @@ class CCTV_News(object):
                     m_content = m_cont.get_text()
                     f.write("- " + m_content + "\n")
 
+        if os == True:
+            self.win_cctv_file(self.filename)
+        elif os == False:
+            self.lin_cctv_file(self.filename)
+
     def getfilename(self):
         return self.filename
+
+    def get_os(self):
+        flag = pt.get_platform()
+        return flag
+
+    def lin_cctv_file(self, filename):
+        path = "./Finance/CCTV_News/"
+        filename = "./" + filename
+        isExists = os.path.exists(path)
+        if not isExists:
+            os.mkdir(path)
+        shutil.move(filename, path + filename)
+
+    def win_cctv_file(self, cctv_file):
+        desktop_path = os.path.join(os.path.expanduser('~'),"Desktop") #获取桌面路径
+        path = desktop_path +"\\Finance\\CCTV_News\\"
+        isExists = os.path.exists(path)
+        if not isExists:
+            os.mkdir(path)
+
+        shutil.move(cctv_file, path + cctv_file)
 
     def main(self):
         CCTV = CCTV_News()
         CCTV.request()
         CCTV.getNews_url()
-        #t1 = threading.Thread(target=CCTV.getNews, args=())
-        #t1.start()
-        CCTV.getNews()
-        filename = CCTV.getfilename()
-        return filename
 
 
