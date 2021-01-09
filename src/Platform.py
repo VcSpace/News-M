@@ -2,8 +2,6 @@ import platform
 import os
 import shutil
 import time
-from src.CCTV_News import CCTV_News
-
 
 class Files(object):
     def __init__(self):
@@ -16,13 +14,11 @@ class Files(object):
         elif sys == "Linux":
             return False
 
-    def file_move(self, platform, cctv_file):
+    def file_move(self, platform):
         if platform:
             self.win_News()
-            self.win_cctv_file(cctv_file)
         else:
             self.lin_News()
-            self.lin_cctv_file(cctv_file)
 
     def lin_News(self):
         path = "./Finance/News/"
@@ -34,14 +30,6 @@ class Files(object):
         filetime = time.strftime("%Y_%m_%d", time.localtime())  # year-month-day-hour-minute
         path2 = path + "闻讯__" + filetime + ".xlsx"
         shutil.move(filename, path2)
-
-    def lin_cctv_file(self, cctv_file):
-        path = "./Finance/CCTV_News/"
-        filename = "./" + cctv_file
-        isExists = os.path.exists(path)
-        if not isExists:
-            os.mkdir(path)
-        shutil.move(filename, path + cctv_file)
 
 
     """
@@ -70,16 +58,6 @@ class Files(object):
         filetime = time.strftime("%Y_%m_%d", time.localtime()) #year-month-day-hour-minute
         path2 = path + "闻讯__" + filetime + ".xlsx"
         shutil.move(filename, path2)
-
-
-    def win_cctv_file(self, cctv_file):
-        desktop_path = os.path.join(os.path.expanduser('~'),"Desktop") #获取桌面路径
-        path = desktop_path +"\\Finance\\CCTV_News\\"
-        isExists = os.path.exists(path)
-        if not isExists:
-            os.mkdir(path)
-
-        shutil.move(cctv_file, path + cctv_file)
 
     """
     def win_History(self):
@@ -125,3 +103,5 @@ class Files(object):
         if not dir:
             os.mkdir(dir)
     """
+
+pt = Files()
