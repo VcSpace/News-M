@@ -35,7 +35,7 @@
 
 ## 关于 | About
 
-**本项目主要抓取财经金融类新闻、资讯、金融知识 取得的数据仅供参考。 炒股有得有失 要冷静、保持理智。**
+**本项目主要抓取财经金融类新闻、资讯、金融知识 取得的数据仅供参考。**
 
 **This project mainly captures financial news, information, and financial knowledge. The data obtained is for reference only .**
 
