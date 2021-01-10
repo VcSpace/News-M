@@ -18,6 +18,11 @@
 
 ---
 
+## 信息展示 | Show
+[https://github.com/VcSpace/News-M/tree/main/Show](https://github.com/VcSpace/News-M/tree/main/Show)
+
+---
+
 ## 跨平台 | Cross-Plateform
 
 **使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
