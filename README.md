@@ -31,6 +31,8 @@
 
 - **Ubuntu20.04.1 + python3.8**
 
+- **Macos Catalina10.15.6 + python3.9**
+
 ---
 
 ## 关于 | About
