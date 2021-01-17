@@ -46,7 +46,7 @@ class CCTV_News(object):
         soup = BeautifulSoup(news.text, "lxml")
         content = soup.find_all(class_='text_content')
         self.filename = title + ".md"
-        with open(self.filename, "w+") as f:
+        with open(self.filename, "w+", encoding='utf-8') as f:
             for news in content:
                 m_con = news.find_all('p')
                 for m_cont in m_con:
