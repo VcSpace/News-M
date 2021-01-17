@@ -629,7 +629,7 @@ class SelfStock(object):
         name_list = dict()
         t = time.time()
         m_time = int(t)
-        with open("Code.txt", "r") as f:
+        with open("Code.txt", "r", encoding='utf-8') as f:
             for line in f.readlines():
                 m_line = line.strip('\n')  # 去掉列表中每一个元素的换行符
                 sep = '#'
