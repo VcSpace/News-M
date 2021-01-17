@@ -55,7 +55,7 @@ class CCTV_News(object):
 
         if os == True:
             self.win_cctv_file(self.filename)
-        elif os == False:
+        else:
             self.lin_cctv_file(self.filename)
 
     def getfilename(self):
@@ -67,7 +67,7 @@ class CCTV_News(object):
 
     def lin_cctv_file(self, filename):
         path = "./Finance/CCTV_News/"
-        filename = "./" + filename
+        filename = filename
         isExists = os.path.exists(path)
         if not isExists:
             os.mkdir(path)
