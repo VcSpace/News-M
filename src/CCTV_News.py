@@ -83,8 +83,9 @@ class CCTV_News(object):
         shutil.move(cctv_file, path + cctv_file)
 
     def main(self):
-        CCTV = CCTV_News()
+        #获取今天与昨天的新闻联播 已获取会自动覆盖
         CCTV.request()
         CCTV.getNews_url()
 
 
+CCTV = CCTV_News()
