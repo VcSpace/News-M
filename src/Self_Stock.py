@@ -17,7 +17,7 @@ headers = {
 
 class SelfStock(object):
     threadLock = threading.Lock()
-    def __init__(self, file_name):
+    def __init__(self):
         pass
         #self.xlsxname = file_name
 
@@ -326,6 +326,7 @@ class SelfStock(object):
         except:
             print("Self_Stock Save Error = query")
             self.threadLock.release()
+
         """
         flag = True #已经存在为true
         new_sheet = True #新sheet
@@ -679,6 +680,8 @@ class SelfStock(object):
 
 
     def main(self, file_name):
-        Stock = SelfStock(file_name)
+        #Stock = SelfStock(file_name)
         #Stock.get_filename()
         Stock.get_SelfStock()
+
+Stock = SelfStock()
