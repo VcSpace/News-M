@@ -22,8 +22,8 @@ headers = {
 }
 
 class WangYi(object):
-    def __init__(self, file_name):
-        self.xlsxname = file_name
+    def __init__(self):
+        pass
 
     def request(self):
         #new
@@ -330,7 +330,7 @@ class WangYi(object):
 
 
     def main(self, file_name):
-        Wy = WangYi(file_name)
+        self.xlsxname = file_name
         Wy.Style()
         Wy.request()
         Wy.getTopNew()
@@ -340,3 +340,5 @@ class WangYi(object):
         Wy.getindex()  # 主页原创栏目右边
         Wy.getBusiness()
         Wy.getIndustry()
+
+Wy = WangYi()

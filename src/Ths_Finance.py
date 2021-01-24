@@ -11,8 +11,8 @@ headers = {
 }
 
 class TongHuaShun(object):
-    def __init__(self, file_name):
-        self.xlsxname = file_name
+    def __init__(self):
+        pass
 
     def request(self):
         self.url = 'http://www.10jqka.com.cn/'
@@ -186,7 +186,7 @@ class TongHuaShun(object):
             t1.join()
 
     def main(self, file_name):
-        Ths = TongHuaShun(file_name)
+        self.xlsxname = file_name
         Ths.request()
         Ths.Style()
         Ths.getNew()
@@ -194,3 +194,5 @@ class TongHuaShun(object):
         Ths.getInvestment2()
         Ths.get_Newspaper()
         Ths.get_Calendar()
+
+Ths = TongHuaShun()

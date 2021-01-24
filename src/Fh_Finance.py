@@ -17,8 +17,8 @@ headers = {
 }
 
 class FengHuang(object):
-    def __init__(self, filename):
-        self.xlsxname = filename
+    def __init__(self):
+        pass
 
     def request(self):
         #new
@@ -219,8 +219,10 @@ class FengHuang(object):
         self.IPOObservation(json_str) #stockNewsList 没有top  只有top下的5条
 
     def main(self, filename):
-        Fh = FengHuang(filename)
+        self.xlsxname = filename
         #Fh.Style()
         Fh.request()
         Fh.getTopNew()
         Fh.getStockNews()
+
+Fh = FengHuang()

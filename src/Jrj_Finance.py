@@ -11,8 +11,8 @@ headers = {
 }
 
 class JinRongJie(object):
-    def __init__(self, filename):
-        self.xlsxname = filename
+    def __init__(self):
+        pass
 
     def Style(self):
         self.m_font = Font(
@@ -249,7 +249,7 @@ class JinRongJie(object):
             print("JRJ Save Error = 4")
 
     def main(self, filename):
-        Jrj = JinRongJie(filename)
+        self.xlsxname = filename
         Jrj.Style()
         Jrj.get_TopNews()
         Jrj.get_todayHot()
@@ -258,3 +258,4 @@ class JinRongJie(object):
 #        Jrj.get_Science()
         Jrj.get_yesScience()
 
+Jrj = JinRongJie()

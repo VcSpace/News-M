@@ -11,8 +11,8 @@ headers = {
 }
 
 class EastWealth(object):
-    def __init__(self, file_name):
-        self.xlsxname = file_name
+    def __init__(self):
+        pass
 
     def request(self):
         self.url = 'https://www.eastmoney.com/'
@@ -193,10 +193,12 @@ class EastWealth(object):
 
 
     def main(self, file_name):
-        Ew = EastWealth(file_name)
+        self.xlsxname = file_name
         Ew.request()
         Ew.getTopNew()
         Ew.getMainNews()
         Ew.getFinanceNews()
         Ew.getStockNew()
         Ew.getIndexanalysis() #大盘分析
+
+Ew = EastWealth()
