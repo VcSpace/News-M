@@ -1,48 +1,21 @@
 from src.Platform import pt
-from src.Wy_Finance import WangYi
-from src.Ths_Finance import TongHuaShun
-from src.Jrj_Finance import JinRongJie
-from src.Fh_Finance import FengHuang
-from src.East_Finance import EastWealth
-from src.Self_Stock import SelfStock
-from src.CCTV_News import CCTV_News
+from src.Wy_Finance import Wy
+from src.Ths_Finance import Ths
+from src.Jrj_Finance import Jrj
+from src.Fh_Finance import Fh
+from src.East_Finance import Ew
+from src.Self_Stock import Stock
+from src.CCTV_News import CCTV
 
-def Wy(filename):
-    Wy = WangYi(filename)
-    Wy.main(filename)
-
-def THS(filename):
-    Ths = TongHuaShun(filename)
-    Ths.main(filename)
-
-def JRJ(filename):
-    Jrj = JinRongJie(filename)
-    Jrj.main(filename)
-
-def FH(filename):
-    Fh = FengHuang(filename)
-    Fh.main(filename)
-
-def Ew(filename):
-    Ew = EastWealth(filename)
-    Ew.main(filename)
-
-def Stock(filename):
-    Stock = SelfStock(filename)
-    Stock.main(filename)
-
-def CCTV():
-    CCTV = CCTV_News()
-    CCTV.main()
 
 def get_News(platform, filename):
-        Wy(filename)
-        THS(filename)
-        JRJ(filename)
-        FH(filename)
-        Stock(filename)
-        Ew(filename)
-        CCTV()
+        Wy.main(filename)
+        Ths.main(filename)
+        Jrj.main(filename)
+        Fh.main(filename)
+        Stock.main(filename)
+        Ew.main(filename)
+        CCTV.main()
 
 def get_filename(platform):
     if m_platform == True:
