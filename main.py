@@ -1,3 +1,4 @@
+import threading
 from src.Platform import pt
 from src.Wy_Finance import Wy
 from src.Ths_Finance import Ths
@@ -6,16 +7,21 @@ from src.Fh_Finance import Fh
 from src.East_Finance import Ew
 from src.Self_Stock import Stock
 from src.CCTV_News import CCTV
+from src.Sina_Finance import Sina
 
 
 def get_News(platform, filename):
-        Wy.main(filename)
-        Ths.main(filename)
-        Jrj.main(filename)
-        Fh.main(filename)
-        Stock.main(filename)
-        Ew.main(filename)
-        CCTV.main()
+    Wy.main(filename)
+    t1 = threading.Thread(target=CCTV.main, args=())
+    t1.start()
+    Ths.main(filename)
+    Jrj.main(filename)
+    Fh.main(filename)
+    Stock.main(filename)
+    Ew.main(filename)
+    #CCTV.main()
+    t1.join()
+    Sina.main(filename)
 
 def get_filename(platform):
     if m_platform == True:
