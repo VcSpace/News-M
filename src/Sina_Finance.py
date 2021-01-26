@@ -12,6 +12,13 @@ https://finance.sina.com.cn/
 http://finance.sina.com.cn/chanjing/
 http://feed.mix.sina.com.cn/api/roll/get?pageid=164&lid=1694&num=10&page=1&callback=feedCardJsonpCallback&_=1611561556802 公司新闻
 http://feed.mix.sina.com.cn/api/roll/get?pageid=164&lid=1695&num=10&page=1&callback=feedCardJsonpCallback&_=1611561513495 产业新闻
+
+http://finance.sina.com.cn/china/
+http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1687&num=10&page=1&callback=feedCardJsonpCallback&_=1611573471132 国内新闻
+http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1687&num=10&page=1&callback=feedCardJsonpCallback&_=1611573513741 宏观经济
+http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1689&num=10&page=1&callback=feedCardJsonpCallback&_=1611573537003 部委动态
+http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1690&num=10&page=1&callback=feedCardJsonpCallback&_=1611573555700 金融新闻
+http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1688&num=10&page=1&callback=feedCardJsonpCallback&_=1611573598249 地方经济
 """
 
 headers = {
@@ -99,11 +106,41 @@ class SinaNews(object):
 
 
     def getIndustryNew(self):
+
+        t = time.time() * 1000
+        n_time = int(t)
+        new_list = list()
+
+        j_url1 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=164&lid=1694&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #公司新闻
+        j_url2 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=164&lid=1695&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #产业新闻
+
+        cn_url1 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=3231&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #财经top10
+        cn_url2 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1686&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #国内新闻
+        cn_url3 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1687&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #宏观经济
+        cn_url4 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1689&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #部委动态
+        cn_url5 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1690&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #金融新闻
+        cn_url6 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1688&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #地方新闻
+        new_list = {
+            "财经Top10": cn_url1,
+            "公司新闻": j_url1,
+            "产业新闻": j_url2,
+            "国内新闻": cn_url2,
+            "宏观经济": cn_url3,
+            "部委动态": cn_url4,
+            "金融新闻": cn_url5,
+            "地方新闻": cn_url6,
+        }
+        for newname in new_list:
+            m_url = new_list[newname]
+            self.Deal_News(m_url, newname)
+
+
+    def Deal_News(self, url, new_name):
         wb = load_workbook(self.xlsxname)
         sheet = wb.get_sheet_by_name("Sina")
-        t_row = sheet.max_row + 3
+        t_row = sheet.max_row + 2
         t_col = 1
-        sheet.cell(row=t_row, column=t_col, value="公司新闻")
+        sheet.cell(row=t_row, column=t_col, value="{}".format(new_name))
         t_row = t_row + 1
         sheet.cell(row=t_row, column=t_col, value="新闻标题")
         sheet.cell(row=t_row, column=t_col + 1, value="新闻链接")
@@ -111,17 +148,12 @@ class SinaNews(object):
         sheet.cell(row=t_row, column=t_col + 3, value="新闻时间")
         t_row = t_row + 1
 
-        t = time.time() * 1000
-        n_time = int(t)
-
-        #公司新闻
-        j_url1 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=164&lid=1694&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time)
-        data = requests.get(j_url1, headers=headers)
-        t = '<html><body><p>try{feedCardJsonpCallback('
+        data = requests.get(url, headers=headers)
+        t1 = '<html><body><p>try{feedCardJsonpCallback('
         t2 = ');}catch(e){};</p></body></html>'
         soup = BeautifulSoup(data.text, "lxml")
         data = str(soup)
-        data = data.replace(t, "")
+        data = data.replace(t1, "")
         data = data.replace(t2, "")
         json_str = json.loads(data)
         json_str = json_str['result']['data']
@@ -133,13 +165,13 @@ class SinaNews(object):
             timeArray = time.localtime(timeStamp)
             m_time = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
 
-            sheet.cell(row=t_row, column=t_col , value=m_title)
+            sheet.cell(row=t_row, column=t_col, value=m_title)
             sheet.cell(row=t_row, column=t_col + 1, value=m_href)
             sheet.cell(row=t_row, column=t_col + 3, value=m_time)
             t_row = t_row + 1
 
 
-
+        """
         t_row = t_row + 2
         sheet.cell(row=t_row, column=t_col, value="产业新闻")
         t_row = t_row + 1
@@ -149,8 +181,6 @@ class SinaNews(object):
         sheet.cell(row=t_row, column=t_col + 3, value="新闻时间")
         t_row = t_row + 1
 
-        #产业新闻
-        j_url2 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=164&lid=1695&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time)
         data = requests.get(j_url2, headers=headers)
         soup = BeautifulSoup(data.text, "lxml")
         data = str(soup)
@@ -172,10 +202,18 @@ class SinaNews(object):
             sheet.cell(row=t_row, column=t_col + 1, value=m_href)
             sheet.cell(row=t_row, column=t_col + 3, value=m_time)
             t_row = t_row + 1
+        """
         try:
             wb.save(self.xlsxname)
         except:
             print("Sina getIndustryNew Save Error")
+
+    def getCnNew(self):
+
+        t = time.time() * 1000
+        n_time = int(t)
+
+
 
     def main(self, file_name):
         self.xlsxname = file_name
@@ -183,5 +221,6 @@ class SinaNews(object):
         Sina.getTopNew()
         Sina.getStockNew()
         Sina.getIndustryNew()
+        Sina.getCnNew()
 
 Sina = SinaNews()
