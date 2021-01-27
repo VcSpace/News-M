@@ -13,15 +13,16 @@ from src.Sina_Finance import Sina
 def get_News(platform, filename):
     Wy.main(filename)
     t1 = threading.Thread(target=CCTV.main, args=())
+    t2 = threading.Thread(target=Stock.main, args=(filename,))
     t1.start()
+    t2.start()
     Ths.main(filename)
     Jrj.main(filename)
     Fh.main(filename)
-    Stock.main(filename)
     Ew.main(filename)
-    #CCTV.main()
-    t1.join()
     Sina.main(filename)
+    t1.join()
+    t2.join()
 
 def get_filename(platform):
     if m_platform == True:
