@@ -189,7 +189,7 @@ class SelfStock(object):
         t_row = t_row + 1
 
         m_data = data['data']['distribution']
-        m_sell = m_data['sell']
+        m_sell = m_data['sell'] #如果股票临时停牌会出粗 在code.txt注释掉停牌股即可
         m_buy = m_data['buy']
 
         sheet.cell(row=t_row, column=t_col, value="特大单卖出")
