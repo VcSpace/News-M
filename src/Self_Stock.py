@@ -240,10 +240,10 @@ class SelfStock(object):
         sheet.cell(row=t_row + 4, column=6, value=round(sum_buy - sum_sell, 2) / 10000)
         try:
             wb.save(file_name)
-            self.threadLock.release()
         except Exception:
             print("Self_Stock Save Error = distribution")
-            self.threadLock.release()
+
+        self.threadLock.release()
 
     def Deal_Xq_query(self, data, name): #主力历史是个持续更新的东西 保存到一个新的文件中 分为第一次使用或者长期更新
         self.threadLock.acquire()
@@ -654,9 +654,9 @@ class SelfStock(object):
                     name_list.setdefault(name, [])
                     name_list[name].append(xq_url_quote)
                     name_list[name].append(xq_url_distrbution)
+                    name_list[name].append(tx_url_detail)
                     name_list[name].append(xq_url_query)
                     name_list[name].append(xq_url_blocktrans)
-                    name_list[name].append(tx_url_detail)
 
         url = 'https://xueqiu.com'
         session = requests.session()
