@@ -1,6 +1,6 @@
 # 闻讯 | News-M
 
-**闻讯——用于获取主流财经新闻网站新闻, 将数据聚合、归类并写入表格之中。**
+**闻讯——用于采集主流财经新闻网站新闻, 将数据聚合、归类并写入表格之中。**
 
 **News-M--Get news from mainstream financial news websites, aggregate, categorize, and write data into tables.**
 
@@ -20,13 +20,19 @@
 
 ## 跨平台 | Cross-Plateform
 
-**使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
-
 - **Windows7 + python3.7**
 
 - **Ubuntu20.04.1 + python3.8**
 
 - **Macos Catalina10.15.6 + python3.9**
+
+---
+
+# 教程 ｜ Tutorial
+
+**视频展示 | Video display: [https://www.bilibili.com/video/BV1Ur4y1P7E8/](https://www.bilibili.com/video/BV1Ur4y1P7E8/)**
+
+**使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
 
 ---
 
