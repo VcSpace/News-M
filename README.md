@@ -26,7 +26,7 @@
 
 ---
 
-# 教程 ｜ Tutorial
+## 教程 ｜ Tutorial
 
 **视频展示 | Video display: [https://www.bilibili.com/video/BV1Ur4y1P7E8/](https://www.bilibili.com/video/BV1Ur4y1P7E8/)**
 
