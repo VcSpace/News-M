@@ -18,6 +18,8 @@
 
 ## 跨平台 | Cross-Plateform
 
+**测试为真实环境下运行-2021-03-29**
+
 - **Windows7 + python3.7**
 
 - **Ubuntu20.04 + python3.8**
