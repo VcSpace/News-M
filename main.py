@@ -37,4 +37,4 @@ if __name__ == '__main__':
 
     pt.file_move(m_platform) #文件移动 重命名操作
 
-    print("操作完成")
+    print("操作完成, 程序结束")
