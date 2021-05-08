@@ -56,16 +56,13 @@ class SinaNews(object):
         for ds in datal:
             ds = datal.find_all('a')
             for m_data in ds:
-                try:
-                    m_href = m_data['href']
-                    m_title = m_data.get_text()
-                    if len(m_title) < 4:
-                        continue
-                    sheet.cell(row=t_row, column=t_col, value=m_title)
-                    sheet.cell(row=t_row, column=t_col + 1, value=m_href)
-                    t_row = t_row + 1
-                except:
+                m_href = m_data['href']
+                m_title = m_data.get_text()
+                if len(m_title) < 4:
                     continue
+                sheet.cell(row=t_row, column=t_col, value=m_title)
+                sheet.cell(row=t_row, column=t_col + 1, value=m_href)
+                t_row = t_row + 1
             break
 
         try:
@@ -91,9 +88,9 @@ class SinaNews(object):
             t = 1
 
         for ds in dastl:
-            try:
-                ds = dastl.find_all('a')
-                for m_data in ds:
+            ds = dastl.find_all('a')
+            for m_data in ds:
+                try:
                     m_href = m_data['href']
                     m_title = m_data.get_text()
                     if len(m_title) < 4:
@@ -101,9 +98,10 @@ class SinaNews(object):
                     sheet.cell(row=t_row, column=t_col, value=m_title)
                     sheet.cell(row=t_row, column=t_col + 1, value=m_href)
                     t_row = t_row + 1
-                break
-            except:
-                continue
+                except:
+                    continue
+            break
+
         try:
             wb.save(self.xlsxname)
         except:
@@ -117,6 +115,7 @@ class SinaNews(object):
 
         j_url1 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=164&lid=1694&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #公司新闻
         j_url2 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=164&lid=1695&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #产业新闻
+
         cn_url1 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=3231&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #财经top10
         cn_url2 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1686&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #国内新闻
         cn_url3 = 'http://feed.mix.sina.com.cn/api/roll/get?pageid=155&lid=1687&num=10&page=1&callback=feedCardJsonpCallback&_={}'.format(n_time) #宏观经济
