@@ -32,9 +32,9 @@ def get_filename(platform):
 
 if __name__ == '__main__':
     m_platform = pt.get_platform() #判断系统
-    filename = get_filename(m_platform)
+    filename = get_filename(m_platform) #设置文件名
     get_News(m_platform, filename) #获取信息
 
     pt.file_move(m_platform) #文件移动 重命名操作
 
-    print("操作完成")
+    print("操作完成, 程序结束")
