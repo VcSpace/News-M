@@ -1,9 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import json
-import threading
-import time
-import re
 import os
 import shutil
 from src.Platform import pt
@@ -16,36 +12,27 @@ headers = {
 class CCTV_News(object):
     def __init__(self):
         # 央视新闻联播文字版
-        # http://xwlbo.com/txt.html
+        #http://www.xwlb.net.cn/video.html
         pass
 
     def request(self):
-        url = 'http://xwlbo.com/txt.html'
+        url = 'http://www.xwlb.net.cn/video.html'
         newslist = requests.get(url, headers=headers)
         self.soup = BeautifulSoup(newslist.text, "lxml")
+        m_new = self.soup.find(class_='post_body')
+        new_url = m_new.find_all('a')
+        self.new_url = " "
+        self.new_name = " "
+        for n in new_url:
+            self.new_url = n['href']
+            self.new_name = n['title']
+            break
 
-
-    def getNews_url(self):
-        newslist = self.soup.select('#tab_con1 > div > ol > li:nth-child(1)')
-        newslist2 = self.soup.select('#tab_con1 > div > ol > li:nth-child(2)')
-        os = self.get_os()
-        for news in newslist:
-            News_url = news.find('a')['href']
-            News_title = news.find('a').get_text().replace('文字完整版内容', '')
-            self.getNews(os, News_url, News_title)
-
-        for news2 in newslist2:
-            News_url2 = news2.find('a')['href']
-            News_title2 = news2.find('a').get_text().replace('文字完整版内容', '')
-            self.getNews(os, News_url2, News_title2)
-
-
-    filename = ""
-    def getNews(self, os, url, title):
-        news = requests.get(url, headers=headers)
+    def getNews(self):
+        news = requests.get(self.new_url, headers=headers)
         soup = BeautifulSoup(news.text, "lxml")
-        content = soup.find_all(class_='text_content')
-        self.filename = title + ".md"
+        content = soup.find_all(class_='content')
+        self.filename = self.new_name + ".md"
         with open(self.filename, "w+", encoding='utf-8') as f:
             for news in content:
                 m_con = news.find_all('p')
@@ -58,16 +45,9 @@ class CCTV_News(object):
         else:
             self.lin_cctv_file(self.filename)
 
-    def getfilename(self):
-        return self.filename
-
-    def get_os(self):
-        flag = pt.get_platform()
-        return flag
 
     def lin_cctv_file(self, filename):
         path = "./Finance/CCTV_News/"
-        filename = filename
         isExists = os.path.exists(path)
         if not isExists:
             os.mkdir(path)
@@ -85,7 +65,7 @@ class CCTV_News(object):
     def main(self):
         #获取今天与昨天的新闻联播 已获取会自动覆盖
         CCTV.request()
-        CCTV.getNews_url()
+        CCTV.getNews()
 
 
 CCTV = CCTV_News()
