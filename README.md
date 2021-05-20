@@ -7,8 +7,9 @@
 ---
 
 ## 数据来源 | Data
+ 
 
-**最近更新： 修复新闻联播文字版获取**
+**最近更新： 修复新闻联播文字版获取_2021-05**
 
 **网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新闻联播文字版, 数据会生成表格存放在Finance文件夹中**
 
@@ -18,7 +19,9 @@
 
 ## 跨平台 | Cross-Plateform
 
-**测试为真实环境下运行-2021-03-29**
+**测试为真实环境下运行**
+
+**Running in real environment**
 
 - **Windows7 + python3.7**
 
@@ -30,6 +33,12 @@
 
 ## 教程 ｜ Tutorial
 
+```python
+#Run
+pip install -r requirements.txt
+python3 main.py
+```
+
 **视频展示 | Video display: [https://www.bilibili.com/video/BV1Ur4y1P7E8/](https://www.bilibili.com/video/BV1Ur4y1P7E8/)**
 
 **使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
@@ -38,13 +47,19 @@
 
 ## 关于 | About
 
-**本项目主要抓取财经金融类新闻、资讯、金融知识 取得的数据仅供参考。**
+**本项目主要抓取财经金融类新闻、资讯取得的数据仅供参考。**
 
-**This project mainly captures financial and financial news, information, and financial knowledge. The data obtained is for reference only.**
+**This project mainly captures financial and financial news, information. The data obtained is for reference only.**
 
 ---
 
-## 开源许可协议 ｜ License
+## 开源协议 | License
 
 ``MIT  License``
+
+---
+
+### 编辑器 | IDE 
+
+**[Use Pycharm](https://www.jetbrains.com/pycharm/)**
 
