@@ -17,6 +17,25 @@
 
 ---
 
+## 运行程序 ｜ Run
+
+
+```python
+#Run
+pip install -r requirements.txt
+python3 main.py
+```
+
+**windows系统生成在桌面, Linux/Macos生成在运行目录下**
+
+**Windows system is generated on the desktop, Linux/Macos is generated in the running directory**
+
+**视频展示 | Video display: [https://www.bilibili.com/video/BV1Ur4y1P7E8/](https://www.bilibili.com/video/BV1Ur4y1P7E8/)**
+
+**使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
+
+---
+
 ## 跨平台 | Cross-Plateform
 
 **测试为真实环境下运行**
@@ -28,20 +47,6 @@
 - **Ubuntu20.04 + python3.8**
 
 - **Macos + python3.9**
-
----
-
-## 教程 ｜ Tutorial
-
-```python
-#Run
-pip install -r requirements.txt
-python3 main.py
-```
-
-**视频展示 | Video display: [https://www.bilibili.com/video/BV1Ur4y1P7E8/](https://www.bilibili.com/video/BV1Ur4y1P7E8/)**
-
-**使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
 
 ---
 
