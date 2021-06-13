@@ -11,9 +11,28 @@
 
 **2021-06-13 修复新华网财经获取**
 
-**网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新闻联播文字版, 数据会生成表格存放在Finance文件夹中**
+**网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新华网财经、新闻联播文字版, 数据会生成表格存放在Finance文件夹中**
 
-**Netease Finance, Fung Huashun Finance, Financial Circle Finance, Phoenix Finance, Oriental Fortune, Sina Finance, News Network Text Edition, the data will be generated and stored in the Finance folder**
+**Netease Finance, Fonghuashun Finance, Financial Circle Finance, Phoenix Finance, Oriental Fortune, Sina Finance, Xinhuanet Finance, News Network Text Edition, the data will be generated and stored in the Finance folder**
+
+---
+
+## 运行程序 ｜ Run
+
+
+```python
+#Run
+pip install -r requirements.txt
+python3 main.py
+```
+
+**windows系统生成在桌面, Linux/Macos生成在运行目录下**
+
+**Windows system is generated on the desktop, Linux/Macos is generated in the running directory**
+
+**视频展示 | Video display: [https://www.bilibili.com/video/BV1Ur4y1P7E8/](https://www.bilibili.com/video/BV1Ur4y1P7E8/)**
+
+**使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
 
 ---
 
@@ -28,20 +47,6 @@
 - **Ubuntu20.04 + python3.8**
 
 - **Macos + python3.9**
-
----
-
-## 教程 ｜ Tutorial
-
-```python
-#Run
-pip install -r requirements.txt
-python3 main.py
-```
-
-**视频展示 | Video display: [https://www.bilibili.com/video/BV1Ur4y1P7E8/](https://www.bilibili.com/video/BV1Ur4y1P7E8/)**
-
-**使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
 
 ---
 
