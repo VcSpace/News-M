@@ -1,37 +1,16 @@
 language: python
-os:
-  ubuntu
 jobs:
   include:
-    - python: "3.7"
-      env: TEST_SUITE=suite_3_7
-    - python: "3.8"
-      env: TEST_SUITE=suite_3_8
-    - python: "3.9"
-      env: TEST_SUITE=suite_3_9
-before_install:
-  - pip3 install -r requirements.txt 
-os:
-  macos
-jobs:
-  include:
-    - python: "3.7"
-      env: TEST_SUITE=suite_3_7
-    - python: "3.8"
-      env: TEST_SUITE=suite_3_8
-    - python: "3.9"
-      env: TEST_SUITE=suite_3_9
-before_install:
-  - pip3 install -r requirements.txt 
-os:
-  windows
-jobs:
-  include:
-    - python: "3.7"
-      env: TEST_SUITE=suite_3_7
-    - python: "3.8"
-      env: TEST_SUITE=suite_3_8
-    - python: "3.9"
-      env: TEST_SUITE=suite_3_9
-before_install:
-  - pip3 install -r requirements.txt 
+    - os: linux
+      python: 3.8
+      env: TOXENY=py38
+    - os: osx
+      python: 3.9
+      env: TOXENY=py39
+    - os: windows
+      python: 3.7
+      env: TOXENY=py37
+install:
+  - pip install -r requirements.txt 
+# command to run tests
+script: python3 main.py
