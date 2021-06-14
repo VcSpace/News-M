@@ -40,7 +40,7 @@ class CCTV_News(object):
                     m_content = m_cont.get_text()
                     f.write("- " + m_content + "\n")
 
-        if os == True:
+        if pt.get_platform() == True:
             self.win_cctv_file(self.filename)
         else:
             self.lin_cctv_file(self.filename)
