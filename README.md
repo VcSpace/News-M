@@ -37,7 +37,7 @@ python3 main.py
 
 **Windows system is generated on the desktop, Linux/Macos is generated in the running directory**
 
-**视频展示 | Video display: [https://www.bilibili.com/video/BV1Ur4y1P7E8/](https://www.bilibili.com/video/BV1Ur4y1P7E8/)**
+**视频展示 | Video display: [https://www.bilibili.com/video/BV1dK4y1M7d4](https://www.bilibili.com/video/BV1dK4y1M7d4)**
 
 **使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
 
