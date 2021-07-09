@@ -6,14 +6,6 @@
 
 ---
 
-## 目的
-
-**时间与精力是有限的 为了节省查阅信息的时间成本故此创作News-M用来快捷提取有效信息, 节约时间, 放松精力。**
-
-**Time and energy are limited. In order to save the time cost of consulting information, news-m is created to quickly extract effective information, save time and relax energy.**
-
----
-
 ## 数据来源 | Data
 
 **2021-06-13 修复新华网财经获取**
@@ -58,6 +50,10 @@ python3 main.py
 ---
 
 ## 关于 | About
+
+**时间与精力是有限的 为了节省查阅信息的时间成本故此创作News-M用来快捷提取有效信息, 节约时间, 放松精力。**
+
+**Time and energy are limited. In order to save the time cost of consulting information, news-m is created to quickly extract effective information, save time and relax energy.**
 
 **本项目主要抓取财经金融类新闻、资讯取得的数据仅供参考。**
 
