@@ -10,6 +10,8 @@
 
 **2021-08-05添加松果财经**
 
+**2021-08-05 add pinecone Finance**
+
 **网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新华网财经、新闻联播文字版, 数据会生成表格存放在Finance文件夹中**
 
 **Netease Finance, Fonghuashun Finance, Financial Circle Finance, Phoenix Finance, Oriental Fortune, Sina Finance, Xinhuanet Finance, News Network Text Edition, the data will be generated and stored in the Finance folder**
@@ -53,9 +55,9 @@ python3 main.py
 
 ## 关于 | About
 
-**时间与精力是有限的 为了节省查阅信息的时间成本故此创作News-M用来快捷提取有效信息, 节约时间, 提高效率。 生产力提升就是经济发展**
+**时间与精力是有限的 为了节省查阅信息的时间成本故此创作News-M用来快捷提取有效信息, 节约时间, 提高效率。**
 
-**Time and energy are limited. In order to save the time cost of consulting information, news-m is created to quickly extract effective information, save time and relax energy.**
+**Time and energy are limited. In order to save the time cost of consulting information, news-m is created to quickly extract effective information, save time and improve efficiency.**
 
 **本项目主要抓取财经金融类新闻、资讯取得的数据仅供参考。**
 
