@@ -29,10 +29,15 @@ class CCTV_News(object):
             break
 
     def getNews(self):
+        # 如果是晚上8点后运行程序 将不会获取昨日的新闻 暂时设置为手动补全
+        # 补全
+        #news = requests.get("http://www.xwlb.net.cn/22722.html", headers=headers)
         news = requests.get(self.new_url, headers=headers)
         soup = BeautifulSoup(news.text, "lxml")
         content = soup.find_all(class_='content')
         self.filename = self.new_name + ".md"
+        # 补全
+        #self.filename = "2021年7月25日新闻联播文字版" + ".md"
         with open(self.filename, "w+", encoding='utf-8') as f:
             for news in content:
                 m_con = news.find_all('p')

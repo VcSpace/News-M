@@ -7,13 +7,12 @@
 ---
 
 ## 数据来源 | Data
- 
-
-**2021-06-13 修复新华网财经获取**
 
 **网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新华网财经、新闻联播文字版, 数据会生成表格存放在Finance文件夹中**
 
 **Netease Finance, Fonghuashun Finance, Financial Circle Finance, Phoenix Finance, Oriental Fortune, Sina Finance, Xinhuanet Finance, News Network Text Edition, the data will be generated and stored in the Finance folder**
+
+**添加中金在线、松果财经(在做)**
 
 ---
 
@@ -30,7 +29,7 @@ python3 main.py
 
 **Windows system is generated on the desktop, Linux/Macos is generated in the running directory**
 
-**视频展示 | Video display: [https://www.bilibili.com/video/BV1Ur4y1P7E8/](https://www.bilibili.com/video/BV1Ur4y1P7E8/)**
+**视频展示 | Video display: [https://www.bilibili.com/video/BV1dK4y1M7d4](https://www.bilibili.com/video/BV1dK4y1M7d4)**
 
 **使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
 
@@ -46,11 +45,15 @@ python3 main.py
 
 - **Ubuntu20.04 + python3.8**
 
-- **Macos + python3.9**
+- **Macos11 + python3.9**
 
 ---
 
 ## 关于 | About
+
+**时间与精力是有限的 为了节省查阅信息的时间成本故此创作News-M用来快捷提取有效信息, 节约时间, 放松精力。**
+
+**Time and energy are limited. In order to save the time cost of consulting information, news-m is created to quickly extract effective information, save time and relax energy.**
 
 **本项目主要抓取财经金融类新闻、资讯取得的数据仅供参考。**
 
