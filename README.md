@@ -53,7 +53,7 @@ python3 main.py
 
 ## 关于 | About
 
-**时间与精力是有限的 为了节省查阅信息的时间成本故此创作News-M用来快捷提取有效信息, 节约时间, 放松精力。**
+**时间与精力是有限的 为了节省查阅信息的时间成本故此创作News-M用来快捷提取有效信息, 节约时间, 提高效率。 生产力提升就是经济发展**
 
 **Time and energy are limited. In order to save the time cost of consulting information, news-m is created to quickly extract effective information, save time and relax energy.**
 
