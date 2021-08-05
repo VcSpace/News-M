@@ -23,13 +23,32 @@ class CCTV_News(object):
         new_url = m_new.find_all('a')
         self.new_url = " "
         self.new_name = " "
-        for n in new_url:
+        for n in new_url: #获取今日最新
             self.new_url = n['href']
             self.new_name = n['title']
             break
 
+    # def getNews(self):
+    #     # 补全
+    #     url = "http://www.xwlb.net.cn/22869.html"
+    #     news = requests.get(url, headers=headers)
+    #     soup = BeautifulSoup(news.text, "lxml")
+    #     content = soup.find_all(class_='content')
+    #     # 补全
+    #     self.filename = "2021年7月27日新闻联播文字版" + ".md"
+    #     with open(self.filename, "w+", encoding='utf-8') as f:
+    #         for news in content:
+    #             m_con = news.find_all('p')
+    #             for m_cont in m_con:
+    #                 m_content = m_cont.get_text()
+    #                 f.write("- " + m_content + "\n")
+    #
+    #     if pt.get_platform() == True:
+    #         self.win_cctv_file(self.filename)
+    #     else:
+    #         self.lin_cctv_file(self.filename)
+
     def getNews(self):
-        # 如果是晚上8点后运行程序 将不会获取昨日的新闻 暂时设置为手动补全
         # 补全
         #news = requests.get("http://www.xwlb.net.cn/22722.html", headers=headers)
         news = requests.get(self.new_url, headers=headers)
