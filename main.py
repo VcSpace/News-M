@@ -5,11 +5,9 @@ from src.Ths_Finance import Ths
 from src.Jrj_Finance import Jrj
 from src.Fh_Finance import Fh
 from src.East_Finance import Ew
-from src.Self_Stock import Stock
 from src.CCTV_News import CCTV
 from src.Sina_Finance import Sina
 from src.Xhs_Finance import Xhs
-from src.Yh_Finance import Yh
 from src.Sg_Finance import Sg
 from src.Baidu_upload import Bd
 
@@ -19,10 +17,8 @@ def get_News(platform, filename, debug):
         Wy.create_file(filename)
         return
     Wy.main(filename)
-    t1 = threading.Thread(target=CCTV.main, args=())
-    t2 = threading.Thread(target=Stock.main, args=(filename,))
-    #t1.start()
-    t2.start()
+    #t1 = threading.Thread(target=CCTV.main, args=()) 最近源头不太稳定 先关闭
+    t1.start()
     Xhs.main(filename)
     Ths.main(filename)
     Jrj.main(filename)
@@ -31,7 +27,6 @@ def get_News(platform, filename, debug):
     Sina.main(filename)
     Sg.main(filename)
     #t1.join()
-    t2.join()
 
 def get_filename(platform):
     if m_platform == True:
@@ -56,7 +51,7 @@ if __name__ == '__main__':
     复制授权码
     粘贴到命令行-enter
     """
-    bd_flag = True
+    bd_flag = Flase
     if(bd_flag == False):
         print("如果需要上传到云盘备份 请自行开启bd.main \n")
     else:
