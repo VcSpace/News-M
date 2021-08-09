@@ -8,17 +8,17 @@
 
 ## 数据来源 | Data
 
-**2021-08-05添加松果财经**
+**2021-08-09 添加了网盘备份功能**
 
-**2021-08-06 新闻获取出错 添加了新的补全**
+**2021-08-09 added network disk backup function**
 
-**2021-08-05 add pinecone Finance**
+**最近新闻文字版源头不稳定 暂时停掉 如果得不到修复 换新源**
 
-**网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新华网财经、新闻联播文字版, 数据会生成表格存放在Finance文件夹中**
+**Recently, the source of the text version of the news is unstable and temporarily stopped. If it cannot be repaired, replace it with a new source**
 
-**Netease Finance, Fonghuashun Finance, Financial Circle Finance, Phoenix Finance, Oriental Fortune, Sina Finance, Xinhuanet Finance, News Network Text Edition, the data will be generated and stored in the Finance folder**
+**网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新华网财经、松果财经、新闻联播文字版, 数据会生成表格存放在Finance文件夹中**
 
-添加中金在线、~~松果财经~~(在做)
+**NetEase Finance and economics, flush finance and economics, finance and economics in financial circles, Phoenix finance and economics, Oriental Fortune, sina finance and economics, Xinhuanet finance and economics, pinecone finance and economics, and the text version of news broadcast. The data will be generated into tables and stored in the finance folder**
 
 ---
 
