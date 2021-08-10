@@ -16,17 +16,30 @@ class CCTV_News(object):
         pass
 
     def request(self):
-        url = 'http://www.xwlb.net.cn/video.html'
+        url = 'http://www.ab3.com.cn/xwlb.html'
         newslist = requests.get(url, headers=headers)
         self.soup = BeautifulSoup(newslist.text, "lxml")
-        m_new = self.soup.find(class_='post_body')
+        m_new = self.soup.find(class_='newslist')
         new_url = m_new.find_all('a')
-        self.new_url = " "
-        self.new_name = " "
+        self.m_url = " "
+        self.m_title = " "
         for n in new_url: #获取今日最新
-            self.new_url = n['href']
-            self.new_name = n['title']
+            self.m_url = n['href']
+            self.m_title = n.get_text()
             break
+
+    # def request(self):
+    #     url = 'http://www.xwlb.net.cn/video.html'
+    #     newslist = requests.get(url, headers=headers)
+    #     self.soup = BeautifulSoup(newslist.text, "lxml")
+    #     m_new = self.soup.find(class_='post_body')
+    #     new_url = m_new.find_all('a')
+    #     self.new_url = " "
+    #     self.new_name = " "
+    #     for n in new_url: #获取今日最新
+    #         self.new_url = n['href']
+    #         self.new_name = n['title']
+    #         break
 
     # def getNews(self):
     #     # 补全
@@ -48,35 +61,13 @@ class CCTV_News(object):
     #     else:
     #         self.lin_cctv_file(self.filename)
 
-    # def getNews(self):
-    #     # 补全2
-    #     url = "http://www.ab3.com.cn/17502.html"
-    #     news = requests.get(url, headers=headers)
-    #     soup = BeautifulSoup(news.text, "lxml")
-    #     content = soup.find_all(class_='content-txt')
-    #     # 补全
-    #     self.filename = "2021年8月04日新闻联播文字版" + ".md"
-    #     with open(self.filename, "w+", encoding='utf-8') as f:
-    #         for news in content:
-    #             m_con = news.find_all('p')
-    #             for m_cont in m_con:
-    #                 m_content = m_cont.get_text()
-    #                 f.write("- " + m_content + "\n")
-    #
-    #     if pt.get_platform() == True:
-    #         self.win_cctv_file(self.filename)
-    #     else:
-    #         self.lin_cctv_file(self.filename)
-
-
-    def getNews(self): #正常
-        # 补全
-        news = requests.get(self.new_url, headers=headers)
+    def getNews(self):
+        # 补全2
+        news = requests.get(self.m_url, headers=headers)
         soup = BeautifulSoup(news.text, "lxml")
-        content = soup.find_all(class_='content')
-        self.filename = self.new_name + ".md"
+        content = soup.find_all(class_='content-txt')
         # 补全
-        #self.filename = "2021年7月25日新闻联播文字版" + ".md"
+        self.filename = self.m_title + ".md"
         with open(self.filename, "w+", encoding='utf-8') as f:
             for news in content:
                 m_con = news.find_all('p')
@@ -89,6 +80,29 @@ class CCTV_News(object):
         else:
             self.lin_cctv_file(self.filename)
 
+
+    # def getNews(self): #正常
+    #     # 补全
+    #     news = requests.get(self.new_url, headers=headers)
+    #     soup = BeautifulSoup(news.text, "lxml")
+    #     content = soup.find_all(class_='content')
+    #     self.filename = self.new_name + ".md"
+    #     # 补全
+    #     #self.filename = "2021年7月25日新闻联播文字版" + ".md"
+    #     with open(self.filename, "w+", encoding='utf-8') as f:
+    #         for news in content:
+    #             m_con = news.find_all('p')
+    #             for m_cont in m_con:
+    #                 m_content = m_cont.get_text()
+    #                 f.write("- " + m_content + "\n")
+    #
+    #     if pt.get_platform() == True:
+    #         self.win_cctv_file(self.filename)
+    #     else:
+    #         self.lin_cctv_file(self.filename)
+
+    def getfilename(self):
+        return self.filename
 
     def lin_cctv_file(self, filename):
         path = "./Finance/CCTV_News/"
