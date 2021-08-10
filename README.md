@@ -12,7 +12,7 @@
 
 **2021-08-09 added network disk backup function**
 
-**最近新闻文字版源头不稳定 暂时停掉 如果得不到修复 换新源**
+**2021-08-10 已换新源**
 
 **Recently, the source of the text version of the news is unstable and temporarily stopped. If it cannot be repaired, replace it with a new source**
 
