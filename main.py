@@ -13,12 +13,12 @@ from src.Baidu_upload import Bd
 
 def get_News(platform, filename, debug):
     #debug True开启
-    if debug:
+    if Debug:
         Wy.create_file(filename)
         return
     Wy.main(filename)
-    #t1 = threading.Thread(target=CCTV.main, args=()) 最近源头不太稳定 先关闭
-    #t1.start()
+    t1 = threading.Thread(target=CCTV.main, args=()) 最近源头不太稳定 先关闭
+    t1.start()
     Xhs.main(filename)
     Ths.main(filename)
     Jrj.main(filename)
@@ -26,7 +26,7 @@ def get_News(platform, filename, debug):
     Ew.main(filename)
     Sina.main(filename)
     Sg.main(filename)
-    #t1.join()
+    t1.join()
 
 def get_filename(platform):
     if m_platform == True:
@@ -37,7 +37,7 @@ def get_filename(platform):
         return linux_file
 
 if __name__ == '__main__':
-    debug = False
+    Debug = False
     m_platform = pt.get_platform() #判断系统
     filename = get_filename(m_platform)
     get_News(m_platform, filename, debug) #获取信息
@@ -51,8 +51,8 @@ if __name__ == '__main__':
     复制授权码
     粘贴到命令行-enter
     """
-    bd_flag = Flase
-    if(bd_flag == False):
+    bd_flag = Flase #改为True
+    if bd_flag == False or Debug == True:
         print("如果需要上传到云盘备份 请自行开启bd.main \n")
     else:
         Bd.main()
