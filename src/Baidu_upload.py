@@ -22,9 +22,10 @@ class Baidu(object):
 
     def upload(self):
         path = pt.getpath()
-        print("正在同步备份文件，如果文件过多 请耐心等待\n")
+        print("正在同步备份文件，如果文件过多 请耐心等待")
         #re: https://www.jianshu.com/p/19ddb60e2b22
-        print(bp.syncup(localdir=path, remotedir=u'/', deleteremote=False))
+        cmd = 'bypy syncup ' + path + " /"
+        print("上传完成: ", os.system(cmd))
 
     def main(self):
         Bd.upload() #bypy 把当前目录同步到云盘
