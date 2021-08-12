@@ -51,7 +51,7 @@ if __name__ == '__main__':
     复制授权码
     粘贴到命令行-enter
     """
-    bd_flag = Flase #改为True
+    bd_flag = False #改为True
     if bd_flag == False or Debug == True:
         print("如果需要上传到云盘备份 请自行开启bd.main \n")
     else:
