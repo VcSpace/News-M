@@ -5,7 +5,6 @@ from src.Ths_Finance import Ths
 from src.Jrj_Finance import Jrj
 from src.Fh_Finance import Fh
 from src.East_Finance import Ew
-from src.Self_Stock import Stock
 from src.CCTV_News import CCTV
 from src.Sina_Finance import Sina
 from src.Xhs_Finance import Xhs
