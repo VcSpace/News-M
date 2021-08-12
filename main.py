@@ -5,11 +5,12 @@ from src.Ths_Finance import Ths
 from src.Jrj_Finance import Jrj
 from src.Fh_Finance import Fh
 from src.East_Finance import Ew
+from src.Self_Stock import Stock
 from src.CCTV_News import CCTV
 from src.Sina_Finance import Sina
 from src.Xhs_Finance import Xhs
 from src.Sg_Finance import Sg
-from src.Baidu_upload import Bd
+import src.Baidu_upload
 
 def get_News(platform, filename, debug):
     #debug True开启
@@ -51,10 +52,11 @@ if __name__ == '__main__':
     复制授权码
     粘贴到命令行-enter
     """
-    bd_flag = False #改为True
+    bd_flag = False #改为True开启
     if bd_flag == False or Debug == True:
         print("如果需要上传到云盘备份 请自行开启bd.main \n")
     else:
+        Bd = src.Baidu_upload.Baidu()
         Bd.main()
 
     print("操作完成")
