@@ -3,11 +3,10 @@ import requests
 import json
 from src.Platform import pt
 from bypy import ByPy
-bp = ByPy()
 
 class Baidu(object):
     def __init__(self):
-        pass
+        bp = ByPy()
         #print(bp.info())  # or whatever instance methods of ByPy class
         # 使用上传接口之前，请申请接入，申请地址为：https://pan.baidu.com/union/apply/
 
@@ -28,7 +27,4 @@ class Baidu(object):
         print("上传完成: ", os.system(cmd))
 
     def main(self):
-        Bd.upload() #bypy 把当前目录同步到云盘
-
-
-Bd = Baidu()
+        self.upload() #bypy 把当前目录同步到云盘
