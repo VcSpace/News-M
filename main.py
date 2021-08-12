@@ -17,7 +17,7 @@ def get_News(platform, filename, debug):
         Wy.create_file(filename)
         return
     Wy.main(filename)
-    t1 = threading.Thread(target=CCTV.main, args=()) 最近源头不太稳定 先关闭
+    t1 = threading.Thread(target=CCTV.main, args=())
     t1.start()
     Xhs.main(filename)
     Ths.main(filename)
