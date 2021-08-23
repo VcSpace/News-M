@@ -13,7 +13,7 @@ import src.Baidu_upload
 
 def get_News(platform, filename, debug):
     #debug True开启
-    if Debug:
+    if debug:
         Wy.create_file(filename)
         return
     Wy.main(filename)
@@ -29,7 +29,7 @@ def get_News(platform, filename, debug):
     t1.join()
 
 def get_filename(platform):
-    if m_platform == True:
+    if platform == True:
         win_file = pt.win_filename()
         return win_file
     else:
