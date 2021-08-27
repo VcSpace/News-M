@@ -62,3 +62,36 @@ if __name__ == '__main__':
 
     if m_platform == True:
         pt.pause()
+        
+        
+"""
+#服务器定时运行
+#添加库: time logging random
+#https://blog.csdn.net/ainivip/article/details/106296599
+if __name__ == '__main__':
+    while True:
+        logger = logging.getLogger()
+        logger.setLevel(logging.INFO)
+        log_time = time.strftime("%Y_%m_%d", time.localtime())  # 刷新
+        logfile = "./" + log_time + ".log"
+        fh = logging.FileHandler(logfile,mode='w')
+        fh.setLevel(logging.INFO)
+        
+        while True:
+            int rnum = random(60, 100);
+            formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
+            fh.setFormatter(formatter)
+            logger.addHandler(fh)
+            time_now = time.strftime("%H", time.localtime())  # 刷新
+            if time_now == "21" or time_now == "10": # 设置要执行的时间
+                start()
+                logger.info("sleep(20000) start news_d")
+                time.sleep(4000 + rnum)
+            elif time_now == "00":
+                logger.info("new day, log end")
+                logger.removeHandler(fh)
+                break
+            else:
+                logger.info("wait sleep(600)")
+                time.sleep(600 + rnum)
+"""
