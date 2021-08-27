@@ -8,13 +8,7 @@
 
 ## 数据来源 | Data
 
-**2021-08-09 添加了网盘备份功能**
-
-**2021-08-09 added network disk backup function**
-
-**2021-08-10 已换新源**
-
-**Recently, the source of the text version of the news is unstable and temporarily stopped. If it cannot be repaired, replace it with a new source**
+**2021-08-27 在main.py中添加了定时运行代码（可在服务器中定时运行 并上传到网盘中）**
 
 **网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新华网财经、松果财经、新闻联播文字版, 数据会生成表格存放在Finance文件夹中**
 
