@@ -78,7 +78,7 @@ if __name__ == '__main__':
         fh.setLevel(logging.INFO)
         
         while True:
-            int rnum = random(60, 100);
+            rnum = random.randint(60, 100);
             formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
             fh.setFormatter(formatter)
             logger.addHandler(fh)
