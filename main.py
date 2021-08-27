@@ -66,14 +66,17 @@ if __name__ == '__main__':
         
 """
 #服务器定时运行
-#添加库: time logging random
-#https://blog.csdn.net/ainivip/article/details/106296599
+#添加库: time logging random os
 if __name__ == '__main__':
+    path = "./logs/"
+    isExists = os.path.exists(path)   
+    if not isExists:
+        os.mkdir(path)
     while True:
         logger = logging.getLogger()
         logger.setLevel(logging.INFO)
         log_time = time.strftime("%Y_%m_%d", time.localtime())  # 刷新
-        logfile = "./" + log_time + ".log"
+        logfile = path + log_time + ".log"
         fh = logging.FileHandler(logfile,mode='w')
         fh.setLevel(logging.INFO)
         
@@ -95,4 +98,5 @@ if __name__ == '__main__':
             else:
                 logger.info("wait sleep(600)")
                 time.sleep(600 + rnum)
+
 """
