@@ -33,6 +33,10 @@ python3 main.py
 
 **使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
 
+- 更多设置, 请查看教程
+
+- More settings， check out the tutorial
+ 
 ---
 
 ## 跨平台 | Cross-Plateform
