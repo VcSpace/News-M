@@ -90,6 +90,7 @@ if __name__ == '__main__':
             elif time_now == "00":
                 logger.info("new day, log end")
                 logger.removeHandler(fh)
+                time.sleep(3600 + rnum)
                 break
             else:
                 logger.info("wait sleep(600)")
