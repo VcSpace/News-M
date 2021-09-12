@@ -10,6 +10,8 @@
 
 **2021-08-27 在main.py中添加了定时运行代码（可在服务器中定时运行 并上传到网盘中）**
 
+**2021-09-13 预增加投资界新闻**
+
 **网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新华网财经、松果财经、新闻联播文字版, 数据会生成表格存放在Finance文件夹中**
 
 **NetEase Finance and economics, flush finance and economics, finance and economics in financial circles, Phoenix finance and economics, Oriental Fortune, sina finance and economics, Xinhuanet finance and economics, pinecone finance and economics, and the text version of news broadcast. The data will be generated into tables and stored in the finance folder**
