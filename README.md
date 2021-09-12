@@ -4,7 +4,7 @@
 
 **News-M--Get news from mainstream financial news websites, aggregate, categorize, and write data into tables.**
 
-*开源不易，如对您有帮助请点个star*
+*如果本项目对您有所帮助请点个star支持下*
 
 ---
 
