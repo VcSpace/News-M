@@ -9,6 +9,7 @@ from src.CCTV_News import CCTV
 from src.Sina_Finance import Sina
 from src.Xhs_Finance import Xhs
 from src.Sg_Finance import Sg
+from src.Tzj_Finance import Tzj
 import src.Baidu_upload
 
 def get_News(platform, filename, debug):
@@ -25,6 +26,7 @@ def get_News(platform, filename, debug):
     Fh.main(filename)
     Ew.main(filename)
     Sina.main(filename)
+    Tzj.main(filename)
     Sg.main(filename)
     t1.join()
 
