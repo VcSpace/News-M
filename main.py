@@ -11,6 +11,10 @@ from src.Xhs_Finance import Xhs
 from src.Sg_Finance import Sg
 from src.Tzj_Finance import Tzj
 import src.Baidu_upload
+import time
+import logging
+import random
+import os
 
 def get_News(platform, filename, debug):
     #debug True开启
@@ -38,7 +42,7 @@ def get_filename(platform):
         linux_file = pt.linux_filename()
         return linux_file
 
-if __name__ == '__main__':
+def start():
     Debug = False
     m_platform = pt.get_platform() #判断系统
     filename = get_filename(m_platform)
@@ -53,7 +57,7 @@ if __name__ == '__main__':
     复制授权码
     粘贴到命令行-enter
     """
-    bd_flag = False #改为True开启
+    bd_flag = True #改为True开启
     if bd_flag == False or Debug == True:
         print("如果需要上传到云盘备份 请自行开启bd.main \n")
     else:
@@ -66,9 +70,6 @@ if __name__ == '__main__':
         pt.pause()
         
         
-"""
-#服务器定时运行
-#添加库: time logging random os
 if __name__ == '__main__':
     path = "./logs/"
     isExists = os.path.exists(path)   
@@ -88,9 +89,9 @@ if __name__ == '__main__':
             fh.setFormatter(formatter)
             logger.addHandler(fh)
             time_now = time.strftime("%H", time.localtime())  # 刷新
-            if time_now == "21" or time_now == "10": # 设置要执行的时间
+            if time_now == "20" or time_now == "09" or time_now == "15": # 设置要执行的时间 每天9时、下午3，8时执行
                 start()
-                logger.info("sleep(20000) start news_d")
+                logger.info("sleep(20000) start news_m")
                 time.sleep(4000 + rnum)
             elif time_now == "00":
                 logger.info("new day, log end")
@@ -99,6 +100,4 @@ if __name__ == '__main__':
                 break
             else:
                 logger.info("wait sleep(600)")
-                time.sleep(600 + rnum)
-
-"""
+                time.sleep(900 + rnum)
