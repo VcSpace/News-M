@@ -75,7 +75,7 @@ python3 main.py
 
 ---
 
-### 编辑器 | IDE 
+## 编辑器 | IDE 
 
 **[Use Pycharm](https://www.jetbrains.com/pycharm/)**
 
