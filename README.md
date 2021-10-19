@@ -1,6 +1,6 @@
 # 闻讯 | News-M
 
-![https://img.shields.io/github/workflow/status/VcSpace/News-M/newsci](https://img.shields.io/github/workflow/status/VcSpace/News-M/newsci) ![https://img.shields.io/badge/platform-Linux--64%20%7C%20Macosx%20%7C%20Win--64-blue](https://img.shields.io/badge/platform-Linux--64%20%7C%20Macosx%20%7C%20Win--64-blue) ![https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9-blue) ![https://img.shields.io/github/license/VcSpace/News-M?color=blue](https://img.shields.io/github/license/VcSpace/News-M?color=blue) ![https://img.shields.io/github/stars/VcSpace/News-M?style=social](https://img.shields.io/github/stars/VcSpace/News-M?style=social)
+![https://img.shields.io/github/workflow/status/VcSpace/News-M/newsci](https://img.shields.io/github/workflow/status/VcSpace/News-M/newsci) ![https://img.shields.io/badge/platform-Linux--64%20%7C%20Macosx%20%7C%20Win--64-blue](https://img.shields.io/badge/platform-Linux%20%7C%20Macos%20%7C%20Windows-blue) ![https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9-blue) ![https://img.shields.io/github/license/VcSpace/News-M?color=blue](https://img.shields.io/github/license/VcSpace/News-M?color=blue) ![https://img.shields.io/github/stars/VcSpace/News-M?style=social](https://img.shields.io/github/stars/VcSpace/News-M?style=social)
 
 **闻讯——用于采集财经新闻网站新闻, 将数据聚合、归类并写入表格之中。**
 
@@ -12,11 +12,11 @@
 
 ## 数据来源 | Data
 
-**2021-09-15: 增加投资界新闻**
+**2021-10-19: 松果财经正常了**
 
-**网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新华网财经、松果财经、新闻联播文字版, 数据会生成表格存放在Finance文件夹中**
+**网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新华网财经、松果财经、新闻联播文字版、投资界, 数据会生成表格存放在Finance文件夹中**
 
-**NetEase Finance and economics, flush finance and economics, finance and economics in financial circles, Phoenix finance and economics, Oriental Fortune, sina finance and economics, Xinhuanet finance and economics, pinecone finance and economics, and the text version of news broadcast. The data will be generated into tables and stored in the finance folder**
+**NetEase Finance and economics, flush finance and economics, finance and economics in financial circles, Phoenix finance and economics, Oriental Fortune, sina finance and economics, Xinhuanet finance and economics, pinecone finance and economics, news broadcast text version and investment circles. The data will be generated into tables and stored in the finance folder**
 
 ---
 
@@ -75,7 +75,7 @@ python3 main.py
 
 ---
 
-### 编辑器 | IDE 
+## 编辑器 | IDE 
 
 **[Use Pycharm](https://www.jetbrains.com/pycharm/)**
 
