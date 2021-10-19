@@ -13,7 +13,12 @@ class SongGuo(object):
 
     def request(self):
         self.url = 'http://www.songguocaijing.com/'
-        self.data = requests.get(self.url, headers=headers)
+        for _ in range(3):
+            try:
+                self.data = requests.get(self.url, headers=headers, timeout=(10, 40))
+                break
+            except:
+                continue
         self.data.encoding = "utf-8"
         self.soup = BeautifulSoup(self.data.text, "lxml")
 
