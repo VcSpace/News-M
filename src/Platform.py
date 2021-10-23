@@ -19,7 +19,7 @@ class Files(object):
             self.win_News()
         else:
             self.lin_News()
-
+            
     def lin_News(self):
         path = "./Finance/News/"
         filename = "./News_Finance.xlsx"
@@ -27,24 +27,9 @@ class Files(object):
         if not isExists:
             os.mkdir(path)
         #filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
-        filetime = time.strftime("%Y_%m_%d", time.localtime())  # year-month-day-hour-minute
-        path2 = path + "闻讯__" + filetime + ".xlsx"
+        filetime = time.strftime("%Y_%m_%d_%H", time.localtime())  # year-month-day-hour-minute
+        path2 = path + "闻讯__" + filetime + "时.xlsx"
         shutil.move(filename, path2)
-
-
-    """
-    def lin_History(self):
-        path = "./Finance/History/"
-        file_name = "./Main_History.xlsx"
-        isExists = os.path.exists(path + "闻讯_主力资金历史.xlsx")
-        isExists2 = os.path.exists(path)
-        if not isExists:
-            if not isExists2:
-                os.mkdir(path)
-            #filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
-            path2 = path + "闻讯_主力资金历史" + ".xlsx"
-            shutil.move(file_name, path2)
-    """
 
     def win_News(self):
         desktop_path = os.path.join(os.path.expanduser('~'),"Desktop") #获取桌面路径
@@ -55,24 +40,10 @@ class Files(object):
         if not isExists:
             os.mkdir(path)
         #filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime()) #year-month-day-hour-minute
-        filetime = time.strftime("%Y_%m_%d", time.localtime()) #year-month-day-hour-minute
-        path2 = path + "闻讯__" + filetime + ".xlsx"
+        filetime = time.strftime("%Y_%m_%d_%H", time.localtime()) #year-month-day-hour-minute
+        path2 = path + "闻讯__" + filetime + "时.xlsx"
         shutil.move(filename, path2)
 
-    """
-    def win_History(self):
-        desktop_path = os.path.join(os.path.expanduser('~'), "Desktop")  # 获取桌面路径
-        filename = desktop_path + "\\Finance\\Main_History.xlsx"
-        path = desktop_path + "\\Finance\\History\\"
-        isExists = os.path.exists(path + "闻讯_主力资金历史.xlsx")
-        isExists2 = os.path.exists(path)
-        if not isExists:
-            if not isExists2:
-                os.mkdir(path)
-            # filetime = time.strftime("%Y_%m_%d_%H_%M", time.localtime())  # year-month-day-hour-minute
-            path2 = path + "闻讯_主力资金历史" + ".xlsx"
-            shutil.move(filename, path2)
-    """
 
     def linux_filename(self):
         path = "./Finance/"
