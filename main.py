@@ -80,24 +80,28 @@ if __name__ == '__main__':
         logger.setLevel(logging.INFO)
         log_time = time.strftime("%Y_%m_%d", time.localtime())  # 刷新
         logfile = path + log_time + ".log"
+        if os.path.exists(logfile):
+            log_time = time.strftime("%Y_%m_%d_%H", time.localtime())  # 刷新
+            logfile = path + log_time + "时.log"
         fh = logging.FileHandler(logfile,mode='w')
         fh.setLevel(logging.INFO)
         
         while True:
-            rnum = random.randint(60, 100);
+            rnum = random.randint(30, 60);
             formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
             fh.setFormatter(formatter)
             logger.addHandler(fh)
             time_now = time.strftime("%H", time.localtime())  # 刷新
-            if time_now == "20" or time_now == "09" or time_now == "15": # 设置要执行的时间 每天9时、下午3，8时执行
+            if time_now == "10" or time_now == "15" or time_now == "20": # 设置要执行的时间
+                logger.info("New-D Start")
                 start()
-                logger.info("sleep(4000) start news_m")
+                logger.info("sleep(4000) start news_d")
                 time.sleep(4000 + rnum)
             elif time_now == "00":
                 logger.info("new day, log end")
                 logger.removeHandler(fh)
-                time.sleep(3600 + rnum)
+                time.sleep(900 + rnum)
                 break
             else:
-                logger.info("wait sleep(900)")
-                time.sleep(900 + rnum)
+                logger.info("wait sleep(500)")
+                time.sleep(500 + rnum)
