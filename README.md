@@ -12,10 +12,6 @@
 
 ## 数据来源 | Data
 
-**2021-10-19: 预添加``新能源``、``元宇宙``两个新闻类**
- 
-**2021-10-26: 我好像有个更好的想法**
-
 **网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新华网财经、松果财经、新闻联播文字版、投资界, 数据会生成表格存放在Finance文件夹中**
 
 **NetEase Finance and economics, flush finance and economics, finance and economics in financial circles, Phoenix finance and economics, Oriental Fortune, sina finance and economics, Xinhuanet finance and economics, pinecone finance and economics, news broadcast text version and investment circles. The data will be generated into tables and stored in the finance folder**
