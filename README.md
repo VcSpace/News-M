@@ -57,9 +57,9 @@ python3 main.py
 
 ## 关于 | About
 
-**时间与精力是有限的 为了节省查阅信息的时间成本故此创作News-M用来快捷提取有效信息, 节约时间, 提高效率。**
+**News-M是我根据 ``经济 + 新闻 + 投资 + 代码``的需求组合制作的，提取财经新闻标题、链接进行整合排列写入表格，省去了平时搜索网站、打开网页、查看标题、打开网页、关闭网页、继续查看下一条的繁复步骤, 以往早起看新闻得用一个小时，现在10分钟内即可。**
 
-**Time and energy are limited. In order to save the time cost of consulting information, news-m is created to quickly extract effective information, save time and improve efficiency.**
+**News-m is made according to the demand combination of ` ` economy + news + investment + code `. It extracts the financial news titles and links, integrates them, arranges them and writes them into the table, eliminating the complicated steps of searching the website, opening the web page, viewing the title, opening the web page, closing the web page and continuing to view the next one. In the past, it took one hour to get up early to read the news, but now it can be done in 10 minutes.**
 
 **本项目主要抓取财经金融类新闻、资讯取得的数据仅供参考。**
 
