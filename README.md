@@ -12,7 +12,7 @@
 
 ## 数据来源 | Data
 
-**News-E: [https://github.com/VcSpace/News-E](https://github.com/VcSpace/News-E), cnn,fox,ft,yahoo news**
+**分支项目：News-E: [https://github.com/VcSpace/News-E](https://github.com/VcSpace/News-E), 外网财经新闻获取，了解世界经济。**
 
 **网易财经、同花顺财经、金融界财经、凤凰财经、东方财富、新浪财经、新华网财经、松果财经、新闻联播文字版、投资界, 数据会生成表格存放在Finance文件夹中**
 
