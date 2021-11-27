@@ -12,7 +12,7 @@
 
 ## 更新 | Update
 
-- 2021-11-16: 昨天发现新闻联播文字版g了，实在是没有好源了。
+- 2021-11-27: 恢复新闻联播文字版
 
 **分支项目：News-E: [https://github.com/VcSpace/News-E](https://github.com/VcSpace/News-E), 外网财经新闻获取，了解世界经济。**
 
