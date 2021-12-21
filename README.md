@@ -46,7 +46,7 @@ python3 main.py
 
 ## 跨平台 | Cross-Plateform
 
-**实机测试: **
+**实机测试:**
 
 **Running in real environment**
 
