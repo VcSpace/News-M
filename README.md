@@ -69,8 +69,7 @@ python3 main.py
 **This project mainly captures financial and financial news, information. The data obtained is for reference only.**
 
 ```
-此外本项目分为M,D,E 三个分支，D分支主要用于股票相关(只有大A，港股美股没有)，所以暂时不打算开放。未来准备加入ai分析(在研究...)，利用D分支的数据做一个数据分析、趋势判断，想做个萝卜投研这个类型的站点.(https://robo.datayes.com/v2/landing/indicator_library)
-目前能力有限，不知道有没有会看到这里的，有想法、有能力的可以issues留个言。
+此外本项目分为M,D,E 三个分支，D分支主要用于股票相关(只有大A，港股美股没有)，所以暂时不打算开放。未来准备加入ai分析(在研究...)，利用D分支的数据做一个数据分析、趋势判断，想做个萝卜投研这个类型的站点.(https://robo.datayes.com/v2/landing/indicator_library)。个人能力有限，不知道有没有会看到这里的，有想法、有能力的可以issues留个言。
 ```
 
 ---
