@@ -1,18 +1,14 @@
 # 闻讯 | News-M
 
-![https://img.shields.io/github/workflow/status/VcSpace/News-M/newsci](https://img.shields.io/github/workflow/status/VcSpace/News-M/newsci) ![https://img.shields.io/badge/platform-Linux--64%20%7C%20Macosx%20%7C%20Win--64-blue](https://img.shields.io/badge/platform-Linux%20%7C%20Macos%20%7C%20Windows-blue) ![https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue](https://img.shields.io/badge/python-3.7%20%7C%203.8%20%7C%203.9-blue) ![https://img.shields.io/github/license/VcSpace/News-M?color=blue](https://img.shields.io/github/license/VcSpace/News-M?color=blue) ![https://img.shields.io/github/stars/VcSpace/News-M?style=social](https://img.shields.io/github/stars/VcSpace/News-M?style=social)
+![https://img.shields.io/github/workflow/status/VcSpace/News-M/newsci](https://img.shields.io/github/workflow/status/VcSpace/News-M/newsci) ![https://img.shields.io/badge/platform-Linux--64%20%7C%20Macosx%20%7C%20Win--64-blue](https://img.shields.io/badge/platform-Linux%20%7C%20Macos%20%7C%20Windows-blue) ![https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue](https://img.shields.io/badge/python-v3-blue) ![https://img.shields.io/github/license/VcSpace/News-M?color=blue](https://img.shields.io/github/license/VcSpace/News-M?color=blue) ![https://img.shields.io/github/stars/VcSpace/News-M?style=social](https://img.shields.io/github/stars/VcSpace/News-M?style=social)
 
 **闻讯——用于采集财经新闻网站新闻, 将数据聚合、归类并写入表格之中。**
 
 **News-M--Get news from mainstream financial news websites, aggregate, categorize, and write data into tables.**
-
-*如果本项目对您有所帮助请点个star支持下 ｜ If this project is helpful to you, please click star support*
-
+ 
 ---
 
 ## 更新 | Update
-
-- 2021-12-09: 最新版本的bypy已经正常使用 百度网盘上传功能恢复
 
 **分支项目：News-E: [https://github.com/VcSpace/News-E](https://github.com/VcSpace/News-E), 外网财经新闻获取，了解世界经济。**
 
@@ -50,7 +46,7 @@ python3 main.py
 
 ## 跨平台 | Cross-Plateform
 
-**测试为真实环境下运行**
+**实机测试:**
 
 **Running in real environment**
 
@@ -58,19 +54,23 @@ python3 main.py
 
 - **Ubuntu20.04 + python3.8**
 
-- **Macos11 + python3.9**
+- **Macos11.4 + python3.9**
 
 ---
 
 ## 关于 | About
 
-**提取财经新闻标题、链接进行整合排列写入表格，省去了平时搜索网站、打开网页、查看标题、打开网页、关闭网页、继续查看下一条的繁复步骤, 以往早起看新闻得用一个小时，现在10分钟内即可。**
+**提取财经新闻标题、链接进行整合排列写入表格，省去了人眼识别、大脑检索、手指点击鼠标打开/关闭的繁琐步骤, 之前我大约读各大网站讯息新闻得话费一个小时，现在10分钟内即可。**
 
 **Extracting the financial news headlines and links for integration and arrangement and writing them into the table eliminates the complicated steps of searching the website, opening the web page, viewing the title, opening the web page, closing the web page and continuing to view the next one. In the past, it took one hour to get up early to watch the news, but now it can be done in 10 minutes.**
 
 **本项目主要抓取财经金融类新闻、资讯取得的数据仅供参考。**
 
 **This project mainly captures financial and financial news, information. The data obtained is for reference only.**
+
+```
+此外本项目分为M,D,E 三个分支，D分支主要用于股票相关(只有大A，港股美股没有)，所以暂时不打算开放。未来准备加入ai分析(在研究...)，利用D分支的数据做一个数据分析、趋势判断，想做个萝卜投研这个类型的站点.(https://robo.datayes.com/v2/landing/indicator_library)。个人能力有限，不知道有没有会看到这里的，有想法、有能力的可以issues留个言。
+```
 
 ---
 
