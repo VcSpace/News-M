@@ -32,7 +32,7 @@ pip install -r requirements.txt
 python3 main.py
 ```
 
-**windows系统生成在桌面, Linux/Macos生成在运行目录下**
+**Windows新闻文件生成在桌面, Linux/Macos生成在运行目录下**
 
 **Windows system is generated on the desktop, Linux/Macos is generated in the running directory**
 
@@ -62,7 +62,7 @@ python3 main.py
 
 ## 关于 | About
 
-**提取财经新闻标题、链接进行整合排列写入表格，省去了人眼识别、大脑检索、手指点击鼠标打开/关闭的繁琐步骤, 之前我大约读各大网站讯息新闻得话费一个小时，现在10分钟内即可。**
+**提取财经新闻标题、链接进行整合排列写入表格，省去了人眼识别->大脑检索->点击鼠标->打开/关闭的繁琐步骤, 我每日会大约花费一小时时间用来获取最新的新闻资讯，效率极低。本项目提升获取效率，缩短了花费在新闻获取的时间。**
 
 **Extracting the financial news headlines and links for integration and arrangement and writing them into the table eliminates the complicated steps of searching the website, opening the web page, viewing the title, opening the web page, closing the web page and continuing to view the next one. In the past, it took one hour to get up early to watch the news, but now it can be done in 10 minutes.**
 
