@@ -10,8 +10,6 @@
 
 ## 更新 | Update
 
-**2022-02-26: **
-
 **分支项目：News-E: [https://github.com/VcSpace/News-E](https://github.com/VcSpace/News-E), 外网财经新闻获取，了解世界经济。**
 
 ---
