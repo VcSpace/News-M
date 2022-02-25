@@ -10,7 +10,7 @@
 
 ## 更新 | Update
 
-**2022-013: cctv新闻文字版暂时又正常了，缺失的可以简单修改代码手动补全。**
+**2022-02-26: **
 
 **分支项目：News-E: [https://github.com/VcSpace/News-E](https://github.com/VcSpace/News-E), 外网财经新闻获取，了解世界经济。**
 
