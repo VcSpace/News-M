@@ -2,7 +2,7 @@
 
 ![https://img.shields.io/github/workflow/status/VcSpace/News-M/newsci](https://img.shields.io/github/workflow/status/VcSpace/News-M/newsci) ![https://img.shields.io/badge/platform-Linux--64%20%7C%20Macosx%20%7C%20Win--64-blue](https://img.shields.io/badge/platform-Linux%20%7C%20Macos%20%7C%20Windows-blue) ![https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue](https://img.shields.io/badge/python-v3-blue) ![https://img.shields.io/github/license/VcSpace/News-M?color=blue](https://img.shields.io/github/license/VcSpace/News-M?color=blue) ![https://img.shields.io/github/stars/VcSpace/News-M?style=social](https://img.shields.io/github/stars/VcSpace/News-M?style=social)
 
-**闻讯——用于采集财经新闻网站新闻, 将数据聚合、归类并写入表格之中。**
+**闻讯——用于采集财经新闻网站新闻, 将数据聚合、归类并写入表格之中。** 
 
 **News-M--Get news from mainstream financial news websites, aggregate, categorize, and write data into tables.**
  
