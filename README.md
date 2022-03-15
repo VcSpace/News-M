@@ -24,7 +24,7 @@
 
 ## 运行程序 ｜ Run
 
-```python
+```python 
 #Run
 pip install -r requirements.txt
 python3 main.py
