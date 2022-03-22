@@ -118,7 +118,7 @@ class WangYi(object):
 
     def getstock(self):
         #stock
-        stockurl = 'https://money.163.com/stock/'
+        stockurl = 'https://money.163.com/stock'
         stockdata = requests.get(stockurl, headers=headers)
         soup = BeautifulSoup(stockdata.text, "lxml")
         stockl = soup.select('#stock2016_wrap > div > div.stock2016_content > div.idx_main.common_wrap.clearfix > div.news_main > div.news_main_wrap > div.topnews > div.topnews_first > h2 > a')
