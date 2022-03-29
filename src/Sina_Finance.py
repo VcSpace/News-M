@@ -30,7 +30,7 @@ class SinaNews(object):
         pass
 
     def request(self):
-        self.url = 'https://finance.sina.com.cn/'
+        self.url = 'https://finance.sina.com.cn'
         self.data = requests.get(self.url, headers=headers)
         self.data.encoding = "utf-8"
         self.soup = BeautifulSoup(self.data.text, "lxml")
