@@ -10,8 +10,6 @@
 
 ## 更新 | Update
 
-**2022-03-22: 网易财经已修复**
-
 **分支项目：News-E: [https://github.com/VcSpace/News-E](https://github.com/VcSpace/News-E), 外网财经新闻获取，了解世界经济。**
 
 ---
