@@ -5,12 +5,6 @@
 **闻讯——用于采集财经新闻网站新闻, 将数据聚合、归类并写入表格之中。** 
 
 **News-M--Get news from mainstream financial news websites, aggregate, categorize, and write data into tables.**
- 
----
-
-## 更新 | Update
-
-**分支项目：News-E: [https://github.com/VcSpace/News-E](https://github.com/VcSpace/News-E), 外网财经新闻获取，了解世界经济。**
 
 ---
 
