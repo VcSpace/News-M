@@ -58,10 +58,6 @@ python3 main.py
 
 **Extracting the financial news headlines and links for integration and arrangement and writing them into the table eliminates the complicated steps of searching the website, opening the web page, viewing the title, opening the web page, closing the web page and continuing to view the next one. In the past, it took one hour to get up early to watch the news, but now it can be done in 10 minutes.**
 
-**本项目主要抓取财经金融类新闻、资讯取得的数据仅供参考。**
-
-**This project mainly captures financial and financial news, information. The data obtained is for reference only.**
-
 ```
 此外本项目分为M,D,E 三个分支，D分支主要用于股票相关(只有大A，港股美股没有)，所以暂时不打算开放。未来准备加入ai分析(在研究...)，利用D分支的数据做一个数据分析、趋势判断，想做个萝卜投研这个类型的站点.(https://robo.datayes.com/v2/landing/indicator_library)。个人能力有限，不知道有没有会看到这里的，有想法、有能力的可以issues留个言。
 
