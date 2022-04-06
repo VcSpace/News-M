@@ -61,7 +61,7 @@ class SongGuo(object):
 
     def main(self, file_name):
         self.xlsxname = file_name
-        Sg.request()
+        Sg.request() #有些单一
         Sg.get_news()
 
 Sg = SongGuo()
