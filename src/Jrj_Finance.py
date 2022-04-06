@@ -58,7 +58,7 @@ class JinRongJie(object):
         except Exception:
             print("JRJ Save Error = 1")
 
-    def get_FinanceNews(self): #差不多4-5个小时内的热点新闻
+    def get_FinanceNews(self): #大约4-5个小时内的热点新闻
         fin_time1 = time.strftime("%Y%m", time.localtime())  # year-month-day-hour-minute
         fin_time2 = time.strftime("%Y%m%d", time.localtime())  # year-month-day-hour-minute
         fin_url = 'http://finance.jrj.com.cn/xwk/{}/{}_1.shtml'.format(fin_time1, fin_time2)
