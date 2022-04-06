@@ -7,8 +7,7 @@ from bypy import ByPy
 class Baidu(object):
     def __init__(self):
         bp = ByPy()
-        #print(bp.info())  # or whatever instance methods of ByPy class
-        # 使用上传接口之前，请申请接入，申请地址为：https://pan.baidu.com/union/apply/
+        #print(bp.info()) #使用上传接口之前，请申请接入，申请地址为：https://pan.baidu.com/union/apply/
 
     # def get_token(self):
     #     #用不到
