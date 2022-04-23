@@ -13,7 +13,7 @@ class Touzijie(object):
 
     def request(self):
         self.url = 'https://www.pedaily.cn'
-        self.data = requests.get(self.url, headers=headers)
+        self.data = requests.get(self.url, headers=headers,timeout=60)
         self.data.encoding = "utf-8"
         self.soup = BeautifulSoup(self.data.text, "lxml")
 
@@ -114,12 +114,15 @@ class Touzijie(object):
 
     def main(self, file_name):
         self.xlsxname = file_name
-        Tzj.request()
-        Tzj.get_topnews()
-        Tzj.get_news()
-        Tzj.get_Instantnews()
+        try:
+            Tzj.request()
+            Tzj.get_topnews()
+            Tzj.get_news()
+            Tzj.get_Instantnews()
         #Tzj.get_invest()
         #Tzj.get_ipo()
+        except Exception:
+            pass
 
 
 Tzj = Touzijie()
