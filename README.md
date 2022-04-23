@@ -7,6 +7,9 @@
 **News-M--Get news from mainstream financial news websites, aggregate, categorize, and write data into tables.**
 
 ---
+**2022-04-23: tzj这个网站不知道怎么回事隔几天出一次问题，加了个try，有问题就跳过不影响程序定时运行。**
+
+---
 
 ## 数据来源 | Data
 
