@@ -128,8 +128,9 @@ class CCTV_News(object):
         #获取今天与昨天的新闻联播 已获取会自动覆盖
         CCTV.request()
         CCTV.getNews()
-        CCTV.request_114()
-        CCTV.getNews_114()
+        #114站点没了
+#         CCTV.request_114()
+#         CCTV.getNews_114()
 
 
 CCTV = CCTV_News()
