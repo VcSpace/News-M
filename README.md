@@ -7,7 +7,12 @@
 **News-M--Get news from mainstream financial news websites, aggregate, categorize, and write data into tables.**
 
 ---
-**2022-05-25: 一个新闻源关站导致软件的崩溃，已删除，暂未找到补充。**
+
+```
+项目目前为缓慢更新、长期维护状态。
+```
+
+**2022-06-12: 全面的维护更新，另准备开放测试版内容**
 
 ---
 
@@ -61,9 +66,6 @@ python3 main.py
 
 **Extracting the financial news headlines and links for integration and arrangement and writing them into the table eliminates the complicated steps of searching the website, opening the web page, viewing the title, opening the web page, closing the web page and continuing to view the next one. In the past, it took one hour to get up early to watch the news, but now it can be done in 10 minutes.**
 
-```
-项目目前为缓慢维护状态。
-```
 
 ---
 
