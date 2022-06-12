@@ -48,7 +48,7 @@ def get_filename(platform):
         linux_file = pt.linux_filename()
         return linux_file
 
-def start():
+if __name__ == '__main__':
     Debug = False
     m_platform = pt.get_platform() #判断系统
     filename = get_filename(m_platform)
@@ -74,41 +74,3 @@ def start():
 
     if m_platform == True:
         pt.pause()
-
-
-if __name__ == '__main__':
-    print('start')
-
-    path = "./logs/"
-    isExists = os.path.exists(path)   
-    if not isExists:
-        os.mkdir(path)
-    while True:
-        logger = logging.getLogger()
-        logger.setLevel(logging.INFO)
-        log_time = time.strftime("%Y_%m_%d", time.localtime())  # 刷新
-        logfile = path + log_time + ".log"
-        if os.path.exists(logfile):
-            log_time = time.strftime("%Y_%m_%d_%H", time.localtime())  # 另创建
-            logfile = path + log_time + "时.log"
-        fh = logging.FileHandler(logfile,mode='w')
-        fh.setLevel(logging.INFO)
-        
-        while True:
-            formatter = logging.Formatter("%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s")
-            fh.setFormatter(formatter)
-            logger.addHandler(fh)
-            time_now = time.strftime("%H", time.localtime())  # 刷新
-            if time_now == "11" or time_now == "16" or time_now == "21": # 设置要执行的时间
-                logger.info("New-D Start")
-                start()
-                logger.info("sleep(4567) start news_d")
-                time.sleep(4567)
-            elif time_now == "00":
-                logger.info("new day, log end")
-                logger.removeHandler(fh)
-                time.sleep(4567)
-                break
-            else:
-                logger.info("wait sleep(1234)")
-                time.sleep(1234)
