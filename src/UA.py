@@ -36,5 +36,6 @@ USER_AGENT_LIST = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
     ]
 import random #这个文件的UA用不用都不影响
-USER_AGENT = random.choice(USER_AGENT_LIST)# 构造请求头
+USER_AGENT = random.choice(USER_AGENT_LIST)
+# 构造请求头
 headers = {'user-agent': USER_AGENT}

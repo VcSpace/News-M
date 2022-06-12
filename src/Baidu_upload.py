@@ -1,13 +1,12 @@
 import os
-import requests
-import json
 from src.Platform import pt
 from bypy import ByPy
 
 class Baidu(object):
     def __init__(self):
         bp = ByPy()
-        #print(bp.info()) #使用上传接口之前，请申请接入，申请地址为：https://pan.baidu.com/union/apply/
+        #print(bp.info())  # or whatever instance methods of ByPy class
+        # 使用上传接口之前，请申请接入，申请地址为：https://pan.baidu.com/union/apply/
 
     # def get_token(self):
     #     #用不到
@@ -23,7 +22,10 @@ class Baidu(object):
         print("正在同步备份文件，如果文件过多 请耐心等待")
         #re: https://www.jianshu.com/p/19ddb60e2b22
         cmd = 'bypy syncup ' + path + " /"
-        print("上传完成: ", os.system(cmd))
+        try:
+            print("上传完成: ", os.system(cmd))
+        except:
+            print("上传出错")
 
     def main(self):
         self.upload() #bypy 把当前目录同步到云盘

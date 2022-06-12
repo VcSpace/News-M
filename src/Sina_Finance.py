@@ -30,8 +30,15 @@ class SinaNews(object):
         pass
 
     def request(self):
-        self.url = 'https://finance.sina.com.cn'
-        self.data = requests.get(self.url, headers=headers)
+        self.url = 'https://finance.sina.com.cn/'
+
+        for ll in range(3):
+            try:
+                self.data = requests.get(self.url, headers=headers, timeout=120)
+                if self.data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
         self.data.encoding = "utf-8"
         self.soup = BeautifulSoup(self.data.text, "lxml")
 
@@ -50,6 +57,7 @@ class SinaNews(object):
         t_row = t_row + 1
 
         datalist = self.soup.find_all(class_='fin_tabs0_c0')
+        datal = None
         for datal in datalist:
             t = 0 #留着先
 
@@ -150,7 +158,14 @@ class SinaNews(object):
         sheet.cell(row=t_row, column=t_col + 3, value="新闻时间")
         t_row = t_row + 1
 
-        data = requests.get(url, headers=headers)
+        data = None
+        for ll in range(3):
+            try:
+                data = requests.get(url, headers=headers, timeout=120)
+                if data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
         t1 = '<html><body><p>try{feedCardJsonpCallback('
         t2 = ');}catch(e){};</p></body></html>'
         soup = BeautifulSoup(data.text, "lxml")

@@ -13,7 +13,13 @@ class Touzijie(object):
 
     def request(self):
         self.url = 'https://www.pedaily.cn'
-        self.data = requests.get(self.url, headers=headers,timeout=60)
+        for ll in range(3):
+            try:
+                self.data = requests.get(self.url, headers=headers, timeout=120)
+                if self.data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
         self.data.encoding = "utf-8"
         self.soup = BeautifulSoup(self.data.text, "lxml")
 
@@ -119,8 +125,6 @@ class Touzijie(object):
             Tzj.get_topnews()
             Tzj.get_news()
             Tzj.get_Instantnews()
-        #Tzj.get_invest()
-        #Tzj.get_ipo()
         except Exception:
             pass
 

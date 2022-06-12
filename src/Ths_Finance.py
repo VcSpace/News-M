@@ -16,7 +16,14 @@ class TongHuaShun(object):
 
     def request(self):
         self.url = 'http://www.10jqka.com.cn/'
-        self.data = requests.get(self.url, headers=headers)
+        for ll in range(3):
+            try:
+                self.data = requests.get(self.url, headers=headers, timeout=120)
+                if self.data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
+
         self.data.encoding = "gbk"
         self.soup = BeautifulSoup(self.data.text, "lxml")
 
@@ -24,7 +31,15 @@ class TongHuaShun(object):
         calendar_time = time.strftime("%Y%m", time.localtime())  # year-month-day-hour-minute
         #self.url_calendar = 'http://stock.10jqka.com.cn/fincalendar.shtml#{}'.format(datatime)
         self.url_calendar = 'http://comment.10jqka.com.cn/tzrl/getTzrlData.php?callback=callback_dt&type=data&date={}'.format(calendar_time)
-        self.data_calendar = requests.get(self.url_calendar, headers=headers)
+
+        for ll in range(3):
+            try:
+                self.data_calendar = requests.get(self.url_calendar, headers=headers, timeout=120)
+                if self.data_calendar.status_code == 200:
+                    break
+            except Exception as e:
+                pass
+
 
     def Style(self):
         self.m_font = Font(
@@ -188,7 +203,6 @@ class TongHuaShun(object):
     def main(self, file_name):
         self.xlsxname = file_name
         Ths.request()
-        Ths.Style()
         Ths.getNew()
         Ths.getInvestment()
         Ths.getInvestment2()

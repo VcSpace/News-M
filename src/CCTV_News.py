@@ -5,6 +5,12 @@ import shutil
 from src.Platform import pt
 import time
 
+"""
+http://mrxwlb.com/category/mrxwlb-text/amp/
+cn.govopendata.com
+http://www.11417.cn/cctv.html
+"""
+
 headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
 }
@@ -16,13 +22,16 @@ class CCTV_News(object):
     def request(self):
         newslist = ''
         url = 'http://mrxwlb.com/category/mrxwlb-text/amp/'
-        for _ in range(10):
+        data = ''
+        for ll in range(3):
             try:
-                newslist = requests.get(url, headers=headers)
-                break
-            except:
-                continue
-        self.soup = BeautifulSoup(newslist.text, "lxml")
+                data = requests.get(url, headers=headers, timeout=120)
+                if data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
+
+        self.soup = BeautifulSoup(data.text, "lxml")
         m_new = self.soup.find(class_='loop-title')
         m_url = m_new.find('a')
         self.mr_url = m_url['href']
@@ -31,8 +40,8 @@ class CCTV_News(object):
 
     def getNews(self):
         news = ''
-        # self.mr_url = 'http://mrxwlb.com/2022年1月6日新闻联播文字版/amp/'
-        # self.mr_title = '2022年1月6日新闻联播文字版'
+        # self.mr_url = 'http://mrxwlb.com/2022年2月15日新闻联播文字版/amp/'
+        # self.mr_title = '2022年2月15日新闻联播文字版'
         for _ in range(10):
             try:
                 news = requests.get(self.mr_url, headers=headers)
@@ -128,9 +137,8 @@ class CCTV_News(object):
         #获取今天与昨天的新闻联播 已获取会自动覆盖
         CCTV.request()
         CCTV.getNews()
-        #114站点没了
-#         CCTV.request_114()
-#         CCTV.getNews_114()
+        # CCTV.request_114()
+        # CCTV.getNews_114()
 
 
 CCTV = CCTV_News()

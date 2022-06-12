@@ -23,7 +23,15 @@ class FengHuang(object):
     def request(self):
         #new
         self.url = 'http://finance.ifeng.com/'
-        self.data = requests.get(self.url, headers=headers)
+
+        for ll in range(3):
+            try:
+                self.data = requests.get(self.url, headers=headers, timeout=120)
+                if self.data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
+
         self.soup = BeautifulSoup(self.data.text, "lxml")
 
         self.stock_url = 'http://finance.ifeng.com/stock/'
