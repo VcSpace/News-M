@@ -16,17 +16,38 @@ class EastWealth(object):
 
     def request(self):
         self.url = 'https://www.eastmoney.com/'
-        self.data = requests.get(self.url, headers=headers)
+
+        for ll in range(3):
+            try:
+                self.data = requests.get(self.url, headers=headers, timeout=120)
+                if self.data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
         self.data.encoding = "utf-8"
         self.soup = BeautifulSoup(self.data.text, "lxml")
 
         self.stock_url = 'http://stock.eastmoney.com/'
-        self.stock_data = requests.get(self.stock_url, headers=headers)
+
+        for ll in range(3):
+            try:
+                self.stock_data = requests.get(self.stock_url, headers=headers, timeout=120)
+                if self.stock_data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
         self.stock_data.encoding = "utf-8"
         self.stock_soup = BeautifulSoup(self.stock_data.text, "lxml")
 
         self.finance_url = 'http://finance.eastmoney.com/'
-        self.finance_data = requests.get(self.finance_url, headers=headers)
+
+        for ll in range(3):
+            try:
+                self.finance_data = requests.get(self.finance_url, headers=headers, timeout=120)
+                if self.finance_data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
         self.finance_data.encoding = "utf-8"
         self.finance_soup = BeautifulSoup(self.finance_data.text, "lxml")
 

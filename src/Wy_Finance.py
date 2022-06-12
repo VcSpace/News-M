@@ -28,39 +28,21 @@ class WangYi(object):
     def request(self):
         #new
         self.url = 'https://money.163.com/'
-        self.data = requests.get(self.url, headers=headers)
-        self.soup = BeautifulSoup(self.data.text, "lxml")
+        for ll in range(3):
+            try:
+                self.data = requests.get(self.url, headers=headers, timeout=120)
+                if self.data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
 
+        self.soup = BeautifulSoup(self.data.text, "lxml")
         self.time = time.time()
 
     def Style(self):
-        self.m_font = Font(
-        size = 12,
-        bold = True,
-        )
+        self.m_font = Font(name="微软雅黑",size=15,bold=True,italic=True,color="FF0000")
+        self.head_font = Font(name="微软雅黑",size=20,bold=True,italic=True,color="FF0000")
 
-        self.head_font = Font(
-        size = 14,
-        bold = True,
-        )
-
-    """
-    def Style(self):
-        font = xlwt.Font()  # 内容字体
-        font2 = xlwt.Font()  # 标题字体
-        font3 = xlwt.Font()  # 指数
-        font.height = 20 * 11
-        font2.height = 20 * 12
-        font2.bold = True
-        font3.height = 20 * 13
-        self.style = xlwt.XFStyle() #标题 链接字体
-        self.style_head = xlwt.XFStyle() #类别列字体
-        self.style_index = xlwt.XFStyle() #指数字体
-
-        self.style.font = font
-        self.style_head.font = font2
-        self.style_index.font = font3
-    """
 
     def getTopNew(self):
         datalist = self.soup.select("ul li h2")
@@ -118,7 +100,7 @@ class WangYi(object):
 
     def getstock(self):
         #stock
-        stockurl = 'https://money.163.com/stock/'
+        stockurl = 'https://money.163.com/stock'
         stockdata = requests.get(stockurl, headers=headers)
         soup = BeautifulSoup(stockdata.text, "lxml")
         stockl = soup.select('#stock2016_wrap > div > div.stock2016_content > div.idx_main.common_wrap.clearfix > div.news_main > div.news_main_wrap > div.topnews > div.topnews_first > h2 > a')
@@ -328,10 +310,18 @@ class WangYi(object):
         t2.join()
         #self.get_Indu(soup2, if_write)
 
+    def create_file(self, filename):
+        wb = Workbook()
+        ws = wb['Sheet']
+        wb.remove(ws)
+        sheet = wb.create_sheet("Wy")
+        try:
+            wb.save(filename)
+        except Exception:
+            print("Wy create_error = 1")
 
     def main(self, file_name):
         self.xlsxname = file_name
-        Wy.Style()
         Wy.request()
         Wy.getTopNew()
         Wy.getlist2()

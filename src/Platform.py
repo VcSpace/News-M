@@ -19,7 +19,7 @@ class Files(object):
             self.win_News()
         else:
             self.lin_News()
-            
+
     def lin_News(self):
         path = "./Finance/News/"
         filename = "./News_Finance.xlsx"
@@ -30,6 +30,7 @@ class Files(object):
         filetime = time.strftime("%Y_%m_%d_%H", time.localtime())  # year-month-day-hour-minute
         path2 = path + "闻讯__" + filetime + "时.xlsx"
         shutil.move(filename, path2)
+
 
     def win_News(self):
         desktop_path = os.path.join(os.path.expanduser('~'),"Desktop") #获取桌面路径
@@ -43,7 +44,6 @@ class Files(object):
         filetime = time.strftime("%Y_%m_%d_%H", time.localtime()) #year-month-day-hour-minute
         path2 = path + "闻讯__" + filetime + "时.xlsx"
         shutil.move(filename, path2)
-
 
     def linux_filename(self):
         path = "./Finance/"

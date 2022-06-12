@@ -27,8 +27,15 @@ class JinRongJie(object):
 
     def get_TopNews(self):
         url = 'http://finance.jrj.com.cn/'
-        data = requests.get(url, headers=headers)
-        soup = BeautifulSoup(data.text, "lxml")
+        for ll in range(3):
+            try:
+                self.data = requests.get(url, headers=headers, timeout=120)
+                if self.data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
+
+        soup = BeautifulSoup(self.data.text, "lxml")
 
         wb = load_workbook(self.xlsxname)
         sheet = wb.create_sheet('Jrj')
@@ -76,7 +83,15 @@ class JinRongJie(object):
         t_row = t_row + 3
         time_row = t_row
 
-        data = requests.get(fin_url, headers=headers)
+        data = None
+        for ll in range(3):
+            try:
+                data = requests.get(fin_url, headers=headers, timeout=120)
+                if data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
+
         soup = BeautifulSoup(data.text, "lxml")
         datalist = soup.find_all(class_="list")
         flag = False
@@ -105,7 +120,14 @@ class JinRongJie(object):
 
     def get_todayHot(self):
         url = 'http://biz.jrj.com.cn/biz_index.shtml'
-        data = requests.get(url, headers=headers)
+        for ll in range(3):
+            try:
+                data = requests.get(url, headers=headers, timeout=120)
+                if data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
+
         soup = BeautifulSoup(data.text, "lxml")
         datalist = soup.find_all(class_="jrj-top10")
 
@@ -158,7 +180,15 @@ class JinRongJie(object):
         t_row = t_row + 3
         time_row = t_row
 
-        data = requests.get(bus_url, headers=headers)
+        data = None
+        for ll in range(3):
+            try:
+                data = requests.get(bus_url, headers=headers, timeout=120)
+                if data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
+
         soup = BeautifulSoup(data.text, "lxml")
         datalist = soup.find_all(class_="list")
         flag = False
@@ -220,8 +250,14 @@ class JinRongJie(object):
         sheet.cell(row=t_row + 2, column=t_col + 3, value="新闻时间")
         t_row = t_row + 3
         time_row = t_row
-
-        data = requests.get(sci_url, headers=headers)
+        data = ''
+        for ll in range(3):
+            try:
+                data = requests.get(sci_url, headers=headers, timeout=120)
+                if data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
         soup = BeautifulSoup(data.text, "lxml")
         datalist = soup.find_all(class_="list")
         flag = False
@@ -250,7 +286,6 @@ class JinRongJie(object):
 
     def main(self, filename):
         self.xlsxname = filename
-        Jrj.Style()
         Jrj.get_TopNews()
         Jrj.get_todayHot()
         Jrj.get_FinanceNews()

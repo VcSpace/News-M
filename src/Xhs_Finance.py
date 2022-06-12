@@ -12,7 +12,14 @@ class XinHuaNet(object):
 
     def request(self):
         self.url = 'http://www.xinhuanet.com/fortunepro/'
-        self.data = requests.get(self.url, headers=headers)
+        for ll in range(3):
+            try:
+                self.data = requests.get(self.url, headers=headers, timeout=120)
+                if self.data.status_code == 200:
+                    break
+            except Exception as e:
+                pass
+
         self.data.encoding = "utf-8"
         self.soup = BeautifulSoup(self.data.text, "lxml")
 
