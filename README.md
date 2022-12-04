@@ -27,6 +27,7 @@
 
 ```python 
 #Run
+#新闻联播文字版、个股处理功能、网盘资料备份默认关闭，自行开启。
 pip install -r requirements.txt
 python3 main.py
 ```
