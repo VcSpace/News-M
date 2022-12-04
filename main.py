@@ -24,10 +24,10 @@ def get_News(platform, filename, debug):
         Wy.create_file(filename)
         CCTV.main()
         return
-    Wy.main(filename)
-    t1 = threading.Thread(target=CCTV.main, args=())
-    # t2 = threading.Thread(target=Stock.main, args=(filename,)) #进入维护待更新状态
-    t1.start()
+    Wy.main(filename) 
+    # t1 = threading.Thread(target=CCTV.main, args=()) #新闻联播文字版获取默认关闭，经常失效，失效后不再更新
+    # t2 = threading.Thread(target=Stock.main, args=(filename,)) #个股处理版本默认关闭，使用先在Code.txt添加代码+名称，失效不再更新
+    # t1.start()
     # t2.start()
     Xhs.main(filename)
     Ths.main(filename)
@@ -37,7 +37,7 @@ def get_News(platform, filename, debug):
     Sina.main(filename)
     Tzj.main(filename)
     Sg.main(filename)
-    t1.join()
+    # t1.join()
     # t2.join()
 
 def get_filename(platform):
@@ -63,7 +63,7 @@ if __name__ == '__main__':
     复制授权码
     粘贴到命令行-enter
     """
-    bd_flag = True #改为True开启
+    bd_flag = False #改为True开启
     if bd_flag == False or Debug == True:
         print("如果需要上传到云盘备份 请自行开启bd.main \n")
     else:
