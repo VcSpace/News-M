@@ -8,6 +8,10 @@ import re
 import os
 import wget
 from src.Platform import pt
+#处理个股版本，包含交易明细、买卖盘、券商机构等。
+#上层目录Code.txt 添加代码
+#失效不再更新，自行抓包获取。
+
 
 headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36',
