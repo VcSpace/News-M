@@ -32,7 +32,7 @@ def get_News(platform, filename, debug):
     Xhs.main(filename)
     Ths.main(filename)
     Jrj.main(filename)
-    Fh.main(filename)
+    # Fh.main(filename)#接口失效
     Ew.main(filename)
     Sina.main(filename)
     Tzj.main(filename)
