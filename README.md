@@ -81,9 +81,8 @@ python3 main.py
 
 ---
 
-## Star History
+## Stargazers over time
 
-[![Star History Chart](https://api.star-history.com/svg?repos=VcSpace/News-M&type=Date)](https://star-history.com/#VcSpace/News-M&Date)
-
+[![Stargazers over time](https://starchart.cc/VcSpace/News-M.svg)](https://starchart.cc/VcSpace/News-M)
 
 
