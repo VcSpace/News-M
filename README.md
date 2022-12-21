@@ -82,6 +82,7 @@ python3 main.py
 
 ---
 
+
 ## Stargazers over time
 
 [![Stargazers over time](https://starchart.cc/VcSpace/News-M.svg)](https://starchart.cc/VcSpace/News-M)
