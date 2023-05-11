@@ -4,7 +4,8 @@ import os
 import time
 
 """
-POST https://www.entobit.cn/trending/top/getWeiboRankSearch.do HTTP/1.1
+POST https://www.en
+tobit.cn/trending/top/getWeiboRankSearch.do HTTP/1.1
 Host: www.entobit.cn
 Connection: keep-alive
 Content-Length: 33
@@ -19,7 +20,8 @@ Origin: https://www.entobit.cn
 Sec-Fetch-Site: same-origin
 Sec-Fetch-Mode: cors
 Sec-Fetch-Dest: empty
-Referer: https://www.entobit.cn/hot-search/nav/home?accessToken=Cjr8dOf3BVcz6kQELQ24/SHCztOETa%2BGJuB%2BR4c2SaWErDW6BR7ZBuKo5idM1TWHQ2YHNf6GjPn6Vxb971zAPw==&bindPhone=false&isIos=&isWx=
+Referer: https://www.ent
+obit.cn/hot-search/nav/home?accessToken=Cjr8dOf3BVcz6kQELQ24/SHCztOETa%2BGJuB%2BR4c2SaWErDW6BR7ZBuKo5idM1TWHQ2YHNf6GjPn6Vxb971zAPw==&bindPhone=false&isIos=&isWx=
 Accept-Encoding: gzip, deflate, br
 Accept-Language: zh-CN,zh;q=0.9
 
@@ -37,7 +39,8 @@ Connection: keep-alive
 session = requests.Session()
 
 headers = {
-    'Host': 'www.entobit.cn',
+    'Host': 'www.ent'
+            'obit.cn',
     'Connection': 'keep-alive',
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/x-www-form-urlencoded',
@@ -46,7 +49,8 @@ headers = {
     'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.105 Safari/537.36'
 }
 def request(text, num):
-    url = 'https://www.entobit.cn/trending/top/getWeiboRankSearch.do'
+    url = 'https://www.ento' \
+          'bit.cn/trending/top/getWeiboRankSearch.do'
     key = {
         'keyword': '{0}'.format(text),
         'from': '{0}'.format(num)
