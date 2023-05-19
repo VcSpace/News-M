@@ -72,7 +72,7 @@ python3 main.py
 
 ## 开源协议 | License
 
-``MIT  License``
+``GPLV3  License``
 
 ---
 
