@@ -100,19 +100,17 @@ SOL: eKYV6tEiWBmtns4Ph2JxvLk6N86h9rn8vJ5WmT3LBN8
 
 - OG元老
 - PFP NFT
-- ERC20代币(具体看情况)
+- ERC20 token
  
 如果您的捐助<=0.01eth的价值，您将获得下列奖励：
 
-- 少量的ERC20代币(具体看情况)
+- 少量的ERC20 token
 
-请将转账TX地址+截图发送到下方的其中一个：
+将转账TX地址发送到下方的其中一个邮箱，请使用常用邮箱发送，方便以后邮件通知，奖励直接发到钱包地址中：
 
 - domail: vcvckwkw@dmail.ai, eldxz-r2dwu-m3d7p-qujlp-jefye-pvk7x-rnnlr-kw33h-ggpnt-v3rha-gqe
 
 - Web2 email: vcvckw@gmail.com
-
-我会记录钱包地址+发件邮箱，起航之时，群发通知。
 
 ---
 
