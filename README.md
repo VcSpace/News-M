@@ -5,7 +5,7 @@
 
 **News-M--用于采集财经新闻网站新闻, 将数据聚合、归类并写入表格之中。 项目的cloud分支是定时版本可以放在服务器中定时运行** 
 
-**News-M--Get news from mainstream financial news websites, aggregate, categorize, and write data into tables.**
+**News-M is a useful and innovative tool for anyone who is interested in financial news and data. 😊**
 
 ---
 
