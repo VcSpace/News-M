@@ -3,15 +3,14 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/VcSpace/News-M/python-app.yml?branch=main)
 ![https://img.shields.io/badge/platform-Linux--64%20%7C%20Macosx%20%7C%20Win--64-blue](https://img.shields.io/badge/platform-Linux%20%7C%20Macos%20%7C%20Windows-blue) ![https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue](https://img.shields.io/badge/python-v3-blue) ![https://img.shields.io/github/license/VcSpace/News-M?color=blue](https://img.shields.io/github/license/VcSpace/News-M?color=blue) ![https://img.shields.io/github/stars/VcSpace/News-M?style=social](https://img.shields.io/github/stars/VcSpace/News-M?style=social)
 
-**News-M--用于采集财经新闻网站新闻, 将数据聚合、归类并写入表格之中。 项目的cloud分支是定时版本可以放在服务器中定时运行** 
+**对于任何对金融新闻和数据感兴趣的人来说，News-M是有用且创新的工具。😊** 
 
 **News-M is a useful and innovative tool for anyone who is interested in financial news and data. 😊**
 
 ---
 
 ```
-2022-10-05: 项目已经在服务器停用了，未来的更新、维护不再那么即时。失效接口自行更换即可。(市场年年有机会）
-2022-12-04: 将私有项目News-D的未开源部分上传，专用于处理个股版本，包含交易明细、买卖盘、券商机构等(在Code.txt添加代码，在main文件打开接口即可)
+项目的维护不再那么即时。失效接口自行更换即可。同时将私有项目News-D的未开源部分上传，专用于处理个股版本，包含交易明细、买卖盘、券商机构等(在Code.txt添加代码，在main文件打开接口即可)
 ```
 
 ---
