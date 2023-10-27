@@ -32,10 +32,10 @@
 pip install -r requirements.txt
 python3 main.py
 ```
+> [!IMPORTANT]
+> Windows新闻文件生成在桌面, Linux/Macos生成在运行目录下
 
-**Windows新闻文件生成在桌面, Linux/Macos生成在运行目录下**
-
-**Windows system is generated on the desktop, Linux/Macos is generated in the running directory**
+ Windows system is generated on the desktop, Linux/Macos is generated in the running directory
 
 **视频展示 | Video display: [https://www.bilibili.com/video/BV1dK4y1M7d4](https://www.bilibili.com/video/BV1dK4y1M7d4)**
 
