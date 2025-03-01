@@ -54,8 +54,6 @@ python3 main.py
 
 **提取财经新闻标题、链接进行整合排列写入表格，省去繁琐步骤, 提高效率。过去每日会大约花费一小时时间用来获取新闻资讯，效率极低，目前10分钟即可全部阅完。**
 
-**2. 可以考虑使用一些机器学习或自然语言处理的技术来提高项目的功能和效果，*
-
 **Extracting the financial news headlines and links for integration and arrangement and writing them into the table eliminates the complicated steps of searching the website, opening the web page, viewing the title, opening the web page, closing the web page and continuing to view the next one. In the past, it took one hour to get up early to watch the news, but now it can be done in 10 minutes.**
 
 
