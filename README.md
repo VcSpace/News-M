@@ -21,14 +21,13 @@
 pip install -r requirements.txt
 python3 main.py
 ```
+
 > [!IMPORTANT]
 > Windows新闻文件生成在桌面, Linux/Macos生成在运行目录下
 
  Windows system is generated on the desktop, Linux/Macos is generated in the running directory
 
-**视频展示 | Video display: [https://www.bilibili.com/video/BV1dK4y1M7d4](https://www.bilibili.com/video/BV1dK4y1M7d4)**
-
-**使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://6923403.github.io/post/news_wps)**
+**使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://vcvvvc.github.io/post/news_wps)**
 
 - 更多设置, 请查看教程
 
@@ -62,12 +61,6 @@ python3 main.py
 ## 开源协议 | License
 
 ``GPLV3  License``
-
----
-
-## 编辑器 | IDE 
-
-**[Use Pycharm](https://www.jetbrains.com/pycharm/)**
 
 ---
 
