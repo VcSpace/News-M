@@ -56,16 +56,6 @@ python3 main.py
 **Extracting the financial news headlines and links for integration and arrangement and writing them into the table eliminates the complicated steps of searching the website, opening the web page, viewing the title, opening the web page, closing the web page and continuing to view the next one. In the past, it took one hour to get up early to watch the news, but now it can be done in 10 minutes.**
 
 
----
 
-## 开源协议 | License
-
-``GPLV3  License``
-
----
-
-## Stargazers over time
-
-[![Stargazers over time](https://starchart.cc/VcSpace/News-M.svg)](https://starchart.cc/VcSpace/News-M)
 
 
