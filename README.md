@@ -27,7 +27,7 @@ python3 main.py
 
  Windows system is generated on the desktop, Linux/Macos is generated in the running directory
 
-**使用教程 | Tutorial: [https://6923403.github.io/post/news_wps](https://vcvvvc.github.io/post/news_wps)**
+**使用教程 | Tutorial: [Tutorial_news_wps](https://0120012.xyz/post/news_wps/)**
 
 - 更多设置, 请查看教程
 
