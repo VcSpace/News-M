@@ -32,7 +32,7 @@ def get_News(platform, filename, debug):
     Xhs.main(filename)
     Ths.main(filename)
     Jrj.main(filename)
-    # Fh.main(filename)#接口失效
+    # Fh.main(filename)- error: 接口失效
     Ew.main(filename)
     Sina.main(filename)
     Tzj.main(filename)
@@ -74,3 +74,4 @@ if __name__ == '__main__':
 
     if m_platform == True:
         pt.pause()
+
